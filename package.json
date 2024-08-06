@@ -19,6 +19,9 @@
     "*.{scss,js,tsx}": [
       "yarn format",
       "git add"
+    ],
+    "*.{php}": [
+      "composer phpcs"
     ]
   },
   "repository": {
