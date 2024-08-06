@@ -70,4 +70,40 @@ abstract class Field {
     protected static function throw_errors( array $errors ) {
         throw new RequestValidatorException( $errors, 422, null );
     }
+
+    public static function get_label_by_id( int $id, array $form_fields ): ?string {
+        $field = self::get_form_field( 'id', $id, $form_fields );
+
+        if ( ! $field ) {
+            return null;
+        }
+
+        self::get_label( $field );
+    }
+
+    public static function get_label_by_name( string $name, array $form_fields ): ?string {
+        $field = self::get_form_field( 'name', $name, $form_fields );
+
+        if ( ! $field ) {
+            return null;
+        }
+
+        self::get_label( $field );
+    }
+
+    public static function get_label( array $field ): string {
+        return $field['label'];
+    }
+
+    public static function get_form_field( $column_key, $value, array $form_fields ) {
+        $value = strval( $value );
+
+        foreach ( $form_fields as $field ) {
+            if ( strval( $field[ $column_key ] ) === $value ) {
+                return $field;
+            }
+        }
+
+        return null;
+    }
 }
