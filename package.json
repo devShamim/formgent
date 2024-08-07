@@ -20,7 +20,7 @@
       "yarn format",
       "git add"
     ],
-    "*.{php}": [
+    "*.php": [
       "composer phpcs"
     ]
   },
