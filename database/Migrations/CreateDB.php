@@ -58,6 +58,19 @@ class CreateDB implements Migration {
             `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
         ) {$charset_collate};
+
+        -- -----------------------------------------------------
+        -- Table notes
+        -- -----------------------------------------------------
+
+        CREATE TABLE {$db_prefix}notes (
+            `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `response_id` BIGINT UNSIGNED NOT NULL,
+            `note` LONGTEXT NULL,
+            `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`)
+        ) {$charset_collate};
         ";
 
         dbDelta( $sql );

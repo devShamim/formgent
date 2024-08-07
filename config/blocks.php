@@ -7,6 +7,9 @@ use FormGent\App\Fields\Email\Email;
 use FormGent\App\Fields\Text\Text;
 use FormGent\App\Fields\TextArea\TextArea;
 use FormGent\App\Fields\Number\Number;
+use FormGent\App\Fields\GDPR\GDPR;
+use FormGent\App\Fields\PhoneNumber\PhoneNumber;
+use FormGent\App\Fields\Website\Website;
 
 return [
     'formgent/form'          => [],
@@ -36,7 +39,7 @@ return [
     ],
     'formgent/phone-number'  => [
         'types'      => ['general', 'conversational'],
-        'field_type' => ''
+        'field_type' => PhoneNumber::get_key(),
     ],
     'formgent/dropdown'      => [
         'types'      => ['general', 'conversational'],
@@ -56,10 +59,10 @@ return [
     ],
     'formgent/gdpr'          => [
         'types'      => ['general', 'conversational'],
-        'field_type' => ''
+        'field_type' => GDPR::get_key()
     ],
     'formgent/website'       => [
         'types'      => ['general', 'conversational'],
-        'field_type' => '',
+        'field_type' => Website::get_key(),
     ]
 ];

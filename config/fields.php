@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 use FormGent\App\Fields\GDPR\GDPR;
 use FormGent\App\Fields\PhoneNumber\PhoneNumber;
-use FormGent\App\Fields\URL\URL;
+use FormGent\App\Fields\Website\Website;
 use FormGent\App\Fields\Name\Name;
 use FormGent\App\Fields\Email\Email;
 use FormGent\App\Fields\Text\Text;
@@ -48,8 +48,8 @@ return apply_filters(
             'allowed_in_response'       => true,
             'allowed_in_response_table' => true
         ],
-        URL::get_key()         => [
-            'class'                     => URL::class,
+        Website::get_key()     => [
+            'class'                     => Website::class,
             'allowed_in_response'       => true,
             'allowed_in_response_table' => true
         ],

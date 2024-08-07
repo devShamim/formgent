@@ -1,15 +1,12 @@
 <?php
 
-namespace FormGent\App\Fields\URL;
-use FormGent\WpMVC\RequestValidator\Validator;
+namespace FormGent\App\Fields\Website;
 
 defined( 'ABSPATH' ) || exit;
 
-use WP_REST_Request;
-
 trait MethodResolver {
     public static function get_key(): string {
-        return 'url';
+        return 'website';
     }
 
     protected function get_validation_rules(): array {

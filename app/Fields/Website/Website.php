@@ -1,11 +1,11 @@
 <?php
 
-namespace FormGent\App\Fields\URL;
+namespace FormGent\App\Fields\Website;
 
 defined( 'ABSPATH' ) || exit;
 
 use FormGent\App\Fields\Field;
 
-class URL extends Field {
+class Website extends Field {
     use MethodResolver;
 }
