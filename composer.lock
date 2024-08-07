@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8af36443a9fd461ce851bb50747cd95f",
+    "content-hash": "a40b55b129dddc2070bf9c7948ee4f4e",
     "packages": [
         {
             "name": "laravel/serializable-closure",
@@ -334,16 +334,16 @@
         },
         {
             "name": "wpmvc/framework",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmvc/framework.git",
-                "reference": "566d3a6c1ee1f4875dbfc35ceb73d9fce83160d9"
+                "reference": "a16fe29f1a1d9242c232d8fbdf31f9a88d4fbb1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmvc/framework/zipball/566d3a6c1ee1f4875dbfc35ceb73d9fce83160d9",
-                "reference": "566d3a6c1ee1f4875dbfc35ceb73d9fce83160d9",
+                "url": "https://api.github.com/repos/wpmvc/framework/zipball/a16fe29f1a1d9242c232d8fbdf31f9a88d4fbb1b",
+                "reference": "a16fe29f1a1d9242c232d8fbdf31f9a88d4fbb1b",
                 "shasum": ""
             },
             "require": {
@@ -351,7 +351,7 @@
                 "php-di/php-di": "6.4.0",
                 "wpmvc/database": "^1.0.0",
                 "wpmvc/request-validator": "^1.0.0",
-                "wpmvc/routing": "^1.0.0"
+                "wpmvc/routing": "^1.0.1"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "1.8.2",
@@ -379,9 +379,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wpmvc/framework/issues",
-                "source": "https://github.com/wpmvc/framework/tree/1.0.0"
+                "source": "https://github.com/wpmvc/framework/tree/1.0.1"
             },
-            "time": "2024-02-20T13:39:33+00:00"
+            "time": "2024-06-08T10:45:41+00:00"
         },
         {
             "name": "wpmvc/request-validator",
