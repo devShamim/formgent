@@ -6,6 +6,7 @@ defined( 'ABSPATH' ) || exit;
 
 use FormGent\App\Models\Answer;
 use FormGent\App\DTO\ResponseDTO;
+use FormGent\App\DTO\AnswerDTO;
 use FormGent\App\EnumeratedList\ResponseStatus;
 use FormGent\App\Exceptions\RequestValidatorException;
 use FormGent\App\Http\Controllers\Controller;
@@ -16,7 +17,6 @@ use FormGent\WpMVC\RequestValidator\Validator;
 use FormGent\WpMVC\Routing\Response;
 use stdClass;
 use WP_REST_Request;
-use FormGent\App\DTO\AnswerDTO;
 
 class ResponseController extends Controller {
     private ResponseRepository $repository;
