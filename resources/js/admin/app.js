@@ -13,13 +13,11 @@ import {
 } from 'react-router-dom';
 
 import { applyFilters } from '@wordpress/hooks';
-// import { ThemeProvider } from 'styled-components';
 import { SlotFillProvider } from '@wordpress/components';
 import { getPlugins } from '@wordpress/plugins';
 import AddForm from './pages/AddForm/index.js';
-import Editor from './pages/Editor/index.js';
 import FormTable from './pages/FormTable/index.js';
-import Results from './pages/Results/index.js';
+import ResponseTable from './pages/ResponseTable/index.js';
 import Settings from './pages/Settings/index.js';
 
 export default function App() {
@@ -68,16 +66,12 @@ export default function App() {
 			element: <FormTable />,
 		},
 		{
-			path: '/forms/:id/edit',
-			element: <Editor />,
-		},
-		{
 			path: '/forms/:id/settings/*',
 			element: <Settings />,
 		},
 		{
-			path: '/forms/:id/results/*',
-			element: <Results />,
+			path: '/forms/:id/response/*',
+			element: <ResponseTable />,
 		},
 		{
 			path: '/forms/form-new/:type',
@@ -91,19 +85,6 @@ export default function App() {
 				<Plugins />
 				<HashRouter>
 					<Suspense fallback={ <></> }>
-						{ /* <ThemeProvider theme={ theme }> */ }
-						{ /* <ConfigProvider
-						theme={ {
-							token: {
-								// Seed Tokens
-								colorPrimary: '#000000',
-								borderRadius: 2,
-
-								// Alias Token
-								colorBgContainer: '#f6ffed',
-							},
-						} }
-					> */ }
 						<Routes>
 							{ adminRoutes.map( ( routeItem, index ) => {
 								return (
@@ -115,8 +96,6 @@ export default function App() {
 								);
 							} ) }
 						</Routes>
-						{ /* </ConfigProvider> */ }
-						{ /* </ThemeProvider> */ }
 					</Suspense>
 				</HashRouter>
 			</SlotFillProvider>

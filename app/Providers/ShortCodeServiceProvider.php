@@ -21,17 +21,23 @@ class ShortCodeServiceProvider implements Provider {
     }
 
     public function content( array $attributes ) {
-        if ( empty( $attributes['form_id'] ) ) {
-            return 'form_id is required.';
+        if ( empty( $attributes['id'] ) ) {
+            return 'id is required.';
         }
 
-        $form_id = intval( $attributes['form_id'] );
-        $form    = Post::query()->select( '1' )->where( 'ID', $form_id )->where( 'post_status', 'publish' )->get();
+        $form_id = intval( $attributes['id'] );
+        $form    = Post::query()->select( 'ID', 'post_content' )->where( 'ID', $form_id )->where( 'post_type', formgent_post_type() )->where( 'post_status', 'publish' )->first();
 
         if ( empty( $form ) ) {
             return;
         }
 
-        return View::get( 'shortcode', compact( 'form_id' ) );
+        return View::get(
+            'form', [
+                'form'      => $form,
+                'fields'    => do_blocks( $form->post_content ),
+                'css_class' => 'formgent-shortcode'
+            ]
+        );
     }
 }

@@ -17,7 +17,7 @@
 		},
 		"value": {
 			"type": "string",
-			"default": "one"
+			"default": ""
 		},
 		"options": {
 			"type": "array",
@@ -33,7 +33,7 @@
 		},
 		"sub_label": {
 			"type": "string",
-			"default": "Select Single Choice Here"
+			"default": ""
 		},
 		"required": {
 			"type": "boolean",

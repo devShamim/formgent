@@ -6,43 +6,115 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import Controls from './Controls';
 import { useEffect } from '@wordpress/element';
 import { nanoid } from 'nanoid';
-import { store as blockEditorStore } from '@wordpress/block-editor';
-import { select } from '@wordpress/data';
+import { select, dispatch } from '@wordpress/data';
+import { addFilter } from '@wordpress/hooks';
 import { registerBlockType } from '@wordpress/blocks';
 
-function Block( { controls, Edit, attributes, setAttributes } ) {
+function generateUniqueKey( baseKey, blocks ) {
+	// Extract the numeric suffixes from existing keys
+	const suffixes = blocks
+		.map( ( block ) => {
+			const name = block.attributes.name;
+			// Match names with the format "baseKey-n" where n is a number
+			const match = name.match( new RegExp( `^${ baseKey }-(\\d+)$` ) );
+			return match ? parseInt( match[ 1 ], 10 ) : 0;
+		} )
+		.filter( ( num ) => num >= 0 ); // Filter out non-numeric suffixes
+
+	// Find the highest suffix and increment it
+	const maxSuffix = Math.max( ...suffixes, -1 );
+	const newSuffix = maxSuffix + 1;
+
+	// Return the new unique key
+	return newSuffix === 0 ? baseKey : `${ baseKey }-${ newSuffix }`;
+}
+
+addFilter( 'formgent-field-text-control', 'formgent', function ( props ) {
+	if ( 'name' !== props.attr_key ) {
+		return props;
+	}
+
+	const blockEditorStore = select( 'core/block-editor' );
+	const selectedBlock = blockEditorStore.getSelectedBlock();
+
+	if ( ! selectedBlock ) {
+		return props;
+	}
+
+	const blocks = blockEditorStore
+		.getBlocks()
+		.filter(
+			( block ) =>
+				block.name === props.metaData.name &&
+				block.clientId !== selectedBlock.clientId
+		);
+
+	for ( const key in blocks ) {
+		const block = blocks[ key ];
+		if ( block.attributes.name === props.attributes[ props.attr_key ] ) {
+			props.help = __( 'This name is already used.', 'doatmail' );
+			props.isInvalid = true;
+		}
+	}
+
+	return props;
+} );
+
+function Block( { controls, Edit, attributes, setAttributes, metaData } ) {
+	const blockProps = useBlockProps();
+
 	useEffect( () => {
-		/**
-		 * If id length is empty, that's mean it's a new block.
-		 */
-		if ( undefined === attributes.id || 0 !== attributes.id.length ) {
-			return;
+		const blockEditorStore = select( 'core/block-editor' );
+		const blocks = blockEditorStore.getBlocks();
+		const blockName = metaData.name;
+		const currentId = attributes.id;
+		const isNewBlock = ! currentId || currentId.length === 0;
+
+		if ( isNewBlock ) {
+			// All blocks of the same type, excluding the current block
+			const filteredBlocks = blocks.filter(
+				( block ) =>
+					block.name === blockName &&
+					! blockProps.id.includes( block.clientId )
+			);
+
+			setAttributes( {
+				id: nanoid( 12 ),
+				name: generateUniqueKey(
+					blockName.substring( 'formgent/'.length ),
+					filteredBlocks
+				),
+			} );
+		} else {
+			const duplicateBlocks = blocks.filter( ( block ) => {
+				return block.attributes.id === currentId;
+			} );
+
+			if ( duplicateBlocks[ 1 ] ) {
+				// All blocks of the same type, excluding the duplicate block
+				const filteredBlocks = blocks.filter(
+					( block ) =>
+						block.name === blockName &&
+						block.clientId !== duplicateBlocks[ 1 ].clientId
+				);
+
+				dispatch( 'core/block-editor' ).updateBlockAttributes(
+					duplicateBlocks[ 1 ].clientId,
+					{
+						id: nanoid( 12 ),
+						name: generateUniqueKey(
+							blockName.substring( 'formgent/'.length ),
+							filteredBlocks
+						),
+					}
+				);
+			}
 		}
-
-		const selectedBlock = select( 'core/block-editor' ).getSelectedBlock();
-
-		if ( ! selectedBlock ) {
-			return;
-		}
-
-		const blocks = select( blockEditorStore )
-			.getBlocks()
-			.filter( ( block ) => block.name === selectedBlock.name );
-
-		const name =
-			blocks.length > 1
-				? `${ attributes.name }-${ blocks.length - 1 }`
-				: attributes.name;
-
-		setAttributes( {
-			id: nanoid( 12 ),
-			name: name,
-		} );
 	}, [] );
 
 	return (
 		<>
-			<div { ...useBlockProps() }>
+			<div { ...blockProps }>
 				<Edit
 					attributes={ attributes }
 					setAttributes={ setAttributes }
@@ -53,6 +125,7 @@ function Block( { controls, Edit, attributes, setAttributes } ) {
 					controls={ controls }
 					attributes={ attributes }
 					setAttributes={ setAttributes }
+					metaData={ metaData }
 				/>
 			</InspectorControls>
 		</>
@@ -64,7 +137,8 @@ export function registerBlock(
 	controls,
 	Edit,
 	icon = 'smiley',
-	exampleAttributes = {}
+	exampleAttributes = {},
+	props = {}
 ) {
 	if ( 'formgent_form' === typenow ) {
 		registerBlockType( metadata.name, {
@@ -79,9 +153,11 @@ export function registerBlock(
 						Edit={ Edit }
 						attributes={ attributes }
 						setAttributes={ setAttributes }
+						metaData={ metadata }
 					/>
 				);
 			},
+			...props,
 		} );
 	}
 }

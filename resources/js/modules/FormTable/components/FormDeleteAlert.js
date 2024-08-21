@@ -11,7 +11,7 @@ export default function FormDeleteAlert( props ) {
 			) }
 
 			<div className="helpgent-alert-content">
-				<p>
+				<div>
 					{ __( 'You are about to delete', 'helpgent' ) }{ ' ' }
 					{ Array.isArray( formTitle ) ? (
 						<ul className="helpgent-form-delete-list">
@@ -22,7 +22,7 @@ export default function FormDeleteAlert( props ) {
 					) : (
 						<strong>{ formTitle }</strong>
 					) }
-				</p>
+				</div>
 
 				<p>
 					{ Array.isArray( formTitle ) && formTitle.length > 1

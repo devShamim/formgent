@@ -67,37 +67,6 @@ export const SingleFormActions = {
 		};
 	},
 
-	updateActiveCustomizerTab: ( activeTab ) => {
-		return {
-			type: 'UPDATE_ACTIVE_CUSTOMIZER_TAB',
-			activeTab,
-		};
-	},
-
-	duplicateFormField: ( field, index ) => {
-		return {
-			type: 'DUPLICATE_FORM_FIELD',
-			field,
-			index,
-		};
-	},
-
-	addFieldAfter: ( field, index, formId ) => {
-		return {
-			type: 'ADD_FIELD_AFTER',
-			field,
-			index,
-			formId,
-		};
-	},
-
-	deleteFormField: ( id ) => {
-		return {
-			type: 'DELETE_FORM_FIELD',
-			id,
-		};
-	},
-
 	/**
 	 * Action creator to handle successful form fetch
 	 * @param {String} path - path for requesting api
@@ -128,10 +97,88 @@ export const SingleFormActions = {
 	 * @param {String} path - path for requesting api
 	 * @returns {Object} Action object with type 'FORM_FETCH' and fetched data
 	 */
-	fetchResponse: ( path, currentPage, perPage, formID ) => {
+	fetchResponse: (
+		path,
+		currentPage,
+		perPage,
+		searchItem,
+		formID,
+		readStatus,
+		orderType
+	) => {
 		return {
 			type: 'FETCH_RESPONSE',
-			payload: { path, currentPage, perPage, formID },
+			payload: {
+				path,
+				currentPage,
+				perPage,
+				searchItem,
+				formID,
+				readStatus,
+				orderType,
+			},
+		};
+	},
+
+	/**
+	 * Action creator to handle successful form fetch
+	 * @param {String} path - path for requesting api
+	 * @returns {Object} Action object with type 'FETCH_SINGLE_RESPONSE' and fetched data
+	 */
+	fetchSingleResponse: (
+		path,
+		currentPage,
+		searchItem,
+		formID,
+		readStatus,
+		orderType
+	) => {
+		return {
+			type: 'FETCH_SINGLE_RESPONSE',
+			payload: {
+				path,
+				currentPage,
+				searchItem,
+				formID,
+				readStatus,
+				orderType,
+			},
+		};
+	},
+
+	/**
+	 * Action creator to handle store form data
+	 * @param {Object} data - The fetched form data
+	 * @returns {Object} Action object with type 'RESPONSE_STORE' and fetched data
+	 */
+	storeResponse: ( data ) => {
+		return {
+			type: 'RESPONSE_STORE',
+			data,
+		};
+	},
+
+	/**
+	 * Action creator to handle store form data
+	 * @param {Object} data - The fetched form data
+	 * @returns {Object} Action object with type 'RESPONSE_SINGLE_STORE' and fetched data
+	 */
+	storeSingleResponse: ( data ) => {
+		return {
+			type: 'RESPONSE_SINGLE_STORE',
+			data,
+		};
+	},
+
+	/**
+	 * Action creator to handle successful form fetch
+	 * @param {String} path - path for requesting api
+	 * @returns {Object} Action object with type 'FORM_FETCH' and fetched data
+	 */
+	fetchFields: ( path, formID ) => {
+		return {
+			type: 'FETCH_FIELDS',
+			payload: { path, formID },
 		};
 	},
 
@@ -140,9 +187,9 @@ export const SingleFormActions = {
 	 * @param {Object} data - The fetched form data
 	 * @returns {Object} Action object with type 'FORM_FETCH' and fetched data
 	 */
-	storeResponse: ( data ) => {
+	storeFields: ( data ) => {
 		return {
-			type: 'RESPONSE_STORE',
+			type: 'FIELDS_STORE',
 			data,
 		};
 	},
@@ -197,6 +244,117 @@ export const SingleFormActions = {
 		return {
 			type: 'INSERT_SPACER',
 			data: { spacer, index },
+		};
+	},
+
+	starredChangeRequest: () => {
+		return {
+			type: 'STARRED_CHANGE_REQUEST',
+		};
+	},
+
+	starredChangeSuccess: ( id, status ) => {
+		return {
+			type: 'STARRED_CHANGE_SUCCESS',
+			id,
+			status,
+		};
+	},
+
+	starredChangeError: ( error ) => {
+		return {
+			type: 'STARRED_CHANGE_ERROR',
+			error,
+		};
+	},
+
+	readStatusChangeRequest: () => {
+		return {
+			type: 'READ_STATUS_CHANGE_REQUEST',
+		};
+	},
+
+	readStatusChangeSuccess: ( id, status ) => {
+		return {
+			type: 'READ_STATUS_CHANGE_SUCCESS',
+			id,
+			status,
+		};
+	},
+
+	readStatusChangeError: ( error ) => {
+		return {
+			type: 'READ_STATUS_CHANGE_ERROR',
+			error,
+		};
+	},
+
+	responseDeleteRequest: () => {
+		return {
+			type: 'RESPONSE_DELETE_REQUEST',
+		};
+	},
+
+	responseDeleteSuccess: ( formID, ids ) => {
+		return {
+			type: 'RESPONSE_DELETE_SUCCESS',
+			formID,
+			ids,
+		};
+	},
+
+	responseDeleteError: ( error ) => {
+		return {
+			type: 'RESPONSE_DELETE_ERROR',
+			error,
+		};
+	},
+
+	responseColumnUpdateRequest: () => {
+		return {
+			type: 'RESPONSE_COLUMN_UPDATE_REQUEST',
+		};
+	},
+
+	responseColumnUpdateSuccess: () => {
+		return {
+			type: 'RESPONSE_COLUMN_UPDATE_SUCCESS',
+		};
+	},
+
+	responseColumnUpdateError: ( error ) => {
+		return {
+			type: 'RESPONSE_COLUMN_UPDATE_ERROR',
+			error,
+		};
+	},
+
+	getResponseNotes: ( notes ) => {
+		return {
+			type: 'GET_RESPONSE_NOTES',
+			notes,
+		};
+	},
+
+	addResponseNotes: ( note ) => {
+		return {
+			type: 'ADD_RESPONSE_NOTES',
+			note,
+		};
+	},
+
+	updateResponseNotes: ( id, note ) => {
+		return {
+			type: 'UPDATE_RESPONSE_NOTES',
+			id,
+			note,
+		};
+	},
+
+	deleteResponseNotes: ( id ) => {
+		return {
+			type: 'DELETE_RESPONSE_NOTES',
+			id,
 		};
 	},
 };

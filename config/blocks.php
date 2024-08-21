@@ -2,67 +2,76 @@
 
 defined( 'ABSPATH' ) || exit;
 
+use FormGent\App\Fields\Address\Address;
+use FormGent\App\Fields\Dropdown\Dropdown;
 use FormGent\App\Fields\Name\Name;
 use FormGent\App\Fields\Email\Email;
 use FormGent\App\Fields\Text\Text;
 use FormGent\App\Fields\TextArea\TextArea;
+use FormGent\App\Fields\InputMasking\InputMasking;
 use FormGent\App\Fields\Number\Number;
 use FormGent\App\Fields\GDPR\GDPR;
 use FormGent\App\Fields\PhoneNumber\PhoneNumber;
 use FormGent\App\Fields\Website\Website;
+use FormGent\App\Fields\SingleChoice\SingleChoice;
+use FormGent\App\Fields\MultipleChoice\MultipleChoice;
 
 return [
-    'formgent/form'          => [],
-    'formgent/name'          => [
+    'formgent/form'            => [],
+    'formgent/name'            => [
         'types'      => ['general', 'conversational'],
         'field_type' => Name::get_key(),
     ],
-    'formgent/email'         => [
+    'formgent/email'           => [
         'types'      => ['general', 'conversational'],
         'field_type' => Email::get_key(),
     ],
-    'formgent/text'          => [
+    'formgent/text'            => [
         'types'      => ['general', 'conversational'],
         'field_type' => Text::get_key(),
     ],
-    'formgent/textarea'      => [
+    'formgent/textarea'        => [
         'types'      => ['general', 'conversational'],
         'field_type' => TextArea::get_key(),
     ],
-    'formgent/number'        => [
+    'formgent/number'          => [
         'types'      => ['general', 'conversational'],
         'field_type' => Number::get_key()
     ],
-    'formgent/button'        => [
-        'types'      => ['general', 'conversational'],
-        'field_type' => ''
-    ],
-    'formgent/phone-number'  => [
+    // 'formgent/button'        => [
+    //     'types'      => ['general', 'conversational'],
+    //     'field_type' => ''
+    // ],
+    'formgent/phone-number'    => [
         'types'      => ['general', 'conversational'],
         'field_type' => PhoneNumber::get_key(),
     ],
-    'formgent/dropdown'      => [
+    'formgent/dropdown'        => [
         'types'      => ['general', 'conversational'],
-        'field_type' => ''
+        'field_type' => Dropdown::get_key()
     ],
-    'formgent/single-choice' => [
+    'formgent/single-choice'   => [
         'types'      => ['general', 'conversational'],
-        'field_type' => ''
+        'field_type' => SingleChoice::get_key()
     ],
-    'formgent/multi-choice'  => [
+    'formgent/multiple-choice' => [
         'types'      => ['general', 'conversational'],
-        'field_type' => ''
+        'field_type' => MultipleChoice::get_key()
     ],
-    'formgent/address'       => [
+    'formgent/address'         => [
         'types'      => ['general', 'conversational'],
-        'field_type' => ''
+        'field_type' => Address::get_key()
     ],
-    'formgent/gdpr'          => [
+    'formgent/gdpr'            => [
         'types'      => ['general', 'conversational'],
         'field_type' => GDPR::get_key()
     ],
-    'formgent/website'       => [
+    'formgent/website'         => [
         'types'      => ['general', 'conversational'],
         'field_type' => Website::get_key(),
+    ],
+    'formgent/input-masking'   => [
+        'types'      => ['general', 'conversational'],
+        'field_type' => InputMasking::get_key(),
     ]
 ];

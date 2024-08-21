@@ -36,10 +36,8 @@ export default function PopUp( props ) {
 					>
 						{ hasCancelButton && (
 							<AntButton
-								type="light"
-								// className={ `formgent-btn formgent-btn-${
-								// 	cancelBtnType ? cancelBtnType : 'light'
-								// } formgent-btn-md formgent-modal-action__cancel` }
+								ghost
+								className="formgent-modal-cancel-btn"
 								onClick={ ( e ) => {
 									e.preventDefault();
 									onFooterCancel
@@ -52,7 +50,6 @@ export default function PopUp( props ) {
 						) }
 						{ hasSubmitButton && (
 							<AntButton
-								// className={ `formgent-btn formgent-btn-md formgent-modal-action__btn formgent-btn-${ submitBtnType }` }
 								type="primary"
 								onClick={ ( e ) => {
 									e.preventDefault();

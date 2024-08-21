@@ -1,15 +1,11 @@
 import Styled from 'styled-components';
 
 const DropdownStyle = Styled.div`
-    .ant-dropdown{
-        .ant-dropdown-menu{
 
-        }
-    }
 `;
 
 const SelectStyle = Styled.div`
-    width: 175px;
+    width: 196px;
     .ant-select-selection-item {
         margin: 0 5px !important;
         height: 32px;
@@ -17,7 +13,7 @@ const SelectStyle = Styled.div`
     }
     .ant-select-multiple .ant-select-selection-overflow {
         flex-wrap: unset;
-        overflow-x: auto;   
+        overflow-x: auto;
     }
 `;
 
@@ -43,6 +39,14 @@ const InputStyle = Styled.div`
     }
 `;
 
+const DatePickerStyle = Styled.div`
+
+`;
+
+const TagStyle = Styled.div`
+
+`;
+
 const ButtonStyle = Styled.div`
     .ant-btn-dark{
         color: var(--formgent-color-white);
@@ -59,6 +63,7 @@ const ModalAlertStyle = Styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 12px;
         padding: 20px 30px;
         background-color: var(--formgent-color-bg-light);
         .formgent-btn{
@@ -138,7 +143,12 @@ const ModalAlertStyle = Styled.div`
             }
         }
     }
-    .formgent-modal-action{}
+    .formgent-modal-action{
+        .formgent-modal-cancel-btn{
+            border: 1px solid var(--formgent-color-gray-300);
+            color: var(--formgent-color-gray-600);
+        }
+    }
 
     .formgent-session-expired__content{
         margin-top: -84px;
@@ -199,13 +209,11 @@ const FormHeaderStyle = Styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 15px 0 0;
-    margin-bottom: 20px;
+    border-bottom: 12px solid var(--formgent-color-bg-sec);
     background-color: var(--formgent-color-white);
     position: sticky;
     top: 32px;
-    min-height: 60px;
-    z-index: 98;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    z-index: 9999;
     .formgent-editor-header__info {
         flex: 1;
         display: flex;
@@ -227,9 +235,10 @@ const FormHeaderStyle = Styled.div`
                 display: flex;
                 align-items: center;
                 gap: 6px;
+                height: 54px;
                 padding: 0 15px;
-                font-size: 14px;
-                font-weight: 600;
+                font-size: 13px;
+                font-weight: 500;
                 color: var(--formgent-color-dark);
                 background-color: transparent;
                 border: none;
@@ -247,7 +256,7 @@ const FormHeaderStyle = Styled.div`
                 }
             }
         }
-        
+
         .formgent-editor-header__info__logo {
             width: 70px;
             height: 60px;
@@ -272,6 +281,10 @@ const FormHeaderStyle = Styled.div`
             display: flex;
             gap: 6px;
             align-items: center;
+            padding: 0;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--formgent-color-dark);
             svg {
                 &:hover {
                     cursor: pointer;
@@ -310,9 +323,13 @@ const FormHeaderStyle = Styled.div`
         gap: 15px;
         justify-content: center;
         a {
+            display: flex;
+            gap: 8px;
+            align-items: center;
             font-size: 14px;
             font-weight: 600;
-            padding: 10px 15px;
+            height: 36px;
+            padding: 0 16px;
             border-radius: 8px;
             color: var(--formgent-font-color);
             text-decoration: none;
@@ -321,6 +338,7 @@ const FormHeaderStyle = Styled.div`
             &:hover {
                 color: var(--formgent-color-primary);
                 background-color: var(--formgent-primary-light-button-bg);
+                box-shadow: none;
             }
         }
     }
@@ -394,7 +412,7 @@ const MenuStyle = Styled.div`
 `;
 
 const SubmissionFormStyle = Styled.div`
-    
+
 `;
 
 export {
@@ -408,4 +426,6 @@ export {
 	ModalAlertStyle,
 	SelectStyle,
 	SubmissionFormStyle,
+	DatePickerStyle,
+	TagStyle,
 };

@@ -17,11 +17,11 @@
 		},
 		"value": {
 			"type": "string",
-			"default": "test@formgent.com"
+			"default": ""
 		},
 		"placeholder": {
 			"type": "string",
-			"default": "Type Your Email"
+			"default": ""
 		},
 		"label": {
 			"type": "string",
@@ -33,7 +33,7 @@
 		},
 		"sub_label": {
 			"type": "string",
-			"default": "Enter Your Email Here"
+			"default": ""
 		},
 		"required": {
 			"type": "boolean",

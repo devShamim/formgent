@@ -1,17 +1,18 @@
 import { useSelect, useDispatch } from '@wordpress/data';
 import { doAction } from '@wordpress/hooks';
 import { AntInput } from '@formgent/components';
-import ReactSVG from 'react-inlinesvg';
 import { formatDate } from '@formgent/helper/utils';
-import times from '@icon/times.svg';
-import check from '@icon/check.svg';
 import { __ } from '@wordpress/i18n';
 import { TitleBoxStyle } from './style';
+import ReactSVG from 'react-inlinesvg';
+import times from '@icon/times.svg';
+import check from '@icon/check.svg';
+import formIcon from '@icon/form.svg';
 import patchData from '@formgent/helper/patchData';
 
 export default function TItleBox( props ) {
 	const { form, form_edit_url, editableForm, setEditableForm } = props;
-	const { id, title, created_at } = form;
+	const { id, title, created_at, preview_url } = form;
 
 	const { updateTitleRequest, updateTitleSuccess, updateTitleError } =
 		useDispatch( 'formgent' );
@@ -26,11 +27,7 @@ export default function TItleBox( props ) {
 		return select( 'formgent' ).getCommonState();
 	}, [] );
 
-	const { FormReducer } = useSelect( ( select ) => {
-		return select( 'formgent' ).getForms();
-	}, [] );
-
-	const { isTitleUpdating } = FormReducer;
+	const { isTitleUpdating } = false;
 
 	const { Link } = CommonReducer.routerComponents;
 
@@ -76,6 +73,11 @@ export default function TItleBox( props ) {
 							tokens={ { colorBorder: '#ededed' } }
 							value={ editableForm.title }
 							onChange={ handleUpdateEditableForm }
+							onKeyUp={ ( e ) => {
+								if ( e.key === 'Enter' ) {
+									handleUpdateFormTitle();
+								}
+							} }
 						/>
 					</div>
 					<div className="formgent-titleBox__actions">
@@ -99,10 +101,17 @@ export default function TItleBox( props ) {
 				</div>
 			) : (
 				<div className="formgent-titlebox__content">
+					<div className="formgent-titleBox-icon">
+						<ReactSVG src={ formIcon } />
+					</div>
 					<div className="formgent-titleBox-text">
-						<a href={ `${ form_edit_url }&post=${ id }` }>
+						<Link
+							onClick={ () => {
+								window.location.href = `${ form_edit_url }&post=${ id }`;
+							} }
+						>
 							<span className="formgent-title">{ title }</span>
-						</a>
+						</Link>
 						<ul className="formgent-titleBox-meta">
 							<li className="formgent-titleBox-meta__id">
 								{ __( 'ID', 'formgent' ) } #{ id }
@@ -112,8 +121,38 @@ export default function TItleBox( props ) {
 								{ formatDate(
 									'en-US',
 									created_at,
-									dateFormatOptions
+									dateFormatOptions,
+									false
 								) }
+							</li>
+						</ul>
+						<ul className="formgent-form-action">
+							<li className="formgent-form-action__items">
+								<Link
+									onClick={ () => {
+										window.location.href = `${ form_edit_url }&post=${ id }`;
+									} }
+									className="formgent-btn formgent-btn-xxs formgent-btn-light-gray"
+								>
+									{ __( 'Edit', 'formgent' ) }
+								</Link>
+							</li>
+							<li>
+								<Link
+									to={ `/forms/${ id }/response` }
+									className={ `formgent-btn formgent-btn-xxs formgent-btn-light-gray` }
+								>
+									{ __( 'All Responses', 'formgent' ) }
+								</Link>
+							</li>
+							<li>
+								<a
+									href={ preview_url }
+									className={ `formgent-btn formgent-btn-xxs formgent-btn-light-gray` }
+									target="_blank"
+								>
+									{ __( 'Preview', 'formgent' ) }
+								</a>
 							</li>
 						</ul>
 					</div>

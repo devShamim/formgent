@@ -1,10 +1,7 @@
+@import "../sass/variables.scss";
+
 .components-panel__body.edit-post-post-status {
 	display: none;
-}
-
-.formgent-control-label {
-	display: block;
-	margin-bottom: 6px;
 }
 
 .formgent-repeater-control {
@@ -74,5 +71,39 @@ button.formgent-repeater-field-expand {
 	button.formgent-repeater-field-remove,
 	button.formgent-repeater-field-expand {
 		flex: 12%;
+	}
+}
+
+//default value control
+.formgent-control-default-value-wrapper {
+	.formgent-control-default-value {
+		position: relative;
+		.components-input-control__input {
+			padding: 0 35px 0 8px !important;
+		}
+		.components-dropdown {
+			position: absolute;
+			right: 0;
+			top: 25px;
+			svg {
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+}
+.formgent-control-default-value-list-content {
+	.components-popover__content {
+		width: 200px;
+		padding: 10px;
+	}
+	span {
+		display: block;
+		padding: 12px;
+		cursor: pointer;
+		transition: 0.3s ease;
+		&:hover {
+			background: var(--formgent-color-bg-light);
+		}
 	}
 }

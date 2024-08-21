@@ -1,58 +1,69 @@
-import { AntSelect } from '@formgent/components';
-import { useState } from '@wordpress/element';
+/**
+ * wordpress dependencies
+ */
+import { RichText } from '@wordpress/block-editor';
 import ReactSVG from 'react-inlinesvg';
-import countries from './countries';
+import angleDown from '@icon/chevron-down.svg';
+import { __ } from '@wordpress/i18n';
 
 import './editor.scss';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const countryOptions = countries.map( ( country ) => {
-		return {
-			label: <ReactSVG src={ country.flag } />,
-			value: country.dial_code,
-			name: country.name,
-		};
-	} );
-
-	const [ selectedCountry, setSelectedCountry ] = useState(
-		countryOptions[ 18 ]
-	);
-
+	//const phoneNumberParts = attributes.value.split( ')' );
+	console.log( attributes );
 	return (
-		<div className="block-editor-block-list__single">
-			<label
-				className={ `block-editor-block-list__single__label label-align-${ attributes.label_alignment }` }
+		<div className="formgent-editor-block-list__single">
+			<div
+				className={ `formgent-editor-block-list__single__label-container formgent-label-align-${ attributes.label_alignment }` }
 			>
-				{ attributes.label }
+				<RichText
+					className="formgent-editor-block-list__single__label"
+					tagName="label"
+					value={ attributes.label }
+					onChange={ ( content ) =>
+						setAttributes( { label: content } )
+					}
+					placeholder={ __( 'Type your question' ) }
+				/>
 				{ attributes.required ? (
-					<span className="block-editor-block-list__single__label__required">
+					<span className="formgent-editor-block-list__single__label__required">
 						*
 					</span>
 				) : null }
-			</label>
-			<div className="block-editor-block-list__single__wrapper">
-				<div className="block-editor-block-list__single__dialer">
-					<AntSelect
-						options={ countryOptions }
-						defaultValue={ selectedCountry }
-						className="formgent-select formgent-select--flag"
-						onChange={ () => {} }
-					/>
-					<span className="block-editor-block-list__single__dialer__code">
-						({ selectedCountry.value })
+			</div>
+
+			<div className="formgent-editor-block-list__single__wrapper">
+				<div className="formgent-editor-block-list__single__dialer">
+					<span className="formgent-editor-block-list__single__dialer__flag">
+						<img
+							src={ `${ formgent_blocks.assetUrl }/images/flags/bd.png` }
+							alt="Formgent Flag"
+						/>
+						<ReactSVG src={ angleDown } />
 					</span>
-					<input
-						className="block-editor-block-list__single__dialer__input"
-						type="text"
-						name={ attributes.name }
-						placeholder={ attributes.placeholder }
-						value={ attributes.value }
-						onChange={ () => {} }
-					/>
+					<div className="formgent-editor-block-list__single__dialer__content">
+						<span className="formgent-editor-block-list__single__dialer__code">
+							(+880)
+						</span>
+						<input
+							className="formgent-editor-block-list__single__dialer__input"
+							type="text"
+							name={ attributes.name }
+							placeholder={ attributes.placeholder }
+							value={ attributes.value.value_two }
+							onChange={ () => {} }
+						/>
+					</div>
 				</div>
-				<span className="block-editor-block-list__single__sub-label">
-					{ attributes.sub_label }
-				</span>
+				<RichText
+					className="formgent-editor-block-list__single__sub-label"
+					tagName="span"
+					value={ attributes.sub_label }
+					onChange={ ( content ) =>
+						setAttributes( { sub_label: content } )
+					}
+					placeholder={ __( 'Type sub label here (optional)' ) }
+				/>
 			</div>
 		</div>
 	);

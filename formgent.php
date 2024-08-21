@@ -7,7 +7,7 @@ use FormGent\WpMVC\App;
 /**
  * Plugin Name:       FormGent
  * Description:       WordPress Form Builder Plugin aims to enhance user experience in creating forms on WordPress by integrating advanced functionalities that are currently either missing or underdeveloped in existing plugins. Our goal is to provide a solution that is both powerful for developers and accessible for non-technical users, focusing on innovative features such as AI-driven form optimizations, real-time collaboration, and enhanced security measures.
- * Version:           1.0.0
+ * Version:           1.0.0-beta1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Tested up to:      6.5

@@ -46,6 +46,7 @@
     "@wordpress/interactivity": "^6.2.0",
     "@wordpress/plugins": "^6.26.0",
     "antd": "^5.17.0",
+    "dayjs": "^1.11.12",
     "immutability-helper": "^3.1.1",
     "intl-tel-input": "^23.3.2",
     "jspdf": "^2.5.1",
@@ -57,6 +58,7 @@
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
     "styled-components": "^6.1.11",
+    "tom-select": "^2.3.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

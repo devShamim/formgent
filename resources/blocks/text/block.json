@@ -17,11 +17,11 @@
 		},
 		"value": {
 			"type": "string",
-			"default": "Text Value"
+			"default": ""
 		},
 		"placeholder": {
 			"type": "string",
-			"default": "Text Placeholder"
+			"default": ""
 		},
 		"label": {
 			"type": "string",
@@ -33,7 +33,7 @@
 		},
 		"sub_label": {
 			"type": "string",
-			"default": "Enter Text Here"
+			"default": ""
 		},
 		"required": {
 			"type": "boolean",

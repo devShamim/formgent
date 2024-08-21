@@ -49,7 +49,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.4",
-        "wpmvc/framework": "1.0.1"
+        "wpmvc/framework": "1.0.1",
+        "whichbrowser/parser": "dev-master"
     },
     "require-dev": {
         "wp-cli/i18n-command": "^2.0@dev",

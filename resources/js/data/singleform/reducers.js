@@ -5,6 +5,12 @@ const DEFAULT_STATE = {
 	isCreatingForm: false,
 	isLoading: false,
 	isUpdatingForm: false,
+	isStarredChanging: false,
+	isReadStatusChanging: false,
+	isResponseDeleting: false,
+	isResponseColumnUpdating: false,
+	starredItems: {},
+	readStatusItems: {},
 	pagination: {
 		current_page: '1',
 		total_pages: '1',
@@ -65,58 +71,6 @@ export const SingleFormReducer = ( state = DEFAULT_STATE, action ) => {
 				...state,
 				activeField: action?.field,
 			};
-		case 'UPDATE_ACTIVE_CUSTOMIZER_TAB':
-			return {
-				...state,
-				activeCustomizerTab: action?.activeTab,
-			};
-		case 'ADD_FIELD_AFTER':
-			fieldList = structuredClone(
-				state?.forms[ state.selectedFormId ]?.content?.fields
-			);
-			fieldList.splice( action.index + 1, 0, action.field );
-			return {
-				...state,
-				forms: {
-					...state.forms,
-					[ state.selectedFormId ]: {
-						...state.forms[ state.selectedFormId ],
-						content: {
-							...state.forms[ state.selectedFormId ].content,
-							fields: fieldList,
-						},
-					},
-				},
-			};
-		case 'DUPLICATE_FORM_FIELD':
-			fieldList = structuredClone( state?.singleForm?.content?.fields );
-			fieldList.splice( action.index + 1, 0, action.field );
-
-			return {
-				...state,
-				singleForm: {
-					...state.singleForm,
-					content: {
-						...state.singleForm.content,
-						fields: fieldList,
-					},
-				},
-			};
-		case 'DELETE_FORM_FIELD':
-			fieldList = structuredClone( state?.singleForm?.content?.fields );
-			return {
-				...state,
-				singleForm: {
-					...state.singleForm,
-					content: {
-						...state.singleForm.content,
-						fields: fieldList.filter(
-							( item ) => item.id !== action.id
-						),
-					},
-				},
-			};
-
 		case 'UPDATE_SINGLE_FORM_TYPE':
 			return {
 				...state,
@@ -144,9 +98,24 @@ export const SingleFormReducer = ( state = DEFAULT_STATE, action ) => {
 		case 'RESPONSE_STORE':
 			return {
 				...state,
+				forms: {
+					...state.forms,
+					[ data.id ]: {
+						responses: data.responses,
+					},
+				},
+				pagination: data.pagination,
+			};
+		case 'RESPONSE_SINGLE_STORE':
+			return {
+				...state,
 				...data,
 			};
-
+		case 'FIELDS_STORE':
+			return {
+				...state,
+				...data,
+			};
 		case 'UPDATE_CURRENT_RESPONSE_PAGE':
 			return {
 				...state,
@@ -209,6 +178,107 @@ export const SingleFormReducer = ( state = DEFAULT_STATE, action ) => {
 						fields: fieldList,
 					},
 				},
+			};
+		case 'STARRED_CHANGE_REQUEST':
+			return {
+				...state,
+				isStarredChanging: true,
+			};
+		case 'STARRED_CHANGE_SUCCESS':
+			return {
+				...state,
+				starredItems: {
+					...state.starredItems,
+					[ action.id ]: String( action.status ),
+				},
+				isStarredChanging: false,
+			};
+		case 'STARRED_CHANGE_ERROR':
+			return {
+				...state,
+				error: error,
+				isStarredChanging: false,
+			};
+		case 'READ_STATUS_CHANGE_REQUEST':
+			return {
+				...state,
+				isReadStatusChanging: true,
+			};
+		case 'READ_STATUS_CHANGE_SUCCESS':
+			return {
+				...state,
+				readStatusItems: {
+					...state.readStatusItems,
+					[ action.id ]: String( action.status ),
+				},
+				isReadStatusChanging: false,
+			};
+		case 'READ_STATUS_CHANGE_ERROR':
+			return {
+				...state,
+				error: error,
+				isReadStatusChanging: false,
+			};
+		case 'RESPONSE_DELETE_REQUEST':
+			return {
+				...state,
+				isResponseDeleting: true,
+			};
+		case 'RESPONSE_DELETE_SUCCESS':
+			return {
+				...state,
+				forms: {
+					...state.forms,
+					[ action.formID ]: {
+						responses: state.forms[
+							action.formID
+						].responses.filter(
+							( response ) => ! action.ids.includes( response.id )
+						),
+					},
+				},
+				isResponseDeleting: false,
+			};
+		case 'RESPONSE_DELETE_ERROR':
+			return {
+				...state,
+				error: error,
+				isResponseDeleting: false,
+			};
+		case 'RESPONSE_COLUMN_UPDATE_REQUEST':
+			return {
+				...state,
+				isResponseColumnUpdating: true,
+			};
+		case 'RESPONSE_COLUMN_UPDATE_SUCCESS':
+			return {
+				...state,
+				isResponseColumnUpdating: false,
+			};
+		case 'RESPONSE_COLUMN_UPDATE_ERROR':
+			return {
+				...state,
+				error: error,
+				isResponseColumnUpdating: false,
+			};
+
+		case 'GET_RESPONSE_NOTES':
+			return {
+				...state,
+				notes: action.notes,
+			};
+		case 'ADD_RESPONSE_NOTES':
+			return {
+				...state,
+				notes: [ ...state.notes, action.note ],
+			};
+		case 'UPDATE_RESPONSE_NOTES':
+			return {
+				...state,
+			};
+		case 'DELETE_RESPONSE_NOTES':
+			return {
+				...state,
 			};
 		default:
 			return state;

@@ -13,43 +13,7 @@
 		},
 		"name": {
 			"type": "string",
-			"default": "names"
-		},
-		"content": {
-			"type": "string",
-			"default": "Content for edit"
-		},
-		"label": {
-			"type": "string",
-			"default": "Hello World"
-		},
-		"format": {
-			"type": "string",
-			"default": "first_last"
-		},
-		"checkbox": {
-			"type": "boolean",
-			"default": true
-		},
-		"switch": {
-			"type": "boolean",
-			"default": true
-		},
-		"margin": {
-			"type": "object",
-			"default": {}
-		},
-		"padding": {
-			"type": "object",
-			"default": {}
-		},
-		"toggle_group": {
-			"type": "string",
-			"default": "left"
-		},
-		"repeater": {
-			"type": "array",
-			"default": []
+			"default": "name"
 		}
 	},
 	"supports": {
@@ -57,6 +21,5 @@
 	},
 	"editorScript": "file:index.js",
 	"style": "file:style-index.css",
-	"editorStyle": "file:index.css",
-	"render": "file:render.php"
+	"editorStyle": "file:index.css"
 }

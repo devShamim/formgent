@@ -7,6 +7,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use FormGent\WpMVC\View\View;
+use FormGent\App\Models\Post;
 
 class Form extends Widget_Base {
     public static function get_type() {
@@ -29,7 +30,7 @@ class Form extends Widget_Base {
         $this->start_controls_section(
             'content_section',
             [
-                'label' => __( 'Forms', 'formgent' ),
+                'label' => __( 'General', 'formgent' ),
                 'tab'   => Controls_Manager::TAB_CONTENT,
             ]
         );
@@ -53,17 +54,17 @@ class Form extends Widget_Base {
             return;
         }
 
-        $post = get_post( $settings['form_id'] );
+        $form = Post::query()->select( 'ID', 'post_content' )->where( 'ID', $settings['form_id'] )->where( 'post_type', formgent_post_type() )->where( 'post_status', 'publish' )->first();
 
-        if ( empty( $post ) ) {
+        if ( empty( $form ) ) {
             echo "Form not found";
             return;
         }
 
         View::render(
             'form', [
-                'form'   => $post,
-                'fields' => do_blocks( $post->post_content )
+                'form'   => $form,
+                'fields' => do_blocks( $form->post_content )
             ]
         );
     }

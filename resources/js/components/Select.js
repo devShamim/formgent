@@ -1,7 +1,7 @@
 import { ConfigProvider, Select } from 'antd';
 import { SelectStyle } from './style';
 export default function AntSelect( props ) {
-	const { tokens = {}, componentTokens = {}, children, ...rest } = props;
+	const { tokens = {}, componentTokens = {}, ...rest } = props;
 	const defaultComponentTokens = {
 		Select: {
 			paddingBlock: 13,
@@ -32,7 +32,7 @@ export default function AntSelect( props ) {
 					},
 				} }
 			>
-				<Select { ...rest }>{ children }</Select>
+				<Select { ...rest } />
 			</ConfigProvider>
 		</SelectStyle>
 	);

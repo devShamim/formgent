@@ -19,6 +19,20 @@ export const FormActions = {
 		};
 	},
 
+	updateCreatePopupStage: ( stage ) => {
+		return {
+			type: 'UPDATE_CREATE_POPUP_STAGE',
+			stage,
+		};
+	},
+
+	updateCreatePopupStep: ( step ) => {
+		return {
+			type: 'UPDATE_CREATE_POPUP_STEP',
+			step,
+		};
+	},
+
 	updateTitleRequest: () => {
 		return {
 			type: 'UPDATE_TITLE_REQUEST',
@@ -35,6 +49,26 @@ export const FormActions = {
 	updateTitleError: ( error ) => {
 		return {
 			type: 'UPDATE_TITLE_ERROR',
+			error,
+		};
+	},
+
+	updateStatusRequest: () => {
+		return {
+			type: 'UPDATE_STATUS_REQUEST',
+		};
+	},
+
+	updateStatusSuccess: ( payload ) => {
+		return {
+			type: 'UPDATE_STATUS_SUCCESS',
+			payload,
+		};
+	},
+
+	updateStatusError: ( error ) => {
+		return {
+			type: 'UPDATE_STATUS_ERROR',
 			error,
 		};
 	},
@@ -79,15 +113,56 @@ export const FormActions = {
 		};
 	},
 
+	bulkStatusUpdateRequest: () => {
+		return {
+			type: 'BULK_STATUS_UPDATE_REQUEST',
+		};
+	},
+
+	bulkStatusUpdateSuccess: ( { ids, payload } ) => {
+		return {
+			type: 'BULK_STATUS_UPDATE_SUCCESS',
+			ids,
+			payload,
+		};
+	},
+
+	bulkStatusUpdateError: ( error ) => {
+		return {
+			type: 'BULK_STATUS_UPDATE_ERROR',
+			error,
+		};
+	},
+
 	/**
 	 * Action creator to handle successful form fetch
 	 * @param {String} path - path for requesting api
 	 * @returns {Object} Action object with type 'FORM_FETCH' and fetched data
 	 */
-	fetchForm: ( path, currentPage, perPage ) => {
+	fetchForm: (
+		path,
+		currentPage,
+		perPage,
+		sortBy,
+		dateType,
+		dateFrom,
+		dateTo,
+		query,
+		formType
+	) => {
 		return {
 			type: 'FETCH_FROM',
-			payload: { path, currentPage, perPage },
+			payload: {
+				path,
+				currentPage,
+				perPage,
+				sortBy,
+				dateType,
+				dateFrom,
+				dateTo,
+				query,
+				formType,
+			},
 		};
 	},
 
@@ -141,6 +216,43 @@ export const FormActions = {
 			type: 'UPDATE_FORM_ITEM_STORE',
 			formId,
 			data,
+		};
+	},
+
+	updateFormSortBy: ( sortBy ) => {
+		return {
+			type: 'UPDATE_FORM_SORT_BY',
+			sortBy,
+		};
+	},
+	updateFormDateType: ( dateType ) => {
+		return {
+			type: 'UPDATE_FORM_DATE_TYPE',
+			dateType,
+		};
+	},
+	updateFormDateFrom: ( dateFrom ) => {
+		return {
+			type: 'UPDATE_FORM_DATE_FROM',
+			dateFrom,
+		};
+	},
+	updateFormDateTo: ( dateTo ) => {
+		return {
+			type: 'UPDATE_FORM_DATE_TO',
+			dateTo,
+		};
+	},
+	updateFormSearchQuery: ( query ) => {
+		return {
+			type: 'UPDATE_FORM_SEARCH_QUERY',
+			query,
+		};
+	},
+	updateFormsType: ( formType ) => {
+		return {
+			type: 'UPDATE_FORMS_TYPE',
+			formType,
 		};
 	},
 };

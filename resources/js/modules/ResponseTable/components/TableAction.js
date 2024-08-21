@@ -18,7 +18,7 @@ export default function TableAction( props ) {
 		return select( 'formgent' ).getForms();
 	}, [] );
 
-	const { forms, isFormDeleting } = FormReducer;
+	const { isFormDeleting } = FormReducer;
 
 	const { deleteFormRequest, deleteFormSuccess, deleteFormError } =
 		useDispatch( 'formgent' );

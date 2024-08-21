@@ -4,7 +4,7 @@
 	"name": "formgent/form",
 	"title": "Form",
 	"category": "formgent",
-	"description": "FormGent From",
+	"description": "FormGent Form",
 	"textdomain": "formgent",
 	"attributes": {
 		"formId": {
@@ -13,6 +13,22 @@
 		}
 	},
 	"supports": {
+		"color": {
+			"text": false,
+			"background": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		},
 		"interactivity": true
 	},
 	"editorScript": "file:index.js",

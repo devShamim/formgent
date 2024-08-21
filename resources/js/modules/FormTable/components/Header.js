@@ -1,18 +1,12 @@
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { AntButton } from '@formgent/components';
 import { __ } from '@wordpress/i18n';
 import { HeaderStyle } from './style';
-import handleCreateForm from '@formgent/helper/handleCreateForm';
+import ReactSVG from 'react-inlinesvg';
+import plusIcon from '@icon/plus.svg';
 export default function Header() {
-	const { updateCreatePopUp } = useDispatch( 'formgent' );
-
-	const { CommonReducer } = useSelect( ( select ) => {
-		return select( 'formgent' ).getCommonState();
-	}, [] );
-
-	const { useNavigate } = CommonReducer.routerComponents;
-
-	const navigate = useNavigate();
+	const { updateCreatePopUp, updateCreatePopupStep } =
+		useDispatch( 'formgent' );
 
 	return (
 		<HeaderStyle>
@@ -22,10 +16,14 @@ export default function Header() {
 						{ __( 'All Forms', 'formgent' ) }
 					</h1>
 					<AntButton
-						type="dark"
+						type="primary"
 						className="formgent-page-header-btn"
-						onClick={ () => updateCreatePopUp( true ) }
+						onClick={ ( e ) => {
+							updateCreatePopUp( true );
+							updateCreatePopupStep( '1' );
+						} }
 					>
+						<ReactSVG src={ plusIcon } />{ ' ' }
 						{ __( 'Create New', 'formgent' ) }
 					</AntButton>
 				</div>

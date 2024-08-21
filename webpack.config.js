@@ -27,6 +27,7 @@ const resolve = {
 		'@formgent': path.resolve( __dirname, 'resources/js' ),
 		'@icon': path.resolve( __dirname, 'resources/svg/icons' ),
 		'@assets': path.resolve( __dirname, 'assets' ),
+		'@image': path.resolve( __dirname, 'resources/images' ),
 	},
 };
 
@@ -83,7 +84,6 @@ module.exports = [
 			// 	'./resources/js/frontend/pages/FormSubmission/index.js',
 			'js/notification': './resources/js/components/Notification.js',
 			'css/notification': './resources/js/components/notification.scss',
-			'js/block/editor': './resources/js/block/editor.js',
 			'js/elementor': './resources/js/elementor.js',
 			'js/admin': './resources/js/admin/index.js',
 			'js/modules': './resources/js/modules/index.js',

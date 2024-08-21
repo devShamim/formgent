@@ -16,6 +16,8 @@ import AntTable from './Table';
 import AntTabs from './Tabs';
 import AntTextArea from './TextArea';
 import AntTooltip from './Tooltip';
+import AntRangePicker from './RangePicker';
+import AntPagination from './Pagination';
 
 /**
  * Global components for admin and user
@@ -40,6 +42,8 @@ registerModule( 'components', {
 	AntMenu,
 	AntDropdown,
 	AntSelect,
+	AntRangePicker,
+	AntPagination,
 } );
 
 /**
@@ -58,4 +62,6 @@ export {
 	AntTabs,
 	AntTextArea,
 	Form,
+	AntRangePicker,
+	AntPagination,
 };

@@ -2,24 +2,16 @@
 
 wp_enqueue_script( 'wp-api-fetch' );
 
-$data      = formgent_get_form_field_settings( parse_blocks( $form->post_content ) );
-$form_data = array_map(
-    function( $item ) {
-        return isset( $item['value'] ) ? $item['value'] : '';
-    }, $data
-);
-
+$data      = formgent_get_form_field_settings( parse_blocks( $form->post_content ), true );
 $unique_id = str_replace( '-', '_', wp_unique_id( 'formgent-store' ) );
-
-$context = [
+$context   = [
     'formId'         => $form->ID,
     'blocksSettings' => $data,
-    'data'           => $form_data,
+    'data'           => formgent_form_default_values( $data ),
 ];
 
 ?>
-<h1>FormGent Form</h1>
-<div class="formgent-form">
+<div class="formgent-form <?php formgent_render( isset( $css_class ) ? $css_class : '' )?>">
     <form
         id="formgent-<?php formgent_render( $unique_id ) ?>"
         <?php formgent_render( get_block_wrapper_attributes() ); ?>
@@ -29,6 +21,12 @@ $context = [
     >
         <div class="formgent-notices"></div>
         <?php formgent_render( $fields )?>
+        <!-- Honeypot field -->
+        <input
+            type="hidden"
+            name="formgent-honeypot-<?php formgent_render( $form->ID ) ?>"
+            id="formgent-honeypot-<?php formgent_render( $form->ID ) ?>"
+        >
         <button type="submit" class="formgent-btn formgent-primary formgent-btn-md">Submit</button>
     </form>
 </div>

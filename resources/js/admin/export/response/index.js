@@ -1,11 +1,11 @@
-import { utils, write } from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { utils, write } from 'xlsx';
 
 const PrepareExportData = ( data ) => {
 	const { form, responses } = data;
 
-	const formFields = JSON.parse( form.content ).fields;
+	const formFields = form;
 
 	const fieldIds = [];
 	const fieldColumns = [];
@@ -92,7 +92,7 @@ const exportToSpreadsheet = ( data, fileName ) => {
 const exportToPDF = ( data, fileName ) => {
 	const { form, responses } = data;
 
-	const formFields = JSON.parse( form.content ).fields;
+	const formFields = form;
 
 	const fieldIds = [];
 	const fieldColumns = [];
@@ -173,4 +173,4 @@ const exportToPDF = ( data, fileName ) => {
 	doc.save( `${ fileName }.pdf` );
 };
 
-export { PrepareExportData, exportToSpreadsheet, exportToPDF };
+export { exportToPDF, exportToSpreadsheet, PrepareExportData };

@@ -1,89 +1,127 @@
+import { InnerBlocks } from '@wordpress/block-editor';
+
 import './editor.scss';
 
-export default function Edit( { attributes, setAttributes } ) {
+const ALLOWED_BLOCKS = [
+	'core/paragraph',
+	'core/heading',
+	'formgent/text',
+	'formgent/number',
+	'formgent/country',
+	'core/columns',
+	'core/column',
+	'core/group',
+	'core/spacer',
+];
+
+const TEMPLATE = [
+	[
+		'core/paragraph',
+		{
+			content: '<strong>Address</strong>',
+			className: 'has-medium-font-size',
+		},
+	],
+	[
+		'formgent/text',
+		{
+			label: 'Address line 1',
+			label_alignment: 'top',
+			name: 'address_line_one',
+			metadata: { name: 'Address line 1' },
+		},
+	],
+	[
+		'core/spacer',
+		{
+			height: '20px',
+		},
+	],
+	[
+		'formgent/text',
+		{
+			label: 'Address line 2',
+			label_alignment: 'top',
+			name: 'address_line_two',
+			metadata: { name: 'Address line 2' },
+		},
+	],
+	[
+		'core/spacer',
+		{
+			height: '20px',
+		},
+	],
+	[
+		'core/group',
+		{
+			layout: { type: 'grid', minimumColumnWidth: null, columnCount: 2 },
+			style: { spacing: { blockGap: 'var:preset|spacing|10' } },
+		},
+		[
+			[
+				'formgent/text',
+				{
+					label: 'City',
+					label_alignment: 'top',
+					name: 'city',
+					metadata: { name: 'City' },
+				},
+			],
+			[
+				'formgent/text',
+				{
+					label: 'State / Province',
+					label_alignment: 'top',
+					name: 'state',
+					metadata: { name: 'State / Province' },
+				},
+			],
+		],
+	],
+	[
+		'core/spacer',
+		{
+			height: '20px',
+		},
+	],
+	[
+		'core/group',
+		{
+			layout: { type: 'grid', minimumColumnWidth: null, columnCount: 2 },
+			style: { spacing: { blockGap: 'var:preset|spacing|10' } },
+		},
+		[
+			[
+				'formgent/text',
+				{
+					label: 'Postal code / Zip Code',
+					label_alignment: 'top',
+					name: 'zip_code',
+					metadata: { name: 'Postal code / Zip Code' },
+				},
+			],
+			[
+				'formgent/text',
+				{
+					label: 'Country',
+					label_alignment: 'top',
+					name: 'country',
+					metadata: { name: 'Country' },
+				},
+			],
+		],
+	],
+	[
+		'core/spacer',
+		{
+			height: '30px',
+		},
+	],
+];
+
+export default function Edit() {
 	return (
-		<div className="block-editor-block-list__single">
-			<label
-				className={ `block-editor-block-list__single__label label-align-${ attributes.label_alignment }` }
-			>
-				{ attributes.label }
-				{ attributes.required ? (
-					<span className="block-editor-block-list__single__label__required">
-						*
-					</span>
-				) : null }
-			</label>
-			<div className="block-editor-block-list__single__wrapper">
-				<div className="block-editor-block-list__address">
-					<div className="block-editor-block-list__address__single">
-						<input
-							className="block-editor-block-list__single__input"
-							type="text"
-							name={ attributes.street_name }
-							placeholder={ attributes.street_placeholder }
-							value={ attributes.street_value }
-							onChange={ () => {} }
-						/>
-						<span className="block-editor-block-list__single__sub-label">
-							{ attributes.street_sub_label }
-						</span>
-					</div>
-					<div className="block-editor-block-list__address__single">
-						<input
-							className="block-editor-block-list__single__input"
-							type="text"
-							name={ attributes.address_line_name }
-							placeholder={ attributes.address_line_placeholder }
-							value={ attributes.address_line_value }
-							onChange={ () => {} }
-						/>
-						<span className="block-editor-block-list__single__sub-label">
-							{ attributes.address_line_sub_label }
-						</span>
-					</div>
-					<div className="block-editor-block-list__address__wrapper">
-						<div className="block-editor-block-list__address__single">
-							<input
-								className="block-editor-block-list__single__input"
-								type="text"
-								name={ attributes.city_name }
-								placeholder={ attributes.city_placeholder }
-								value={ attributes.city_value }
-								onChange={ () => {} }
-							/>
-							<span className="block-editor-block-list__single__sub-label">
-								{ attributes.city_sub_label }
-							</span>
-						</div>
-						<div className="block-editor-block-list__address__single">
-							<input
-								className="block-editor-block-list__single__input"
-								type="text"
-								name={ attributes.state_name }
-								placeholder={ attributes.state_placeholder }
-								value={ attributes.state_value }
-								onChange={ () => {} }
-							/>
-							<span className="block-editor-block-list__single__sub-label">
-								{ attributes.state_sub_label }
-							</span>
-						</div>
-					</div>
-					<div className="block-editor-block-list__address__single">
-						<input
-							className="block-editor-block-list__single__input"
-							type="text"
-							name={ attributes.zip_name }
-							placeholder={ attributes.zip_placeholder }
-							value={ attributes.zip_value }
-							onChange={ () => {} }
-						/>
-						<span className="block-editor-block-list__single__sub-label">
-							{ attributes.zip_sub_label }
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
+		<InnerBlocks allowedBlocks={ ALLOWED_BLOCKS } template={ TEMPLATE } />
 	);
 }

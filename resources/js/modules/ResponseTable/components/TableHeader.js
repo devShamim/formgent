@@ -1,4 +1,3 @@
-import { SearchOutlined } from '@ant-design/icons';
 import {
 	AntButton,
 	AntCheckbox,
@@ -6,171 +5,87 @@ import {
 	AntInput,
 	AntTabs,
 } from '@formgent/components';
-import { useState } from '@wordpress/element';
-import { applyFilters } from '@wordpress/hooks';
 import ReactSVG from 'react-inlinesvg';
 import { TableActionStyle, TableHeaderStyle, TableTabStyle } from './style';
 
 // Icon
-import checkIcon from '@icon/check-square.svg';
 import chevronDownIcon from '@icon/chevron-down.svg';
 import closeIcon from '@icon/close.svg';
 import columnIcon from '@icon/column-3.svg';
 import downloadIcon from '@icon/download.svg';
-import fileIcon from '@icon/file.svg';
-import filterIcon from '@icon/filter-lines.svg';
 import printIcon from '@icon/print.svg';
 import refreshIcon from '@icon/refresh.svg';
+import searchIcon from '@icon/search.svg';
 import trashIcon from '@icon/trash.svg';
 
 export default function TableHeader( props ) {
 	const {
-		responseTableData,
+		id,
+		responses,
 		selectedRowKeys,
 		setSelectedRowKeys,
-		totalCompletedItems,
-		totalPartialItems,
+		handleTableChange,
+		handleSearch,
 		activeTab,
 		setActiveTab,
+		visibleColumns,
+		setVisibleColumns,
+		setFieldColumnHide,
+		responseFields,
+		handleDelete,
+		handlePrint,
+		downloadItems,
+		handleDownload,
 	} = props;
 
-	const [ columnCheckedItems, setColumnCheckedItems ] = useState( {} );
-
-	// Handle Tab Operations
+	// Handle Tab Change
 	function handleTabChange( key ) {
 		setActiveTab( key );
 	}
 
-	function handleDownload( { key } ) {
-		console.log( 'Download clicked', key );
-	}
-
-	function handleSearch( value ) {
-		console.log( 'Search:', value );
-	}
-
-	function handlePrint() {
-		console.log( 'Print clicked' );
-	}
-
-	function handleDelete() {
-		console.log( 'Delete clicked', selectedRowKeys );
-	}
-
+	// Handle Filter
 	function handleFilter() {
 		console.log( 'Filter clicked' );
 	}
 
+	// Handle Refresh
 	function handleRefresh() {
-		console.log( 'Refresh clicked' );
+		handleTableChange();
 	}
 
 	// Handle column checkbox change
 	function handleColumnCheckbox( e, name ) {
-		setColumnCheckedItems( {
-			...columnCheckedItems,
-			[ name ]: e.target.checked,
+		setVisibleColumns( ( prevState ) => {
+			if ( e.target.checked ) {
+				setFieldColumnHide( false );
+				return [ ...prevState, name ];
+			} else {
+				setFieldColumnHide( name );
+				return prevState.filter( ( item ) => item !== name );
+			}
 		} );
 	}
 
+	// Handle Bulk Selection
 	function handleBulkSelection() {
-		setSelectedRowKeys( responseTableData.map( ( item ) => item.id ) );
+		setSelectedRowKeys( responses?.map( ( item ) => item.id ) );
 	}
 
+	// Handle Clear Selection
 	function handleClearSelection() {
 		setSelectedRowKeys( [] );
 	}
 
-	const columnItems = applyFilters( 'formgent_response_column', [
-		{
-			label: (
-				<span
-					style={ {
-						fontWeight: 'bold',
-						display: 'block',
-						marginBottom: '8px',
-					} }
-				>
-					Show Hide Columns
-				</span>
-			),
-			value: 'heading',
-			type: 'group',
-		},
-		{
-			key: 'column1',
-			label: (
-				<AntCheckbox
-					checked={ columnCheckedItems.column1 }
-					onChange={ ( e ) => handleColumnCheckbox( e, 'column1' ) }
-				>
-					Screen name
-				</AntCheckbox>
-			),
-		},
-		{
-			key: 'column2',
-			label: (
-				<AntCheckbox
-					checked={ columnCheckedItems.column2 }
-					onChange={ ( e ) => handleColumnCheckbox( e, 'column2' ) }
-				>
-					Screen name
-				</AntCheckbox>
-			),
-		},
-		{
-			key: 'column3',
-			label: (
-				<AntCheckbox
-					checked={ columnCheckedItems.column3 }
-					onChange={ ( e ) => handleColumnCheckbox( e, 'column3' ) }
-				>
-					Screen name
-				</AntCheckbox>
-			),
-		},
-	] );
-
-	const downloadItems = [
-		{
-			key: 'csv',
-			label: (
-				<span className="dropdown-header-content">
-					<ReactSVG width="14" height="14" src={ fileIcon } />
-					Download as CSV
-				</span>
-			),
-		},
-		{
-			key: 'excel',
-			label: (
-				<span className="dropdown-header-content">
-					<ReactSVG width="14" height="14" src={ fileIcon } />
-					Download as Excel
-				</span>
-			),
-		},
-		{
-			key: 'pdf',
-			label: (
-				<span className="dropdown-header-content">
-					<ReactSVG width="14" height="14" src={ fileIcon } />
-					Download as PDF
-				</span>
-			),
-		},
-	];
-
+	// Tab Items
 	const tabItems = [
 		{
 			key: 'completed',
-			label: `Completed (${ totalCompletedItems })`,
+			label: `Completed ${ responses ? `(${ responses.length })` : '' }`,
 		},
-		{
-			key: 'partial',
-			label: `Partial (${ totalPartialItems })`,
-		},
+		// {
+		// 	key: 'partial',
+		// 	label: `Partial (${ responses?.length })`,
+		// },
 	];
 
 	return (
@@ -179,19 +94,14 @@ export default function TableHeader( props ) {
 				<TableActionStyle className="formgent-table-header__action">
 					<div className="formgent-table-header__selection">
 						<span className="formgent-table-header__selection__text">
-							<ReactSVG
-								width="16"
-								height="16"
-								src={ checkIcon }
-							/>
 							{ selectedRowKeys.length } response selected
 							<button
 								className="formgent-table-header__selection__clear"
 								onClick={ handleClearSelection }
 							>
 								<ReactSVG
-									width="16"
-									height="16"
+									width="12"
+									height="12"
 									src={ closeIcon }
 								/>
 							</button>
@@ -209,24 +119,40 @@ export default function TableHeader( props ) {
 							onClick: handleDownload,
 						} }
 						placement="bottomLeft"
+						overlayStyle={ { width: 210 } }
 					>
-						<AntButton onClick={ ( e ) => e.preventDefault() }>
-							<ReactSVG
-								width="14"
-								height="14"
-								src={ downloadIcon }
-							/>
-						</AntButton>
+						<AntButton
+							onClick={ ( e ) => e.preventDefault() }
+							icon={
+								<ReactSVG
+									width="16"
+									height="16"
+									src={ downloadIcon }
+								/>
+							}
+						/>
 					</AntDropdown>
-					<AntButton onClick={ handlePrint }>
-						<ReactSVG width="14" height="14" src={ printIcon } />
-					</AntButton>
+					<AntButton
+						onClick={ handlePrint }
+						icon={
+							<ReactSVG
+								width="16"
+								height="16"
+								src={ printIcon }
+							/>
+						}
+					/>
 					<AntButton
 						onClick={ handleDelete }
+						icon={
+							<ReactSVG
+								width="16"
+								height="16"
+								src={ trashIcon }
+							/>
+						}
 						className="formgent-table-header__delete"
-					>
-						<ReactSVG width="14" height="14" src={ trashIcon } />
-					</AntButton>
+					/>
 				</TableActionStyle>
 			) : (
 				<TableTabStyle className="formgent-table-header__tab">
@@ -241,22 +167,30 @@ export default function TableHeader( props ) {
 			<TableActionStyle className="formgent-table-header__action">
 				<AntInput
 					placeholder="Search responses"
-					prefix={ <SearchOutlined /> }
+					prefix={
+						<ReactSVG width="14" height="14" src={ searchIcon } />
+					}
+					allowClear
 					onChange={ ( e ) => handleSearch( e.target.value ) }
 					className="formgent-table-header__search"
 				/>
-				<AntButton onClick={ handleFilter }>
-					<ReactSVG width="14" height="14" src={ filterIcon } />
+
+				{ /* <AntButton
+					onClick={ handleFilter }
+					icon={
+						<ReactSVG width="16" height="16" src={ filterIcon } />
+					}
+				>
 					Filters
-				</AntButton>
+				</AntButton> */ }
 
 				{ selectedRowKeys.length === 0 ? (
 					<>
 						<div className="formgent-table-header__dropdown">
 							<div className="formgent-table-header__dropdown__toggle">
 								<ReactSVG
-									width="14"
-									height="14"
+									width="16"
+									height="16"
 									src={ columnIcon }
 								/>
 								<span>
@@ -273,9 +207,27 @@ export default function TableHeader( props ) {
 								<span className="formgent-table-header__dropdown__title">
 									Show Hide Columns
 								</span>
-								{ columnItems
-									.map( ( item ) => item.label )
-									.slice( 1, 4 ) }
+								{ responseFields?.map( ( field, index ) => {
+									return (
+										<AntCheckbox
+											key={ index }
+											checked={ visibleColumns.includes(
+												field.name
+											) }
+											onChange={ ( e ) =>
+												handleColumnCheckbox(
+													e,
+													field.name
+												)
+											}
+										>
+											{ field.label.replace(
+												/<\/?[^>]+(>|$)/g,
+												''
+											) }
+										</AntCheckbox>
+									);
+								} ) }
 							</div>
 						</div>
 
@@ -285,23 +237,30 @@ export default function TableHeader( props ) {
 								onClick: handleDownload,
 							} }
 							placement="bottomRight"
+							overlayStyle={ { width: 210 } }
 						>
-							<AntButton>
-								<ReactSVG
-									width="14"
-									height="14"
-									src={ downloadIcon }
-								/>
-							</AntButton>
+							<AntButton
+								onClick={ ( e ) => e.preventDefault() }
+								icon={
+									<ReactSVG
+										width="16"
+										height="16"
+										src={ downloadIcon }
+									/>
+								}
+							/>
 						</AntDropdown>
 
-						<AntButton onClick={ handleRefresh }>
-							<ReactSVG
-								width="14"
-								height="14"
-								src={ refreshIcon }
-							/>
-						</AntButton>
+						<AntButton
+							onClick={ handleRefresh }
+							icon={
+								<ReactSVG
+									width="16"
+									height="16"
+									src={ refreshIcon }
+								/>
+							}
+						/>
 					</>
 				) : (
 					''

@@ -4,11 +4,15 @@ namespace FormGent\App\DTO;
 
 defined( 'ABSPATH' ) || exit;
 
+use FormGent\App\EnumeratedList\ResponseStatus;
+
 class ResponseDTO extends DTO {
     private int $id;
 
     private int $form_id;
 
+    private string $status = ResponseStatus::PUBLISH;
+    
     private int $is_read = 0;
 
     private int $is_completed = 1;
@@ -43,6 +47,28 @@ class ResponseDTO extends DTO {
      */
     public function set_id( int $id ) {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of string
+     *
+     * @return string
+     */
+    public function get_status() {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @param string $status 
+     *
+     * @return self
+     */
+    public function set_status( string $status ) {
+        $this->status = $status;
 
         return $this;
     }
@@ -151,7 +177,7 @@ class ResponseDTO extends DTO {
      *
      * @return self
      */
-    public function set_created_by( int $created_by ) {
+    public function set_created_by( ?int $created_by ) {
         $this->created_by = $created_by;
 
         return $this;

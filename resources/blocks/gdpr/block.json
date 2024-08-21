@@ -19,15 +19,11 @@
 			"type": "string",
 			"default": false
 		},
-		"label": {
-			"type": "string",
-			"default": "GDPR"
-		},
 		"label_alignment": {
 			"type": "string",
 			"default": "left"
 		},
-		"sub_label": {
+		"description": {
 			"type": "string",
 			"default": "I Accept GDPR"
 		},

@@ -31,7 +31,7 @@ abstract class Field {
         return [];
     }
 
-    public function validate( array $field, WP_REST_Request $wp_rest_request, Validator $validator ) {
+    public function validate( array $field, WP_REST_Request $wp_rest_request, Validator $validator, stdClass $form ) {
         $rules = $this->get_validation_rules();
 
         if ( isset( $field["required"] ) && '1' ===  $field["required"] ) {
@@ -51,12 +51,7 @@ abstract class Field {
     }
 
     public function get_field_dto( array $field, WP_REST_Request $wp_rest_request, stdClass $form ): AnswerDTO {
-        $dto = new AnswerDTO();
-        return $dto->set_form_id( $form->ID )->set_field_type( $field['field_type'] )->set_field_id( $field['id'] )->set_value( $wp_rest_request->get_param( static::get_key() ) );
-    }
- 
-    public function get_children_dtos( array $field, WP_REST_Request $wp_rest_request, stdClass $form ): array {
-        return [];
+        return ( new AnswerDTO() )->set_form_id( $form->ID )->set_field_type( $field['field_type'] )->set_field_name( $field['name'] )->set_value( $wp_rest_request->get_param( $field['name'] ) );
     }
 
     protected static function throw_validator_errors( Validator $validator ) {

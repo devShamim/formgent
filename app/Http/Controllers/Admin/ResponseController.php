@@ -8,7 +8,6 @@ use FormGent\App\DTO\ResponseReadDTO;
 use FormGent\App\DTO\ResponseSingleDTO;
 use FormGent\App\Http\Controllers\Controller;
 use FormGent\App\Repositories\ResponseRepository;
-use FormGent\App\Repositories\AnswerRepository;
 use FormGent\App\Repositories\FormRepository;
 use FormGent\WpMVC\RequestValidator\Validator;
 use FormGent\WpMVC\Routing\Response;
@@ -158,7 +157,7 @@ class ResponseController extends Controller {
         $registered_fields = formgent_config( 'fields' );
         $fields            = [];
 
-        $selected_fields = get_post_meta( $form->ID, 'response_table_field_ids', true );
+        $selected_fields = get_post_meta( $form->ID, 'response_table_names', true );
         $fields_settings = formgent_get_form_field_settings( parse_blocks( $form->post_content ) );
 
         foreach ( $fields_settings as $field ) {
@@ -167,13 +166,17 @@ class ResponseController extends Controller {
             }
 
             $fields[] = [
-                'id'    => $field['id'],
-                'label' => $field['label']
+                'name'  => $field['name'],
+                'label' => $field['label'],
+                'type'  => $field['field_type']
             ];
         }
 
         return Response::send(
             [
+                'form'            => [
+                    'title' => $form->post_title
+                ],
                 'selected_fields' => is_array( $selected_fields ) ? $selected_fields : [],
                 'fields'          => $fields
             ]
@@ -183,8 +186,8 @@ class ResponseController extends Controller {
     public function update_fields( Validator $validator, WP_REST_Request $wp_rest_request ) {
         $validator->validate(
             [
-                'form_id'   => 'required|numeric',
-                'field_ids' => 'required|array'
+                'form_id'     => 'required|numeric',
+                'field_names' => 'required|array'
             ]
         );
 
@@ -196,9 +199,9 @@ class ResponseController extends Controller {
             );
         }
 
-        $field_ids = $wp_rest_request->get_param( 'field_ids' );
+        $field_names = $wp_rest_request->get_param( 'field_names' );
 
-        if ( ! formgent_is_one_level_array( $field_ids ) ) {
+        if ( ! formgent_is_one_level_array( $field_names ) ) {
             return Response::send(
                 [
                     'message' => esc_html__( 'Something was wrong', 'formgent' )
@@ -217,9 +220,9 @@ class ResponseController extends Controller {
             );
         }
 
-        $field_ids = map_deep( $field_ids, "sanitize_text_field" );
+        $field_names = map_deep( $field_names, "sanitize_text_field" );
 
-        update_post_meta( $form_id, "response_table_field_ids", $field_ids );
+        update_post_meta( $form_id, "response_table_names", $field_names );
 
         return Response::send( [] );
     }
@@ -315,7 +318,7 @@ class ResponseController extends Controller {
                 'form'      => array_map(
                     function( $field ) {
                         return ['label' => $field['label'], 'field_type' => $field['field_type']];
-                    }, formgent_get_form_field_settings( parse_blocks( $this->form_repository->get_by_id( $form_id, ['post_content'] )->post_content ), true )
+                    }, formgent_get_form_field_settings( parse_blocks( $this->form_repository->get_by_id( $form_id, ['post_content'] )->post_content ) )
                 ),
                 'responses' => $this->repository->get_export_data( $form_id, $response_ids )
             ]

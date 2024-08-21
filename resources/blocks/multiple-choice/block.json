@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "formgent/multiple-choice",
+	"title": "Multiple Choice",
+	"category": "formgent",
+	"description": "FormGent Multiple Choice field.",
+	"textdomain": "formgent",
+	"attributes": {
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"name": {
+			"type": "string",
+			"default": "multiple-choice"
+		},
+		"value": {
+			"type": "string",
+			"default": ""
+		},
+		"options": {
+			"type": "array",
+			"default": []
+		},
+		"label": {
+			"type": "string",
+			"default": "Multi Choice"
+		},
+		"label_alignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"sub_label": {
+			"type": "string",
+			"default": ""
+		},
+		"required": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"interactivity": true
+	},
+	"editorScript": "file:index.js",
+	"style": "file:style-index.css",
+	"editorStyle": "file:index.css",
+	"render": "file:render.php"
+}

@@ -11,7 +11,7 @@ class AnswerDTO extends DTO {
 
     private int $form_id;
 
-    private string $field_id;
+    private string $field_name;
 
     private string $field_type;
 
@@ -86,23 +86,23 @@ class AnswerDTO extends DTO {
     }
 
     /**
-     * Get the value of field_id
+     * Get the value of field_name
      *
      * @return string
      */
-    public function get_field_id() {
-        return $this->field_id;
+    public function get_field_name() {
+        return $this->field_name;
     }
 
     /**
-     * Set the value of field_id
+     * Set the value of field_name
      *
-     * @param string $field_id 
+     * @param string $field_name 
      *
      * @return self
      */
-    public function set_field_id( string $field_id ) {
-        $this->field_id = $field_id;
+    public function set_field_name( string $field_name ) {
+        $this->field_name = $field_name;
 
         return $this;
     }

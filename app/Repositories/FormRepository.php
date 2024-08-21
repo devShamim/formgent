@@ -8,6 +8,7 @@ use WP_Error;
 use Exception;
 use FormGent\App\DTO\FormDTO;
 use FormGent\App\DTO\FormReadDTO;
+use FormGent\App\EnumeratedList\ResponseStatus;
 use FormGent\App\Models\Response;
 use FormGent\App\Models\Post;
 use FormGent\App\Models\PostMeta;
@@ -41,7 +42,11 @@ class FormRepository {
         $select_columns   = ['post.ID as id', 'post.post_title as title', 'post.post_status as status', 'form_type_post_meta.meta_value as type', 'post.post_date as created_at', 'post.post_modified as updated_at', 'user.display_name as username', 'COUNT(DISTINCT response.id) as total_responses', 'COUNT(DISTINCT CASE WHEN response.is_read = 0 THEN response.id ELSE NULL END) AS total_unread_responses'];
         $group_by_columns = ['post.ID', 'post.post_title', 'post.post_status', 'user.display_name' ];
 
-        $posts_query->select( $select_columns )->left_join( Response::get_table_name() . ' as response', 'post.ID', 'response.form_id' )->group_by( $group_by_columns );
+        $posts_query->select( $select_columns )->left_join(
+            Response::get_table_name() . ' as response', function( JoinClause $join ) {
+                $join->on_column( 'post.ID', 'response.form_id' )->on( 'response.status', ResponseStatus::PUBLISH );
+            }
+        )->group_by( $group_by_columns );
 
         $this->forms_sort_query( $posts_query, $dto );
 
@@ -49,10 +54,17 @@ class FormRepository {
 
         $types = $type_count_query->select( "meta_value as type", 'COUNT(DISTINCT post.ID) as total' )->group_by( ["form_type_post_meta.meta_key" ] )->get();
 
+        $forms = array_map(
+            function( $form ) {
+                $form->preview_url = get_post_permalink( $form->id );
+                return $form;
+            }, $posts_query->pagination( $dto->get_per_page(), $dto->get_page() )
+        );
+
         return [
             'types' => $types,
             'total' => $count_query->count(),
-            'forms' => $posts_query->pagination( $dto->get_per_page(), $dto->get_page() )
+            'forms' => $forms
         ];
     }
 
@@ -334,12 +346,6 @@ class FormRepository {
         foreach ( $ids as $id ) {
             wp_delete_post( $id, true );
         }
-
-        // $this->delete_metas( $ids );
-        // $this->delete_responses( $ids );
-        // $this->delete_answers( $ids );
-        // $this->delete_tags( $ids );
-        // $this->after_delete_form();
 
         return $forms;
     }

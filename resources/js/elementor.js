@@ -18,6 +18,12 @@ jQuery( function () {
 						};
 					} );
 
+					options.unshift( {
+						text: '-- Select a Form --',
+						id: '0',
+						selected: true,
+					} );
+
 					this.controlSelect.select2( {
 						data: options,
 					} );

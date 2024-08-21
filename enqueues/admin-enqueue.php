@@ -6,10 +6,19 @@ defined( 'ABSPATH' ) || exit;
 
 include_once __DIR__ . '/register.php';
 
-// Enqueue::script( 'formgent/admin', 'build/js/admin', ['formgent/notification'] );
-Enqueue::register_script( 'formgent/modules', 'build/js/modules' );
-Enqueue::register_script( 'formgent/components', 'build/js/components' );
+/**
+ * Builder scripts
+ */
+if ( formgent_post_type() === get_post_type() ) {
+    Enqueue::script( 'formgent/blocks-editor', 'build/js/blocks-editor' );
+    Enqueue::style( 'formgent/blocks-editor', 'build/css/blocks-editor' );
+}
 
-Enqueue::script( 'formgent/admin', 'build/js/admin', ['formgent/notification'] );
-
-wp_enqueue_style( 'formgent/style' );
+/**
+ * Dashboard scripts
+ */
+if ( 'formgent_page_formgent' ===  $hook_suffix ) {
+    wp_enqueue_style( 'wp-components' );
+    wp_enqueue_style( 'formgent/style' );
+    Enqueue::script( 'formgent/admin', 'build/js/admin', ['formgent/notification'] );
+}

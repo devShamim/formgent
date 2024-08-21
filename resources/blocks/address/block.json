@@ -11,117 +11,9 @@
 			"type": "string",
 			"default": ""
 		},
-		"label": {
+		"name": {
 			"type": "string",
-			"default": "Address"
-		},
-		"label_alignment": {
-			"type": "string",
-			"default": "left"
-		},
-		"required": {
-			"type": "boolean",
-			"default": false
-		},
-		"street_id": {
-			"type": "string",
-			"default": ""
-		},
-		"street_name": {
-			"type": "string",
-			"default": "street-address"
-		},
-		"street_placeholder": {
-			"type": "string",
-			"default": "Street Address"
-		},
-		"street_sub_label": {
-			"type": "string",
-			"default": "Enter Street Address"
-		},
-		"street_value": {
-			"type": "string",
-			"default": "Heavenly Street"
-		},
-		"address_line_id": {
-			"type": "string",
-			"default": ""
-		},
-		"address_line_name": {
-			"type": "string",
-			"default": "address-line"
-		},
-		"address_line_placeholder": {
-			"type": "string",
-			"default": "Address Line"
-		},
-		"address_line_sub_label": {
-			"type": "string",
-			"default": "Enter Address Line"
-		},
-		"address_line_value": {
-			"type": "string",
-			"default": "Park Street 123"
-		},
-		"city_id": {
-			"type": "string",
-			"default": ""
-		},
-		"city_name": {
-			"type": "string",
-			"default": "city"
-		},
-		"city_placeholder": {
-			"type": "string",
-			"default": "City"
-		},
-		"city_sub_label": {
-			"type": "string",
-			"default": "Enter City Here"
-		},
-		"city_value": {
-			"type": "string",
-			"default": "Dhaka"
-		},
-		"state_id": {
-			"type": "string",
-			"default": ""
-		},
-		"state_name": {
-			"type": "string",
-			"default": "state"
-		},
-		"state_placeholder": {
-			"type": "string",
-			"default": "State"
-		},
-		"state_sub_label": {
-			"type": "string",
-			"default": "Enter State Here"
-		},
-		"state_value": {
-			"type": "string",
-			"default": "Middle"
-		},
-		"zip_id": {
-			"type": "string",
-			"default": ""
-		},
-		"zip_placeholder": {
-			"type": "string",
-			"default": "Zip Code"
-		},
-		"zip_name": {
-			"type": "string",
-			"default": "zip"
-		},
-		"zip_sub_label": {
-			"type": "string",
-			"default": "Enter Zip Code Here"
-		},
-		"zip_value": {
-			"type": "string",
-			"default": "1212"
+			"default": "address"
 		}
 	},
 	"supports": {
@@ -129,6 +21,5 @@
 	},
 	"editorScript": "file:index.js",
 	"style": "file:style-index.css",
-	"editorStyle": "file:index.css",
-	"render": "file:render.php"
+	"editorStyle": "file:index.css"
 }

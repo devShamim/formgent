@@ -5,12 +5,9 @@ defined( 'ABSPATH' ) || exit;
 use FormGent\WpMVC\App;
 use FormGent\DI\Container;
 use FormGent\App\Fields\Field;
-use FormGent\App\Fields\Name\Name;
-use FormGent\App\Fields\Email\Email;
-use FormGent\App\Fields\Number\Number;
-use FormGent\App\Fields\Text\Text;
-use FormGent\App\Fields\TextArea\TextArea;
 use FormGent\App\Utils\DateTime;
+use FormGent\App\Repositories\ResponseRepository;
+use FormGent\App\Repositories\ResponseTokenRepository;
 
 function formgent():App {
     return App::$instance;
@@ -163,36 +160,72 @@ function formgent_post_type() {
     return formgent_app_config( 'post_type' );
 }
 
-function formgent_get_form_field_settings( array $parsed_blocks, $by_id = false ):array {
+function formgent_get_form_field_settings( array $parsed_blocks, bool $remove_label = false, string $array_key = 'name' ): array {
     $blocks            = formgent_config( 'blocks' );
     $registered_blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
 
     $settings = [];
 
-    $array_key = $by_id ? 'id' : 'name';
-
     foreach ( $parsed_blocks as $parsed_block ) {
-        if ( empty( $parsed_block['blockName'] ) ) {
+        $block_name = $parsed_block['blockName'];
+
+        if ( ! isset( $blocks[$block_name] ) ) {
+            // Handle inner blocks if any
+            if ( ! empty( $parsed_block['innerBlocks'] ) ) {
+                $settings = array_merge( $settings, formgent_get_form_field_settings( $parsed_block['innerBlocks'], $remove_label ) );
+            }
             continue;
         }
 
+        // Initialize attributes with default values
         $default_attributes = [];
 
-        if ( empty( $registered_blocks[$parsed_block['blockName']] ) ) {
-            continue;
-        }
-
-        foreach ( $registered_blocks[$parsed_block['blockName']]->get_attributes() as $key => $attr ) {
-            if ( isset( $attr['default'] ) ) {
-                $default_attributes[$key] = $attr['default'];
+        if ( ! empty( $registered_blocks[$block_name] ) ) {
+            foreach ( $registered_blocks[$block_name]->get_attributes() as $key => $attr ) {
+                if ( isset( $attr['default'] ) ) {
+                    $default_attributes[$key] = $attr['default'];
+                }
             }
         }
 
-        $attributes               = array_merge( $default_attributes, $parsed_block['attrs'] );
-        $attributes['field_type'] = $blocks[$parsed_block['blockName']]['field_type'];
+        $attributes = array_merge( $default_attributes, $parsed_block['attrs'] );
 
-        $settings[$attributes[$array_key]] = $attributes;
+        if ( $remove_label ) {
+            unset( $attributes['label'] );
+            unset( $attributes['sub_label'] );
+            unset( $attributes['description'] );
+        }
+
+        $attributes['field_type'] = $blocks[$block_name]['field_type'];
+        $setting_key              = $attributes[$array_key];
+
+        $settings[$setting_key] = $attributes;
+
+        // Handle inner blocks recursively
+        if ( ! empty( $parsed_block['innerBlocks'] ) ) {
+            $settings[$setting_key]['children'] = formgent_get_form_field_settings( $parsed_block['innerBlocks'], $remove_label );
+        }
     }
 
     return $settings;
 }
+
+function formgent_get_response_by_token( string $token, int $form_id ) {
+    /**
+     * @var ResponseTokenRepository $response_token_repository
+     */
+    $response_token_repository = formgent_singleton( ResponseTokenRepository::class );
+    $token_data                = $response_token_repository->get_by_token( $form_id, $token );
+
+    if ( ! $token_data ) {
+        return false;
+    }
+
+    /**
+     * @var ResponseRepository $response_repository
+     */
+    $response_repository = formgent_singleton( ResponseRepository::class );
+    return $response_repository->get_by_id( $token_data->response_id );
+}
+
+require_once __DIR__ . '/form.php';

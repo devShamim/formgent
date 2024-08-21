@@ -26,5 +26,11 @@ class BlockServiceProvider implements Provider {
             );
             register_block_type( formgent_dir( "assets/build{$name}" ) );
         }
+
+        wp_localize_script(
+            'formgent-phone-number-editor-script', 'formgent_blocks', [
+                'assetUrl' => formgent_url( 'assets' )
+            ]
+        );
     }
 }

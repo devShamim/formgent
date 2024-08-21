@@ -397,68 +397,6 @@ class FormController extends Controller {
         }
     }
 
-    public function delete_field( Validator $validator, WP_REST_Request $wp_rest_request ) {
-        $validator->validate(
-            [
-                'id'        => 'required|numeric',
-                'field_id'  => 'required|string',
-                'new_field' => 'json'
-            ]
-        );
-
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
-        $response = [
-            'message' => esc_html__( "Field response removed successfully!", "formgent" )
-        ];
-
-        $form_id  = $wp_rest_request->get_param( 'id' );
-        $field_id = $wp_rest_request->get_param( 'field_id' );
-
-        $form = $this->form_repository->get_by_id( $form_id );
-
-        if ( ! $form ) {
-            return Response::send( $response );
-        }
-
-        /**
-         * Delete element from form content
-         */
-        $content = json_decode( $form->content, true );
-        $fields  = $content['fields'];
-
-        $field_key = array_search( $field_id, array_column( $fields, 'id' ) );
-
-        if ( ! is_int( $field_key ) ) {
-            return Response::send( $response );
-        }
-
-        $new_field = $wp_rest_request->get_param( 'new_field' );
-
-        if ( ! empty( $new_field ) ) {
-            $fields[$field_key] = json_decode( $new_field );
-        } else {
-            unset( $fields[$field_key] );
-        }
-
-        $content['fields'] = array_values( $fields );
-
-        // $this->form_repository->update_content( $form_id, json_encode( $content ) );
-
-        /**
-         * Remove field response
-         */
-        Answer::query( "answer" )->where( 'answer.form_id', $form_id )->where( 'answer.field_id', $field_id )->delete();
-
-        return Response::send( $response );
-    }
-
     public function get_settings( Validator $validator, WP_REST_Request $wp_rest_request ) {
         $validator->validate(
             [

@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { registerBlock } from '../utils';
+import { registerBlock } from '@formgent/modules';
 import Edit from './Edit';
 import metadata from './block.json';
 import './style.scss';
@@ -16,16 +16,8 @@ const exampleAttributes = {};
 const controls = {
 	basic_info: {
 		type: 'panel',
-		label: __( 'Basic info', 'formgent' ),
+		label: __( 'General', 'formgent' ),
 		children: {
-			label: {
-				type: 'text',
-				label: __( 'Label', 'formgent' ),
-			},
-			sub_label: {
-				type: 'text',
-				label: __( 'Sub Label', 'formgent' ),
-			},
 			required: {
 				type: 'switch',
 				label: __( 'Required', 'formgent' ),
@@ -56,13 +48,13 @@ const controls = {
 				type: 'text',
 				label: __( 'Field Placeholder', 'formgent' ),
 			},
-			value: {
-				type: 'text',
-				label: __( 'Phone Number', 'formgent' ),
-			},
 			name: {
 				type: 'text',
 				label: __( 'Field Name', 'formgent' ),
+			},
+			value: {
+				type: 'default_value',
+				label: __( 'Default Value', 'formgent' ),
 			},
 		},
 	},

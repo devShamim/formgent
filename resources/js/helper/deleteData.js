@@ -12,7 +12,7 @@ const deleteData = async ( path, config = {} ) => {
 		const response = await apiFetch( {
 			path: 'formgent/' + path,
 			method: 'DELETE',
-			...config,
+			body: JSON.stringify( config ),
 		} );
 		return response;
 	} catch ( error ) {

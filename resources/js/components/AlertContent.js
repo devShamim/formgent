@@ -1,4 +1,3 @@
-import PopUp from '@formgent/components/PopUp.js';
 import { AlertContentStyle } from '@formgent/components/style';
 import { sprintf, __ } from '@wordpress/i18n';
 
