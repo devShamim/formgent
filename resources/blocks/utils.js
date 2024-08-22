@@ -161,3 +161,30 @@ export function registerBlock(
 		} );
 	}
 }
+
+export const onChangeChoiceOptions = (
+	id,
+	fieldKey,
+	value,
+	attr_key,
+	attributes,
+	setAttributes
+) => {
+	const newFields = attributes[ attr_key ].map( ( item ) => {
+		if ( item.id !== id ) {
+			return item;
+		}
+
+		const values = { ...item, [ fieldKey ]: value };
+
+		if ( 'label' === fieldKey && ! values.isCustomValue ) {
+			values[ 'value' ] = value.trim().toLowerCase().replace( ' ', '-' );
+		} else if ( 'value' === fieldKey ) {
+			values[ 'isCustomValue' ] = true;
+		}
+
+		return values;
+	} );
+
+	setAttributes( { [ attr_key ]: newFields } );
+};

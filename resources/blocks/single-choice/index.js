@@ -10,11 +10,12 @@ import { registerBlock } from '@formgent/modules';
 import Edit from './Edit';
 import metadata from './block.json';
 import './style.scss';
+import { onChangeChoiceOptions } from '../utils';
 
 const exampleAttributes = {};
 
 const controls = {
-	basic_info: {
+	general: {
 		type: 'panel',
 		label: __( 'General', 'formgent' ),
 		children: {
@@ -59,22 +60,38 @@ const controls = {
 			options: {
 				type: 'repeater',
 				label: __( 'Single Choice Items', 'formgent' ),
-				label_key: 'title',
+				label_key: 'label',
 				add_button_text: 'Add Item',
+				onChange: onChangeChoiceOptions,
 				fields: {
-					title: {
+					label: {
 						type: 'text',
-						label: __( 'Title', 'formgent' ),
-					},
-					value: {
-						type: 'text',
-						label: __( 'Value', 'formgent' ),
+						label: __( 'Label', 'formgent' ),
 					},
 				},
 			},
 			value: {
 				type: 'default_value',
 				label: __( 'Default Value', 'formgent' ),
+			},
+		},
+	},
+	advanced: {
+		type: 'panel',
+		label: __( 'FormGent Advanced', 'formgent' ),
+		children: {
+			options: {
+				type: 'repeater',
+				label: __( 'Values', 'formgent' ),
+				label_key: 'label',
+				show_actions: false,
+				onChange: onChangeChoiceOptions,
+				fields: {
+					value: {
+						type: 'text',
+						label: __( 'Value', 'formgent' ),
+					},
+				},
 			},
 		},
 	},

@@ -38,7 +38,7 @@ export default function Edit( { attributes, setAttributes } ) {
 									onClick={ ( e ) => handleClick( e ) }
 								/>
 								<label htmlFor={ option.value }>
-									{ option.title }
+									{ option.label }
 								</label>
 							</div>
 						) )

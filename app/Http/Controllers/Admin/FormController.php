@@ -246,8 +246,8 @@ class FormController extends Controller {
         $dto->set_title( $form->post_title . ' - copy' );
         $dto->set_status( $form->post_status );
         $dto->set_content( $form->post_content );
-        $dto->set_type( get_post_meta( $form->ID, 'formgent_type', true ) );
-        $dto->set_save_incomplete_data( (bool) get_post_meta( $form->ID, 'formgent_save_incomplete_data', true ) );
+        $dto->set_type( get_post_meta( $form->ID, '_formgent_type', true ) );
+        $dto->set_save_incomplete_data( (bool) get_post_meta( $form->ID, '_formgent_save_incomplete_data', true ) );
 
         try {
             do_action( "formgent_before_duplicate_form", $dto, $wp_rest_request );

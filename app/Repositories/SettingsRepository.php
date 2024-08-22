@@ -6,11 +6,11 @@ defined( 'ABSPATH' ) || exit;
 
 class SettingsRepository {
     public function save( array $settings ) {
-        return update_option( 'formgent-settings', map_deep( $settings, 'sanitize_text_field' ) );
+        return update_option( 'formgent_settings', map_deep( $settings, 'sanitize_text_field' ) );
     }
 
     public function get() {
-        return get_option( 'formgent-settings', [] );
+        return get_option( 'formgent_settings', [] );
     }
 
     public function get_by_key( string $key, $default = null ) {

@@ -157,7 +157,7 @@ class ResponseController extends Controller {
         $registered_fields = formgent_config( 'fields' );
         $fields            = [];
 
-        $selected_fields = get_post_meta( $form->ID, 'response_table_names', true );
+        $selected_fields = get_post_meta( $form->ID, '_response_table_names', true );
         $fields_settings = formgent_get_form_field_settings( parse_blocks( $form->post_content ) );
 
         foreach ( $fields_settings as $field ) {
@@ -222,7 +222,7 @@ class ResponseController extends Controller {
 
         $field_names = map_deep( $field_names, "sanitize_text_field" );
 
-        update_post_meta( $form_id, "response_table_names", $field_names );
+        update_post_meta( $form_id, "_response_table_names", $field_names );
 
         return Response::send( [] );
     }

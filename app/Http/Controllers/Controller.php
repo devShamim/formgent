@@ -14,6 +14,9 @@ abstract class Controller {
         $total_pages  = ceil( $total_items / $per_page );
         $rest_url     = get_rest_url( null, $wp_rest_request->get_route() );
 
+        $params['page']     = $current_page;
+        $params['per_page'] = $per_page;
+
         $pagination = [
             'pagination' => [
                 'total_items'  => $total_items,

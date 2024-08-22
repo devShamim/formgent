@@ -4,6 +4,7 @@
 /vendor-src
 .phpunit.result.cache
 npm-debug.log
+/.yarn
 yarn-error.log
 yarn.lock
 package-lock.json

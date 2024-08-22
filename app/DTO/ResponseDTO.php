@@ -17,6 +17,8 @@ class ResponseDTO extends DTO {
 
     private int $is_completed = 1;
 
+    private ?string $completed_at = null;
+
     private string $ip;
 
     private ?int $created_by = null;
@@ -133,6 +135,28 @@ class ResponseDTO extends DTO {
      */
     public function set_is_completed( int $is_completed ) {
         $this->is_completed = $is_completed;
+
+        return $this;
+    }
+
+        /**
+     * Get the value of completed_at
+     *
+     * @return ?string
+     */
+    public function get_completed_at():?string {
+        return $this->completed_at;
+    }
+
+    /**
+     * Set the value of completed_at
+     *
+     * @param ?string $completed_at 
+     *
+     * @return self
+     */
+    public function set_completed_at( ?string $completed_at ):self {
+        $this->completed_at = $completed_at;
 
         return $this;
     }

@@ -31,7 +31,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					{ attributes.options.length > 0 ? (
 						attributes.options.map( ( option, index ) => (
 							<option key={ index } value={ option.value }>
-								{ option.title }
+								{ option.label }
 							</option>
 						) )
 					) : (
