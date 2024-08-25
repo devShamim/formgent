@@ -48,7 +48,6 @@ final class FormGent
 
         /**
          * Fires once activated plugins have loaded.
-         *
          */
         add_action(
             'plugins_loaded', function () use ( $application ): void {

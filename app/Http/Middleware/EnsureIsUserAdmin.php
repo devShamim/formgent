@@ -16,6 +16,6 @@ class EnsureIsUserAdmin implements Middleware
     * @return bool
     */
     public function handle( WP_REST_Request $wp_rest_request ): bool {
-        return current_user_can( 'manage_options' );
+        return apply_filters( 'formgent_is_user_admin', current_user_can( 'manage_options' ) );
     }
 }

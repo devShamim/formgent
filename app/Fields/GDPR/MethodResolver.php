@@ -4,7 +4,12 @@ namespace FormGent\App\Fields\GDPR;
 
 defined( 'ABSPATH' ) || exit;
 
+use FormGent\App\Summary\Pagination;
+
 trait MethodResolver {
+    
+    use Pagination;
+
     public static function get_key(): string {
         return 'gdpr';
     }

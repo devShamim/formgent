@@ -22,6 +22,8 @@ abstract class Field {
     }
 
     abstract public static function get_key(): string;
+    
+    abstract public function get_summary( stdClass $form, array $field, int $page = 0, int $per_page = 0 );
 
     public static function get_supported_form_types(): array {
         return [FormType::GENERAL, FormType::CONVERSATIONAL];

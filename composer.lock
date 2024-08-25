@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa80efc1854555a3ea72878922f2fe48",
+    "content-hash": "c449d62b8af27ed06495c07dd87a256c",
     "packages": [
         {
             "name": "laravel/serializable-closure",
@@ -408,12 +408,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmvc/database.git",
-                "reference": "4756f3ec225db338baf2ff0a2a023a84e821ca46"
+                "reference": "893ae78757ae857363c0c08663ab44b6cf27200f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmvc/database/zipball/4756f3ec225db338baf2ff0a2a023a84e821ca46",
-                "reference": "4756f3ec225db338baf2ff0a2a023a84e821ca46",
+                "url": "https://api.github.com/repos/wpmvc/database/zipball/893ae78757ae857363c0c08663ab44b6cf27200f",
+                "reference": "893ae78757ae857363c0c08663ab44b6cf27200f",
                 "shasum": ""
             },
             "require-dev": {
@@ -443,20 +443,20 @@
                 "issues": "https://github.com/wpmvc/database/issues",
                 "source": "https://github.com/wpmvc/database/tree/1.0.0"
             },
-            "time": "2024-02-20T12:52:13+00:00"
+            "time": "2024-08-23T12:40:36+00:00"
         },
         {
             "name": "wpmvc/framework",
-            "version": "1.0.1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmvc/framework.git",
-                "reference": "a16fe29f1a1d9242c232d8fbdf31f9a88d4fbb1b"
+                "reference": "4fc51d722bbf5b252f1a565be81381fce045541e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmvc/framework/zipball/a16fe29f1a1d9242c232d8fbdf31f9a88d4fbb1b",
-                "reference": "a16fe29f1a1d9242c232d8fbdf31f9a88d4fbb1b",
+                "url": "https://api.github.com/repos/wpmvc/framework/zipball/4fc51d722bbf5b252f1a565be81381fce045541e",
+                "reference": "4fc51d722bbf5b252f1a565be81381fce045541e",
                 "shasum": ""
             },
             "require": {
@@ -464,15 +464,14 @@
                 "php-di/php-di": "6.4.0",
                 "wpmvc/database": "^1.0.0",
                 "wpmvc/request-validator": "^1.0.0",
-                "wpmvc/routing": "^1.0.1"
+                "wpmvc/routing": "^1.0.0"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "1.8.2",
                 "dealerdirect/phpcodesniffer-composer-installer": "1.0.0",
                 "phpcompatibility/phpcompatibility-wp": "2.1.4",
                 "squizlabs/php_codesniffer": "3.7.2",
-                "wp-coding-standards/wpcs": "^2.3",
-                "wpmvc/artisan": "^1.0.0"
+                "wp-coding-standards/wpcs": "^2.3"
             },
             "type": "library",
             "autoload": {
@@ -492,9 +491,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wpmvc/framework/issues",
-                "source": "https://github.com/wpmvc/framework/tree/1.0.1"
+                "source": "https://github.com/wpmvc/framework/tree/1.0.0"
             },
-            "time": "2024-06-08T10:45:41+00:00"
+            "time": "2024-08-23T14:05:55+00:00"
         },
         {
             "name": "wpmvc/request-validator",
@@ -502,12 +501,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmvc/request-validator.git",
-                "reference": "ae5a686e8c9b3ca7f21c3847e67ffb004f311ca7"
+                "reference": "86bf75de4ddd8ae1af3295785551494f8ad7098c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmvc/request-validator/zipball/ae5a686e8c9b3ca7f21c3847e67ffb004f311ca7",
-                "reference": "ae5a686e8c9b3ca7f21c3847e67ffb004f311ca7",
+                "url": "https://api.github.com/repos/wpmvc/request-validator/zipball/86bf75de4ddd8ae1af3295785551494f8ad7098c",
+                "reference": "86bf75de4ddd8ae1af3295785551494f8ad7098c",
                 "shasum": ""
             },
             "require-dev": {
@@ -537,20 +536,20 @@
                 "issues": "https://github.com/wpmvc/request-validator/issues",
                 "source": "https://github.com/wpmvc/request-validator/tree/1.0.0"
             },
-            "time": "2024-02-25T04:01:37+00:00"
+            "time": "2024-08-23T12:52:59+00:00"
         },
         {
             "name": "wpmvc/routing",
-            "version": "1.0.1",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmvc/routing.git",
-                "reference": "e37413ace9cb30ddb09f25c0d95197bbe962a4fe"
+                "reference": "3afb7b7676b6ededda88997d3b38a96ce6331478"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmvc/routing/zipball/e37413ace9cb30ddb09f25c0d95197bbe962a4fe",
-                "reference": "e37413ace9cb30ddb09f25c0d95197bbe962a4fe",
+                "url": "https://api.github.com/repos/wpmvc/routing/zipball/3afb7b7676b6ededda88997d3b38a96ce6331478",
+                "reference": "3afb7b7676b6ededda88997d3b38a96ce6331478",
                 "shasum": ""
             },
             "require-dev": {
@@ -578,9 +577,9 @@
             ],
             "support": {
                 "issues": "https://github.com/wpmvc/routing/issues",
-                "source": "https://github.com/wpmvc/routing/tree/1.0.1"
+                "source": "https://github.com/wpmvc/routing/tree/1.0.0"
             },
-            "time": "2024-06-08T10:29:04+00:00"
+            "time": "2024-08-23T14:01:36+00:00"
         }
     ],
     "packages-dev": [
@@ -2483,12 +2482,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wpmvc/artisan.git",
-                "reference": "eb5fc4a7a44e55c18d72b8cb4b5f81bd8ef14d68"
+                "reference": "d6f0d350b6d455a73742b2a025de13b7cb48bcdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wpmvc/artisan/zipball/eb5fc4a7a44e55c18d72b8cb4b5f81bd8ef14d68",
-                "reference": "eb5fc4a7a44e55c18d72b8cb4b5f81bd8ef14d68",
+                "url": "https://api.github.com/repos/wpmvc/artisan/zipball/d6f0d350b6d455a73742b2a025de13b7cb48bcdd",
+                "reference": "d6f0d350b6d455a73742b2a025de13b7cb48bcdd",
                 "shasum": ""
             },
             "require": {
@@ -2521,7 +2520,7 @@
                 "issues": "https://github.com/wpmvc/artisan/issues",
                 "source": "https://github.com/wpmvc/artisan/tree/1.0.0"
             },
-            "time": "2024-02-20T12:52:02+00:00"
+            "time": "2024-08-23T12:37:53+00:00"
         }
     ],
     "aliases": [],

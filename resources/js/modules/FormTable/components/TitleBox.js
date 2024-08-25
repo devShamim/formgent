@@ -105,13 +105,9 @@ export default function TItleBox( props ) {
 						<ReactSVG src={ formIcon } />
 					</div>
 					<div className="formgent-titleBox-text">
-						<Link
-							onClick={ () => {
-								window.location.href = `${ form_edit_url }&post=${ id }`;
-							} }
-						>
+						<a href={ `${ form_edit_url }&post=${ id }` }>
 							<span className="formgent-title">{ title }</span>
-						</Link>
+						</a>
 						<ul className="formgent-titleBox-meta">
 							<li className="formgent-titleBox-meta__id">
 								{ __( 'ID', 'formgent' ) } #{ id }
@@ -128,14 +124,12 @@ export default function TItleBox( props ) {
 						</ul>
 						<ul className="formgent-form-action">
 							<li className="formgent-form-action__items">
-								<Link
-									onClick={ () => {
-										window.location.href = `${ form_edit_url }&post=${ id }`;
-									} }
+								<a
+									href={ `${ form_edit_url }&post=${ id }` }
 									className="formgent-btn formgent-btn-xxs formgent-btn-light-gray"
 								>
 									{ __( 'Edit', 'formgent' ) }
-								</Link>
+								</a>
 							</li>
 							<li>
 								<Link
