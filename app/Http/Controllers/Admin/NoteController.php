@@ -26,15 +26,6 @@ class NoteController extends Controller {
             ]
         );
 
-
-        if ( $validate->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validate->errors 
-                ], 422
-            );
-        }
-
         $dto = new NoteReadDTO;
         $dto->set_response_id( $request->get_param( 'response_id' ) );
 
@@ -52,14 +43,6 @@ class NoteController extends Controller {
                 'note'        => 'required|string|max:1000',
             ]
         );
-
-        if ( $validate->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validate->errors 
-                ], 422
-            );
-        }
 
         $dto = new NoteDTO;
         $dto->set_response_id( $request->get_param( 'response_id' ) )->set_note( $request->get_param( 'note' ) );
@@ -82,15 +65,6 @@ class NoteController extends Controller {
             ]
         );
 
-
-        if ( $validate->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validate->errors 
-                ], 422
-            );
-        }
-
         $dto = new NoteDTO;
         $dto->set_id( $request->get_param( 'id' ) )->set_response_id( $request->get_param( 'response_id' ) )->set_note( $request->get_param( 'note' ) );
 
@@ -110,14 +84,6 @@ class NoteController extends Controller {
                 'id'          => 'required|numeric'
             ]
         );
-
-        if ( $validate->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validate->errors 
-                ], 422
-            );
-        }
 
         $this->repository->delete( $request->get_param( 'response_id' ), intval( $request->get_param( 'id' ) ) );
 

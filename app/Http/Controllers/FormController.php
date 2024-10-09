@@ -24,14 +24,6 @@ class FormController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         $form = $this->form_repository->get_by_id( intval( $wp_rest_request->get_param( 'id' ) ) );
 
         if ( ! $form ) {

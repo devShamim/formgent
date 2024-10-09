@@ -41,14 +41,6 @@ class ResponseController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         $dto = new ResponseReadDTO;
         $dto->set_page( intval( $wp_rest_request->get_param( 'page' ) ) );
         $dto->set_per_page( intval( $wp_rest_request->get_param( 'per_page' ) ) );
@@ -97,14 +89,6 @@ class ResponseController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         $dto = new ResponseSingleDTO;
         $dto->set_page( intval( $wp_rest_request->get_param( 'page' ) ) );
         $dto->set_search( (string) $wp_rest_request->get_param( 's' ) );
@@ -134,14 +118,6 @@ class ResponseController extends Controller {
                 'form_id' => 'required|numeric'
             ]
         );
-
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
 
         $form_id = intval( $wp_rest_request->get_param( 'form_id' ) );
         $form    = $this->form_repository->get_by_id( $form_id );
@@ -191,14 +167,6 @@ class ResponseController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         $field_names = $wp_rest_request->get_param( 'field_names' );
 
         if ( ! formgent_is_one_level_array( $field_names ) ) {
@@ -235,14 +203,6 @@ class ResponseController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         do_action( 'formgent_before_update_response_starred', $wp_rest_request );
 
         $this->repository->update_starred( intval( $wp_rest_request->get_param( 'id' ) ), $wp_rest_request->get_param( 'is_starred' ) );
@@ -264,14 +224,6 @@ class ResponseController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         do_action( 'formgent_before_update_response_read', $wp_rest_request );
 
         $this->repository->update_read( intval( $wp_rest_request->get_param( 'id' ) ), $wp_rest_request->get_param( 'is_read' ) );
@@ -292,14 +244,6 @@ class ResponseController extends Controller {
                 'response_ids' => 'required|array'
             ]
         );
-    
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
 
         $response_ids = $wp_rest_request->get_param( 'response_ids' );
 
@@ -332,14 +276,6 @@ class ResponseController extends Controller {
                 'form_id' => 'required|numeric'
             ]
         );
-
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
 
         $response_ids = $wp_rest_request->get_param( 'ids' );
 

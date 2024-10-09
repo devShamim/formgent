@@ -7,30 +7,17 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { registerBlock } from '@formgent/modules';
+import { onChangeChoiceOptions } from '../utils';
 import Edit from './Edit';
 import metadata from './block.json';
 import './style.scss';
-import { onChangeChoiceOptions } from '../utils';
 
 const exampleAttributes = {};
 
-const controls = {
+const generalControls = {
 	general: {
 		type: 'panel',
-		label: __( 'General', 'formgent' ),
 		children: {
-			label: {
-				type: 'text',
-				label: __( 'Label', 'formgent' ),
-			},
-			sub_label: {
-				type: 'text',
-				label: __( 'Sub Label', 'formgent' ),
-			},
-			required: {
-				type: 'switch',
-				label: __( 'Required', 'formgent' ),
-			},
 			label_alignment: {
 				type: 'toggle_group',
 				label: __( 'Label Alignment', 'formgent' ),
@@ -53,9 +40,19 @@ const controls = {
 					},
 				],
 			},
-			name: {
-				type: 'text',
-				label: __( 'Field Name', 'formgent' ),
+			style: {
+				type: 'toggle_group',
+				label: __( 'Style', 'formgent' ),
+				options: [
+					{
+						label: __( 'Frame', 'formgent' ),
+						value: 'frame',
+					},
+					{
+						label: __( 'Standard', 'formgent' ),
+						value: 'standard',
+					},
+				],
 			},
 			options: {
 				type: 'repeater',
@@ -70,19 +67,21 @@ const controls = {
 					},
 				},
 			},
-			value: {
-				type: 'default_value',
-				label: __( 'Default Value', 'formgent' ),
+			required: {
+				type: 'switch',
+				label: __( 'Required', 'formgent' ),
 			},
 		},
 	},
+};
+
+const advancedControls = {
 	advanced: {
 		type: 'panel',
-		label: __( 'FormGent Advanced', 'formgent' ),
 		children: {
 			options: {
 				type: 'repeater',
-				label: __( 'Values', 'formgent' ),
+				label: __( 'Options value', 'formgent' ),
 				label_key: 'label',
 				show_actions: false,
 				onChange: onChangeChoiceOptions,
@@ -93,8 +92,18 @@ const controls = {
 					},
 				},
 			},
+			value: {
+				type: 'default_value',
+				label: __( 'Default Value', 'formgent' ),
+			},
+			name: {
+				type: 'text',
+				label: __( 'Field Name', 'formgent' ),
+			},
 		},
 	},
 };
+
+const controls = { generalControls, advancedControls };
 
 registerBlock( metadata, controls, Edit, 'smiley', exampleAttributes );

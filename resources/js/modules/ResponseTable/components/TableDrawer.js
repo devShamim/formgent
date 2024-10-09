@@ -1,13 +1,15 @@
 import { AntDropdown, AntTabs } from '@formgent/components';
+import PopUp from '@formgent/components/PopUp';
 import deleteData from '@formgent/helper/deleteData';
 import patchData from '@formgent/helper/patchData';
 import postData from '@formgent/helper/postData';
-import { formatDate } from '@formgent/helper/utils';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import ReactSVG from 'react-inlinesvg';
 import { TableDrawerStyle, TableTabStyle } from './style';
 
 // Icon
+import { formatDate } from '@formgent/helper/utils';
 import alignLeftIcon from '@icon/align-left.svg';
 import alignRightIcon from '@icon/align-right.svg';
 import arrowLeftIcon from '@icon/arrow-left.svg';
@@ -23,31 +25,39 @@ import phoneIcon from '@icon/phone.svg';
 import plusIcon from '@icon/plus.svg';
 import starIcon from '@icon/star.svg';
 import textIcon from '@icon/text.svg';
+import trashAltIcon from '@icon/trash-alt.svg';
 import trashIcon from '@icon/trash.svg';
+import FormDeleteAlert from './FormDeleteAlert';
 
 export default function TableDrawer( props ) {
 	const {
 		response,
 		handleTableDrawer,
-		setSelectedRowKeys,
 		notes,
+		handleResponseNotes,
 		addResponseNotes,
 		updateResponseNotes,
 		deleteResponseNotes,
-		setTableDrawer,
+		handleDrawerClose,
 		single_response_pagination,
-		handleDelete,
+		handleActivateDeleteFormModal,
 		handleStarred,
 		handleRead,
 		handleDownload,
-		downloadItems,
 		dateFormatOptions,
+		drawerLoading,
+		setDrawerLoading,
 	} = props;
 
+	const [ activeDrawer, setActiveDrawer ] = useState( '' );
+	const [ activeNav, setActiveNav ] = useState( '' );
 	const [ activeDrawerTab, setActiveDrawerTab ] = useState( 'answers' );
 	const [ enableSubmissionInput, setEnableSubmissionInput ] =
 		useState( false );
 	const [ currentNote, setCurrentNote ] = useState( '' );
+	const [ currentNoteID, setCurrentNoteID ] = useState( [] );
+	const [ isNoteDeleting, setIsNoteDeleting ] = useState( '' );
+	const [ deleteModalOpen, setDeleteModalOpen ] = useState( false );
 
 	// Drawer Tab Items
 	const drawerTabItems = [
@@ -123,7 +133,7 @@ export default function TableDrawer( props ) {
 
 		if ( createNote ) {
 			addResponseNotes( createNote );
-			handleTableDrawer( response.id );
+			handleResponseNotes( response.id );
 		}
 	}
 
@@ -141,34 +151,60 @@ export default function TableDrawer( props ) {
 		}
 	}
 
-	async function handleNoteDelete( id ) {
-		const deleteNote = await deleteData(
-			`admin/responses/notes/${ Number( id ) }`,
-			{
-				response_id: Number( response.id ),
-			}
-		);
-
-		if ( deleteNote ) {
-			deleteResponseNotes( id );
-			handleTableDrawer( response.id );
+	async function handleNoteDelete() {
+		// Check before setting the state to avoid redundant calls
+		if ( isNoteDeleting ) {
+			return;
 		}
+
+		setIsNoteDeleting( true );
+
+		try {
+			const deleteNote = await deleteData(
+				`admin/responses/notes/${ Number( currentNoteID ) }`,
+				{
+					response_id: Number( response.id ),
+				}
+			);
+
+			if ( deleteNote ) {
+				deleteResponseNotes( currentNoteID );
+				handleTableDrawer( response.id );
+			}
+		} catch ( error ) {
+			console.error( 'Error deleting note:', error );
+		} finally {
+			// Ensure these states are reset regardless of success or error
+			setIsNoteDeleting( false );
+			setDeleteModalOpen( false );
+		}
+	}
+
+	function handleActivateNoteDeleteAlert() {
+		setDeleteModalOpen( true );
+	}
+	function handleCancelNoteDeleteAlert() {
+		setDeleteModalOpen( false );
+		setIsNoteDeleting( false );
 	}
 
 	// handleSelectItems
 	function handleSelectItems( { key } ) {
 		const selectFunctions = {
 			star: () => {
+				setActiveNav( '' );
 				handleStarred(
 					response.id,
 					response.is_starred === '1' ? '1' : '0'
 				);
 			},
 			'read-unread': () => {
+				setActiveNav( '' );
 				handleRead( response.id, response.is_read === '1' ? '1' : '0' );
 			},
 			delete: () => {
-				handleDelete( [ response.id ] );
+				setActiveNav( '' );
+				handleActivateDeleteFormModal( [ response.id ] );
 			},
 		};
 
@@ -178,6 +214,7 @@ export default function TableDrawer( props ) {
 
 	// handleSelectItems
 	function handleSelectItemsNote( { key }, id, value ) {
+		setCurrentNoteID( id );
 		const selectFunctionsNote = {
 			edit: () => {
 				setEnableSubmissionInput( id );
@@ -185,7 +222,7 @@ export default function TableDrawer( props ) {
 				updateResponseNotes( id, value );
 			},
 			delete: () => {
-				handleNoteDelete( id );
+				handleActivateNoteDeleteAlert();
 			},
 		};
 
@@ -213,6 +250,7 @@ export default function TableDrawer( props ) {
 
 	async function handleNoteFormSubmit( e ) {
 		e.preventDefault();
+		setDrawerLoading( true );
 		const status = enableSubmissionInput === 'create' ? 'create' : 'edit';
 
 		if ( status === 'create' ) {
@@ -226,71 +264,101 @@ export default function TableDrawer( props ) {
 		}
 	}
 
+	useEffect( () => {
+		if ( notes ) {
+			setDrawerLoading( false );
+			setIsNoteDeleting( false );
+		}
+	}, [ notes ] );
+
 	return (
 		<TableDrawerStyle className="response-table__drawer">
 			<div className="response-table__drawer__header">
 				<div className="response-table__drawer__header__response">
 					<div className="response-table__drawer__header__response__btns">
-						<button
-							className={ `response-table__drawer__header__response__btn ${
-								single_response_pagination.current_page <= 1
-									? 'disabled'
-									: ''
-							}` }
-							onClick={ () => {
-								handleTableDrawer( response.id, 'prev' );
-							} }
-						>
-							<ReactSVG
-								width="14"
-								height="14"
-								src={ arrowLeftIcon }
+						{ drawerLoading && activeNav === 'prev' ? (
+							<button
+								className={ `response-table__drawer__header__response__btn formgent-loading ${
+									single_response_pagination?.current_page <=
+									1
+										? 'disabled'
+										: ''
+								}` }
+								onClick={ () => {
+									handleTableDrawer( response.id, 'prev' );
+									setActiveDrawer( response.id );
+									setActiveNav( 'prev' );
+								} }
 							/>
-						</button>
-						<button
-							className={ `response-table__drawer__header__response__btn ${
-								single_response_pagination.current_page ===
-								single_response_pagination.total_pages
-									? 'disabled'
-									: ''
-							}` }
-							onClick={ () => {
-								handleTableDrawer( response.id, 'next' );
-							} }
-						>
-							<ReactSVG
-								width="14"
-								height="14"
-								src={ arrowRightIcon }
+						) : (
+							<button
+								className={ `response-table__drawer__header__response__btn ${
+									single_response_pagination?.current_page <=
+									1
+										? 'disabled'
+										: ''
+								}` }
+								onClick={ () => {
+									handleTableDrawer( response.id, 'prev' );
+									setActiveDrawer( response.id );
+									setActiveNav( 'prev' );
+								} }
+							>
+								<ReactSVG
+									width="14"
+									height="14"
+									src={ arrowLeftIcon }
+								/>
+							</button>
+						) }
+						{ drawerLoading && activeNav === 'next' ? (
+							<button
+								className={ `response-table__drawer__header__response__btn formgent-loading ${
+									single_response_pagination?.current_page ===
+									single_response_pagination?.total_pages
+										? 'disabled'
+										: ''
+								}` }
+								onClick={ () => {
+									handleTableDrawer( response.id, 'next' );
+									setActiveDrawer( response.id );
+									setActiveNav( 'next' );
+								} }
 							/>
-						</button>
+						) : (
+							<button
+								className={ `response-table__drawer__header__response__btn ${
+									single_response_pagination?.current_page ===
+									single_response_pagination?.total_pages
+										? 'disabled'
+										: ''
+								}` }
+								onClick={ () => {
+									handleTableDrawer( response.id, 'next' );
+									setActiveDrawer( response.id );
+									setActiveNav( 'next' );
+								} }
+							>
+								<ReactSVG
+									width="14"
+									height="14"
+									src={ arrowRightIcon }
+								/>
+							</button>
+						) }
 					</div>
-					<span className="">
-						{ single_response_pagination.current_page } of{ ' ' }
-						{ single_response_pagination.total_pages } Responses
+					<span
+						className={
+							! single_response_pagination
+								? 'formgent-loading'
+								: ''
+						}
+					>
+						{ single_response_pagination?.current_page } of{ ' ' }
+						{ single_response_pagination?.total_pages } Responses
 					</span>
 				</div>
 				<div className="response-table__drawer__header__action">
-					<AntDropdown
-						menu={ {
-							items: downloadItems,
-							onClick: handleDownload,
-						} }
-						overlayStyle={ { width: 210 } }
-						placement="bottomRight"
-					>
-						<button
-							className="response-table__drawer__header__action__btn"
-							onClick={ ( e ) => e.preventDefault() }
-						>
-							<ReactSVG
-								width="14"
-								height="14"
-								src={ downloadIcon }
-							/>
-						</button>
-					</AntDropdown>
-
 					<div className="response-table__drawer__header__dropdown">
 						<AntDropdown
 							menu={ {
@@ -316,15 +384,18 @@ export default function TableDrawer( props ) {
 					<button
 						className="response-table__drawer__close"
 						onClick={ () => {
-							setTableDrawer( false );
-							setSelectedRowKeys( [] );
+							handleDrawerClose();
 						} }
 					>
 						<ReactSVG width="14" height="14" src={ closeIcon } />
 					</button>
 				</div>
 			</div>
-			<div className="response-table__drawer__content">
+			<div
+				className={ `response-table__drawer__content ${
+					drawerLoading ? 'formgent-loading' : ''
+				} ` }
+			>
 				<div className="response-table__drawer__tab">
 					<TableTabStyle>
 						<AntTabs
@@ -336,7 +407,7 @@ export default function TableDrawer( props ) {
 					{ activeDrawerTab === 'answers' && (
 						<div className="response-table__drawer__tab__content">
 							<div className="response-table__drawer__tab__wrapper">
-								{ response.answers.map( ( answer, index ) => {
+								{ response?.answers.map( ( answer, index ) => {
 									return (
 										<div
 											key={ index }
@@ -353,11 +424,39 @@ export default function TableDrawer( props ) {
 											</div>
 											<div className="response-table__drawer__tab__item__content">
 												<h5 className="response-table__drawer__tab__item__title">
-													{ answer.field_name }
+													{ answer.label ||
+														answer.field_name }
 												</h5>
-												<p className="response-table__drawer__tab__item__desc">
-													{ answer.value }
-												</p>
+												{ answer.children.length ? (
+													answer.children.map(
+														( child, index ) => {
+															return (
+																<div
+																	key={
+																		index
+																	}
+																	className="response-table__drawer__tab__item__desc__child"
+																>
+																	<span className="response-table__drawer__tab__item__desc__key">
+																		{
+																			child.label
+																		}
+																	</span>{ ' ' }
+																	:{ ' ' }
+																	<span className="response-table__drawer__tab__item__desc__value">
+																		{
+																			child.value
+																		}
+																	</span>
+																</div>
+															);
+														}
+													)
+												) : (
+													<p className="response-table__drawer__tab__item__desc">
+														{ answer.value }
+													</p>
+												) }
 											</div>
 										</div>
 									);
@@ -435,11 +534,12 @@ export default function TableDrawer( props ) {
 													>
 														<div className="response-table__drawer__tab__submission__content__wrapper">
 															<span className="response-table__drawer__tab__submission__content__published-date">
-																{ formatDate(
-																	'en-US',
-																	note.created_at,
-																	dateFormatOptions
-																) }
+																{ note.created_at &&
+																	formatDate(
+																		'en-US',
+																		note.created_at,
+																		dateFormatOptions
+																	) }
 															</span>
 															<p className="response-table__drawer__tab__submission__content__text">
 																{ note.note }
@@ -511,7 +611,7 @@ export default function TableDrawer( props ) {
 										Username
 									</span>
 									<span className="response-table__drawer__tab__info__value">
-										{ response.username || 'Default User' }
+										{ response.username || '' }
 									</span>
 								</div>
 								<div className="response-table__drawer__tab__info__single">
@@ -519,8 +619,7 @@ export default function TableDrawer( props ) {
 										User Email
 									</span>
 									<span className="response-table__drawer__tab__info__value">
-										{ response.user_email ||
-											'Default Mail' }
+										{ response.user_email || '' }
 									</span>
 								</div>
 								<div className="response-table__drawer__tab__info__single">
@@ -546,14 +645,18 @@ export default function TableDrawer( props ) {
 										Browser
 									</span>
 									<span className="response-table__drawer__tab__info__value">
+										<span>{ response.browser || '' }</span>
 										<span>
-											{ response.browser ||
-												'Default Browser' }
+											{ response.browser_version || '' }
 										</span>
-										<span>
-											{ response.browser_version ||
-												'Default Version' }
-										</span>
+									</span>
+								</div>
+								<div className="response-table__drawer__tab__info__single">
+									<span className="response-table__drawer__tab__info__title">
+										IP Address
+									</span>
+									<span className="response-table__drawer__tab__info__value">
+										{ response.ip || '' }
 									</span>
 								</div>
 								<div className="response-table__drawer__tab__info__single">
@@ -561,7 +664,7 @@ export default function TableDrawer( props ) {
 										Operating System
 									</span>
 									<span className="response-table__drawer__tab__info__value">
-										{ response.device || 'Default Device' }
+										{ response.device || '' }
 									</span>
 								</div>
 							</div>
@@ -569,6 +672,40 @@ export default function TableDrawer( props ) {
 					) }
 				</div>
 			</div>
+
+			{ deleteModalOpen && (
+				<PopUp
+					open={ deleteModalOpen }
+					title={
+						<>
+							<span className="formgent-popup-title-icon">
+								<ReactSVG
+									src={ trashAltIcon }
+									width="24"
+									height="24"
+								/>
+							</span>
+							{ __( 'Delete Note?', 'formgent' ) }
+						</>
+					}
+					onCancel={ handleCancelNoteDeleteAlert }
+					onSubmit={ handleNoteDelete }
+					hasCancelButton
+					hasSubmitButton
+					isActiveSubmit
+					submitText={
+						isNoteDeleting
+							? __( 'Deleting', 'formgent' )
+							: __( 'Delete', 'formgent' )
+					}
+					className="formgent-form-delete-alert"
+				>
+					<FormDeleteAlert
+						formTitle={ [ currentNoteID ] }
+						type="note"
+					/>
+				</PopUp>
+			) }
 		</TableDrawerStyle>
 	);
 }

@@ -9,8 +9,6 @@ import { __ } from '@wordpress/i18n';
 import './editor.scss';
 
 export default function Edit( { attributes, setAttributes } ) {
-	//const phoneNumberParts = attributes.value.split( ')' );
-	console.log( attributes );
 	return (
 		<div className="formgent-editor-block-list__single">
 			<div
@@ -36,22 +34,25 @@ export default function Edit( { attributes, setAttributes } ) {
 				<div className="formgent-editor-block-list__single__dialer">
 					<span className="formgent-editor-block-list__single__dialer__flag">
 						<img
-							src={ `${ formgent_blocks.assetUrl }/images/flags/bd.png` }
+							src={ `${ formgent_blocks.assetUrl }/images/us.webp` }
 							alt="Formgent Flag"
 						/>
 						<ReactSVG src={ angleDown } />
 					</span>
 					<div className="formgent-editor-block-list__single__dialer__content">
-						<span className="formgent-editor-block-list__single__dialer__code">
-							(+880)
-						</span>
+						{ attributes?.country_code && (
+							<span className="formgent-editor-block-list__single__dialer__code">
+								+1
+							</span>
+						) }
 						<input
-							className="formgent-editor-block-list__single__dialer__input"
+							className="formgent-editor-block-list__single__input"
 							type="text"
 							name={ attributes.name }
 							placeholder={ attributes.placeholder }
 							value={ attributes.value.value_two }
 							onChange={ () => {} }
+							disabled
 						/>
 					</div>
 				</div>

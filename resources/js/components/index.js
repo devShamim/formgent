@@ -2,12 +2,15 @@ import { registerModule } from '@formgent/modules/helpers';
 import { Col, Form, Row } from 'antd';
 import AntButton from './Button';
 import AntCheckbox from './Checkbox';
+import AntDrawer from './Drawer';
 import AntDropdown from './Dropdown';
 import AntForm from './Form.js';
 import AntInput from './Input';
 import AntMenu from './Menu';
 import AntModal from './Modal';
+import AntPagination from './Pagination';
 import AntPopover from './Popover';
+import AntRangePicker from './RangePicker';
 import AntSelect from './Select';
 import AntSkeleton from './Skeleton';
 import AntSpin from './Spin';
@@ -16,9 +19,7 @@ import AntTable from './Table';
 import AntTabs from './Tabs';
 import AntTextArea from './TextArea';
 import AntTooltip from './Tooltip';
-import AntRangePicker from './RangePicker';
-import AntPagination from './Pagination';
-
+import AntProgress from './Progress';
 /**
  * Global components for admin and user
  */
@@ -28,6 +29,7 @@ registerModule( 'components', {
 	AntInput,
 	AntTextArea,
 	AntModal,
+	AntDrawer,
 	AntForm,
 	AntTabs,
 	AntTable,
@@ -44,6 +46,7 @@ registerModule( 'components', {
 	AntSelect,
 	AntRangePicker,
 	AntPagination,
+	AntProgress,
 } );
 
 /**
@@ -51,17 +54,19 @@ registerModule( 'components', {
  */
 export {
 	AntButton,
+	AntDrawer,
 	AntDropdown,
 	AntForm,
 	AntInput,
 	AntMenu,
 	AntModal,
+	AntPagination,
+	AntRangePicker,
 	AntSelect,
 	AntSwitch,
 	AntTable,
 	AntTabs,
 	AntTextArea,
 	Form,
-	AntRangePicker,
-	AntPagination,
+	AntProgress,
 };

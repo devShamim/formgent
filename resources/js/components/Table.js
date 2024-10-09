@@ -3,7 +3,7 @@ export default function AntTable( props ) {
 	const { componentTokens = {}, ...rest } = props;
 	const defaultTokens = {
 		Table: {
-			//borderColor: 'red'
+			fontFamily: 'Inter',
 		},
 	};
 

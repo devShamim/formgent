@@ -297,15 +297,15 @@ const TableStyle = Styled.div`
             position: absolute;
             right: 0;
             top: calc(100% + 4px);
-            width: 100px;
-            line-height: 30px;
-            padding: 0 10px;
+            width: 170px;
+            padding: 10px;
             background: var(--formgent-color-dark);
             border-radius: 6px;
             font-size: 12px;
             font-weight: 500;
             color: #fff;
             display: none;
+            text-align: left;
         }
         &:after{
             content: "";
@@ -369,6 +369,8 @@ const TableStyle = Styled.div`
         .formgent-form-shortcode__copied{
             svg{
                 left: 73px;
+                width: 14px;
+                height: 14px;
                 path{
                     stroke: inherit;
                     fill: var(--formgent-color-gray-500);
@@ -380,7 +382,8 @@ const TableStyle = Styled.div`
             position: relative;
             svg{
                 left: 50%;
-                margin-left: -6px;
+                margin-left: 6px;
+                margin-top: 0;
                 animation: formgent_spinner 900ms infinite linear forwards;
             }
         }

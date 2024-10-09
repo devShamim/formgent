@@ -15,6 +15,7 @@ export default function AntInput( props ) {
 		colorBorder: 'transparent',
 		borderRadius: 12,
 		lineWidth: 2,
+		fontFamily: 'Inter',
 	};
 	return (
 		<InputStyle>

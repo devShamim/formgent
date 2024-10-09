@@ -15,6 +15,6 @@ trait MethodResolver {
     }
 
     protected function get_validation_rules(): array {
-        return ['string', 'min:1', 'max:250'];
+        return ['string', 'max:250'];
     }
 }

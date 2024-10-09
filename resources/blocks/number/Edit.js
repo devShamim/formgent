@@ -34,6 +34,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					className="formgent-editor-block-list__single__input"
 					type="number"
 					name={ attributes.name }
+					placeholder={ attributes.placeholder }
 					value={ attributes.value }
 					onChange={ () => {} }
 				/>

@@ -44,6 +44,7 @@ class DateTime extends PHPDateTime {
                 $value *= 365 * static::HOURS_PER_DAY * static::MINUTES_PER_HOUR * static::SECONDS_PER_MINUTE;
                 break;
             default:
+                //phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
                 throw new Exception( "Invalid unit for real timestamp add/sub: '$unit'" );
         }
         if ( 'sub' === $type ) {

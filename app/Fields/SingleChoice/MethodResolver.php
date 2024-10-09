@@ -35,7 +35,5 @@ trait MethodResolver {
                 $field['name'] => implode( '|', $rules ),
             ]
         );
-            
-        static::throw_validator_errors( $validator );
     }
 }

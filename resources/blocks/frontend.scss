@@ -5,11 +5,24 @@
 	display: flex;
 	gap: 10px;
 	flex-wrap: wrap;
+	&:last-child {
+		margin-bottom: 0;
+	}
 	.formgent-editor-block-list__single__wrapper {
 		display: flex;
 		gap: 10px;
 		flex: 1;
 		flex-direction: column;
+		.formgent-field-error,
+		.formgent-url-error {
+			font-size: 14px;
+		}
+	}
+	.formgent-editor-block-list__single__bottom {
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+		justify-content: space-between;
 	}
 	.formgent-editor-block-list__single__box {
 		display: flex;
@@ -21,6 +34,116 @@
 			gap: 6px;
 			align-items: center;
 		}
+		.formgent-editor-block-list__single__box__choice {
+			position: relative;
+			display: flex;
+			align-items: center;
+			max-width: 180px;
+			border: none;
+			background: transparent;
+			box-shadow: none;
+			color: #4d5761;
+			font-family: "Inter", sans-serif;
+			transition: background ease 0.3s;
+			&:hover {
+				background-color: none;
+			}
+			.formgent-editor-block-list__single__input {
+				display: none;
+			}
+			.formgent-editor-block-list__single__label {
+				display: flex;
+				flex-wrap: wrap;
+				box-sizing: border-box;
+				width: 100%;
+				min-height: 30px;
+				padding: 0 0 0 32px;
+				font-size: 15px;
+				font-weight: 500;
+				line-height: 26px;
+				border-radius: 8px;
+				cursor: pointer;
+			}
+			.formgent-editor-block-list__single__box__choice__delete {
+				width: 20px;
+				height: 20px;
+				min-width: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0;
+				margin: 0;
+				border: none;
+				border-radius: 100%;
+				background: #a1a9b2;
+				position: absolute;
+				right: -10px;
+				top: 50%;
+				transform: translateY(-50%);
+				cursor: pointer;
+				opacity: 0;
+				visibility: hidden;
+				transition: all 0.3s ease;
+				svg path {
+					stroke: #fff;
+				}
+				&:hover {
+					background: var(--formgent-color-primary);
+				}
+			}
+			&.formgent-editor-block-list__single__box__choice--frame {
+				box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+				.formgent-editor-block-list__single__label {
+					border: 1px solid #d2d6db;
+					padding: 6px 16px 6px 46px;
+					min-height: 40px;
+				}
+				&:hover {
+					background-color: #f9fafb;
+				}
+			}
+			&:hover {
+				.formgent-editor-block-list__single__box__choice__delete {
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+			&.disable {
+				.formgent-editor-block-list__single__box__choice__delete {
+					opacity: 0.5;
+					pointer-events: none;
+				}
+			}
+		}
+
+		.formgent-editor-block-list__single__box__add {
+			display: flex;
+			gap: 6px;
+			align-items: center;
+			justify-content: flex-start;
+			padding: 0;
+			margin: 8px 0 0;
+			border: none;
+			color: #007cba;
+			font-size: 14px;
+			font-weight: 500;
+			background: transparent;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			.formgent-editor-block-list__single__box__add__icon {
+				width: 20px;
+				height: 20px;
+				min-width: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: #007cba;
+				border-radius: 100%;
+				svg path {
+					stroke: #fff;
+				}
+			}
+		}
 	}
 	.formgent-editor-block-list__single__input {
 		.formgent-editor-block-list__single__input--radio,
@@ -31,12 +154,12 @@
 	.formgent-editor-block-list__single__label-container {
 		display: flex;
 		gap: 6px;
+		width: 100px;
 		font-size: 14px;
 		color: var(--formgent-color-dark);
 		line-height: 16px;
 		&.formgent-label-align-left {
 			order: -1;
-			//min-width: 100px;
 			& + .formgent-editor-block-list__single__wrapper {
 				.formgent-editor-block-list__single__input {
 					width: 100%;
@@ -46,7 +169,6 @@
 		}
 		&.formgent-label-align-right {
 			order: 1;
-			//min-width: 100px;
 			text-align: right;
 			~ .formgent-editor-block-list__single__wrapper {
 				justify-content: flex-end;
@@ -69,6 +191,11 @@
 			flex: 0 0 100%;
 		}
 	}
+	.formgent-editor-block-list__single__desc {
+		font-size: 14px;
+		color: #747c89;
+	}
+	.formgent-editor-block-list__single__count,
 	.formgent-editor-block-list__single__sub-label {
 		font-size: 12px;
 		color: #747c89;
@@ -81,15 +208,43 @@
 	&.formgent-editor-block-align-left {
 		flex-wrap: nowrap;
 	}
+	&.formgent-editor-block-list__single--button {
+		&.formgent-editor-block-align-left {
+			justify-content: flex-start;
+		}
+		&.formgent-editor-block-align-right {
+			justify-content: flex-end;
+		}
+		&.formgent-editor-block-align-middle {
+			justify-content: center;
+		}
+		&.formgent-editor-block-align-block {
+			.formgent-btn {
+				display: flex;
+				width: 100%;
+				justify-content: center;
+			}
+		}
+	}
 }
+
+.formgent-editor-block-list__single_sibling {
+	margin-top: 1.2rem;
+}
+
 .formgent-editor-block-list__single__label__required {
 	color: var(--formgent-color-danger);
 }
-// .formgent-editor-block-list__single--csr {
-// 	margin-bottom: 30px;
-// }
 .formgent-editor-block-list__single__wrapper--gdpr {
 	position: relative;
+	.formgent-editor-block-list__single__label-container {
+		width: 100%;
+	}
+	.formgent-editor-block-list__single__sub-label {
+		font-size: 14px;
+		line-height: 22px;
+		color: #4d5761;
+	}
 	.formgent-editor-block-list__single__input--checkbox {
 		position: absolute;
 		visibility: hidden;
@@ -197,28 +352,134 @@
 }
 
 .formgent-editor-block-list__single__wrapper {
-	&.formgent-editor-block-list__single__phone {
-		flex-direction: row;
+	.formgent-editor-block-list__single__phone {
+		display: flex;
+		align-items: center;
+	}
+	&.formgent-editor-block-list__single__wrapper--single-choice {
+		.formgent-editor-block-list__single__input--radio {
+			~ label {
+				position: relative;
+				padding: 0 16px;
+				&:before {
+					content: "";
+					position: absolute;
+					top: 4px;
+					left: 0;
+					width: 18px;
+					height: 18px;
+					border: 2px solid #d2d6db;
+					border-radius: 50%;
+					box-sizing: border-box;
+				}
+				&:after {
+					content: "";
+					position: absolute;
+					top: 8px;
+					left: 4px;
+					width: 10px;
+					height: 10px;
+					border-radius: 50%;
+					background-color: var(--formgent-color-primary);
+					opacity: 0;
+				}
+			}
+			&:checked {
+				+ label {
+					border-color: var(--formgent-color-primary);
+					&:before {
+						border-color: var(--formgent-color-primary);
+					}
+					&:after {
+						opacity: 1;
+					}
+				}
+			}
+		}
+		.formgent-editor-block-list__single__box__choice--frame {
+			.formgent-editor-block-list__single__input--radio ~ label {
+				&:before {
+					top: 10px;
+					left: 16px;
+				}
+				&:after {
+					top: 14px;
+					left: 20px;
+				}
+			}
+		}
+	}
+	&.formgent-editor-block-list__single__wrapper--multi-choice {
+		position: relative;
+		.formgent-editor-block-list__single__checkbox {
+			position: absolute;
+			left: 0;
+			top: 2px;
+			width: 20px;
+			height: 20px;
+			border: 1px solid #d1d1d7;
+			border-radius: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-sizing: border-box;
+			transition: 0.3s ease;
+			svg {
+				width: 14px;
+				height: 14px;
+				visibility: hidden;
+				opacity: 0;
+				transition: 0.3s ease;
+			}
+		}
+		.formgent-editor-block-list__single__input--checkbox:checked + label {
+			border-color: var(--formgent-color-primary);
+			.formgent-editor-block-list__single__checkbox {
+				background-color: var(--formgent-color-primary);
+				border-color: var(--formgent-color-primary);
+				svg {
+					visibility: visible;
+					opacity: 1;
+					fill: var(--formgent-color-primary);
+					stroke: #fff;
+				}
+			}
+		}
+		.formgent-editor-block-list__single__box__choice--frame {
+			.formgent-editor-block-list__single__checkbox {
+				top: 10px;
+				left: 16px;
+			}
+		}
 	}
 }
 
 input.formgent-editor-block-list__single__input,
-textarea.formgent-editor-block-list__single__input {
+textarea.formgent-editor-block-list__single__input,
+.formgent-editor-block-list__single__input--select {
+	display: flex;
+	align-items: center;
+	width: 100%;
 	height: 40px;
 	padding: 0 16px;
 	border: 1px solid #d2d6db;
 	border-radius: 8px;
-	font-size: 14px;
 	background: transparent;
 	box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 	color: #4d5761;
 	font-family: "Inter", sans-serif;
 	box-sizing: border-box;
-	width: 100%;
+	&.formgent-danger {
+		border-color: var(--formgent-color-danger);
+	}
+	&.formgent-editor-block-list__single__input--radio,
 	&.formgent-editor-block-list__single__input--checkbox {
 		width: 15px;
 		height: 15px;
 		border-radius: 4px;
+	}
+	&.formgent-editor-block-list__single__input--checkbox:disabled + label {
+		opacity: 0.5;
 	}
 	&.formgent-editor-block-list__single__input--textarea {
 		padding: 10px;
@@ -227,25 +488,41 @@ textarea.formgent-editor-block-list__single__input {
 		resize: none;
 		padding: 9px 16px;
 	}
+	&.formgent-editor-block-list__single__input--select {
+		appearance: none;
+		border-radius: 8px;
+		padding: 0 16px;
+		font-family: "Inter", sans-serif;
+		color: var(--formgent-color-text);
+		border-color: var(--formgent-color-border-light);
+		background-image: url("../svg/icons/chevron-down.svg");
+		background-repeat: no-repeat;
+		background-size: 16px;
+		background-position: center right 16px;
+		&.ts-hidden-accessible {
+			display: none;
+		}
+	}
 }
 
 .formgent-editor-block-list__single__dialer {
 	display: flex;
 	align-items: center;
+	gap: 4px;
 }
 .formgent-editor-block-list__single__dialer__flag {
 	display: flex;
 	align-items: center;
 	border-radius: 8px;
 	padding: 6px;
-	margin-right: 10px;
-	height: 40px;
+	height: 38px;
 	padding: 0 10px;
-	background-color: var(--formgent-color-white);
 	border: 1px solid var(--formgent-color-border-light);
-
+	box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 	img {
-		max-width: 30px;
+		width: 20px;
+		height: 15px;
+		border-radius: 3px;
 	}
 	svg {
 		width: 16px;
@@ -255,23 +532,42 @@ textarea.formgent-editor-block-list__single__input {
 }
 
 .formgent-editor-block-list__single__dialer__content {
-	padding: 4px 12px;
-	border-radius: 8px;
-	border: 1px solid var(--formgent-color-border-light);
-	background-color: var(--formgent-color-white);
+	flex: 1;
+	display: flex;
+	align-items: center;
+	position: relative;
+	.formgent-editor-block-list__single__dialer__code {
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--formgent-color-gray-600);
+		position: absolute;
+		left: 16px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	.formgent-editor-block-list__single__dialer__code
+		+ .formgent-editor-block-list__single__input {
+		padding-left: 40px;
+	}
+	.just-validate-error-label {
+		flex: 0 0 100%;
+		margin-top: 5px;
+	}
 }
 
 input.formgent-editor-block-list__single__dialer__input {
 	border: 0 none;
+	flex: 1;
+	background: none;
 	&:focus {
 		outline: none;
 		box-shadow: 0 0;
 	}
 }
 
-.formgent-form:not(.elementor-widget-formgent_forms .formgent-form):not(
-		.elementor-shortcode .formgent-form
-	)
+.formgent-form:not(.formgent-shortcode):not(
+		.elementor-widget-formgent_forms .formgent-form
+	):not(.elementor-shortcode .formgent-form)
 	form.wp-block-post-content {
 	padding: 40px;
 	border-radius: 16px;
@@ -279,24 +575,54 @@ input.formgent-editor-block-list__single__dialer__input {
 	box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 
-.formgent-form {
+.formgent-form,
+.wp-block-formgent-submit-button {
 	.formgent-btn {
-		padding: 15px 32px;
+		padding: 13px 32px;
 		border-radius: 10px;
 		box-shadow:
 			0px 1px 3px 0px rgba(16, 24, 40, 0.1),
 			0px 1px 2px 0px rgba(16, 24, 40, 0.06);
 		background: var(--formgent-color-dark);
+		border: 2px solid var(--formgent-color-dark);
 		font-size: 16px;
-		font-weight: 600;
+		font-weight: 500;
 		color: #fff;
 		transition: 0.3s ease;
-		border: 0 none;
 		outline: 0;
 		cursor: pointer;
 		font-family: "Inter", sans-serif;
+		display: flex;
+		align-items: center;
+		gap: 8px;
 		&:hover {
 			background: #2e394b;
+		}
+		&.formgent-btn-default {
+			background: var(--formgent-color-dark);
+			border-color: var(--formgent-color-dark);
+		}
+		&.formgent-btn-solid {
+			background: var(--formgent-btn-bg-color);
+			border-color: var(--formgent-btn-bg-color);
+			color: var(--formgent-btn-text-color);
+		}
+		&.formgent-btn-bordered {
+			border-radius: 10px;
+			border-color: var(--formgent-btn-border-color);
+			background: transparent;
+			color: var(--formgent-btn-text-color);
+		}
+		sub {
+			position: relative;
+			top: 5px;
+		}
+		sup {
+			position: relative;
+			top: -5px;
+		}
+		img {
+			max-width: 50px;
 		}
 	}
 }
@@ -318,5 +644,187 @@ input.formgent-editor-block-list__single__dialer__input {
 	background-color: #d2f9e1;
 	&:empty {
 		display: none;
+	}
+}
+
+.ts-wrapper {
+	padding: 0;
+	flex-wrap: wrap;
+	cursor: pointer;
+	.ts-control {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 40px;
+		position: relative;
+
+		.item {
+			width: 100%;
+			padding: 0 16px;
+			font-size: 15px;
+			font-weight: 500;
+			line-height: 26px;
+			margin-top: -2px;
+			box-sizing: border-box;
+			~ input {
+				display: none;
+			}
+		}
+		input {
+			width: 100%;
+			margin: 0;
+			height: 36px;
+			padding: 0 16px;
+			font-size: 15px;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			border: none;
+			outline: none;
+			border-radius: 8px;
+			background: transparent;
+			box-sizing: border-box;
+			transition: all 0.3s ease;
+		}
+		.icon {
+			position: absolute;
+			right: 16px;
+			top: 50%;
+			transform: translateY(-50%);
+			cursor: pointer;
+		}
+	}
+	.ts-dropdown {
+		flex: 0 0 100%;
+		z-index: 1;
+		.option {
+			font-size: 15px;
+			font-weight: 400;
+			line-height: 26px;
+			padding: 6px 16px;
+			background-color: #fff;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			&:hover {
+				background-color: #f9fafb;
+			}
+		}
+	}
+}
+.dropdown-active {
+	.ts-control {
+		.item ~ input {
+			display: block;
+			background: #fff;
+		}
+	}
+}
+
+.formgent-editor-block-list__single__dialer__content {
+	width: 100%;
+	.iti {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 4px;
+	}
+	.iti__country-container {
+		position: static;
+		border-radius: 8px;
+		border: 1px solid var(--formgent-color-gray-300);
+		box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+		height: 40px;
+		.iti__selected-country-primary {
+			padding: 12px;
+			.iti__arrow {
+				display: inline-block;
+				width: 6px;
+				height: 6px;
+				background: transparent;
+				text-indent: -9999px;
+				border-top: 1px solid var(--formgent-color-gray);
+				border-left: 1px solid var(--formgent-color-gray);
+				border-right: 0 none;
+				border-bottom: 0 none;
+				transition: all 250ms ease-in-out;
+				text-decoration: none;
+				color: transparent;
+				transform: rotate(-135deg);
+				position: relative;
+				top: -1px;
+				&:before {
+					display: block;
+					height: 200%;
+					width: 200%;
+					margin-left: -50%;
+					margin-top: -50%;
+					content: "";
+					transform: rotate(45deg);
+				}
+				&.iti__arrow--up {
+					transform: rotate(45deg);
+					top: 2px;
+				}
+			}
+		}
+		.iti__selected-dial-code:empty {
+			display: none;
+		}
+		.iti__selected-dial-code {
+			position: absolute;
+			left: 65px;
+			font-size: 13px;
+			font-weight: 400;
+		}
+		.iti__dropdown-content {
+			padding: 12px;
+			border-radius: 8px;
+			border: 1px solid var(--formgent-color-gray-200);
+			box-shadow: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+			.iti__search-input {
+				border-radius: 10px;
+				border: 1px solid var(--formgent-color-gray-300);
+				height: 40px;
+				padding: 0 14px;
+			}
+			.iti__country-name,
+			.iti__dial-code {
+				font-size: 14px;
+				font-weight: 500;
+			}
+		}
+	}
+	.formgent-editor-block-list__single__input {
+		flex: 1;
+		padding-left: 48px !important;
+		&:not(.formgent-editor-block-list__single__input--country-code) {
+			padding-left: 16px !important;
+		}
+	}
+}
+
+.formgent-has-input-icon {
+	position: relative;
+}
+
+.formgent-input-icon {
+	position: absolute;
+	inset-inline-start: 0;
+	top: 0;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-inline-start: 15px;
+	padding-inline-end: 7px;
+
+	svg path {
+		fill: var(--formgent-color-gray-600);
+	}
+
+	+ input {
+		padding-inline-start: 42px;
 	}
 }

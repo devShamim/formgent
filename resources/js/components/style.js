@@ -4,6 +4,10 @@ const DropdownStyle = Styled.div`
 
 `;
 
+const DrawerStyle = Styled.div`
+
+`;
+
 const SelectStyle = Styled.div`
     width: 196px;
     .ant-select-selection-item {
@@ -418,6 +422,8 @@ const SubmissionFormStyle = Styled.div`
 export {
 	AlertContentStyle,
 	ButtonStyle,
+	DatePickerStyle,
+	DrawerStyle,
 	DropdownStyle,
 	EmptyStyle,
 	FormHeaderStyle,
@@ -426,6 +432,5 @@ export {
 	ModalAlertStyle,
 	SelectStyle,
 	SubmissionFormStyle,
-	DatePickerStyle,
 	TagStyle,
 };

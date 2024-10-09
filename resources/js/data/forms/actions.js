@@ -93,6 +93,26 @@ export const FormActions = {
 		};
 	},
 
+	duplicateFormRequest: () => {
+		return {
+			type: 'DUPLICATE_FORM_REQUEST',
+		};
+	},
+
+	duplicateFormSuccess: ( data ) => {
+		return {
+			type: 'DUPLICATE_FORM_SUCCESS',
+			data,
+		};
+	},
+
+	duplicateFormError: ( error ) => {
+		return {
+			type: 'DUPLICATE_FORM_ERROR',
+			error,
+		};
+	},
+
 	bulkDeleteFormRequest: () => {
 		return {
 			type: 'BULK_DELETE_FORM_REQUEST',

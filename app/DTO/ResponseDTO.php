@@ -5,6 +5,7 @@ namespace FormGent\App\DTO;
 defined( 'ABSPATH' ) || exit;
 
 use FormGent\App\EnumeratedList\ResponseStatus;
+use FormGent\WpMVC\DTO\DTO;
 
 class ResponseDTO extends DTO {
     private int $id;

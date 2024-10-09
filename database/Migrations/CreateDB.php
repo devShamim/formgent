@@ -27,7 +27,7 @@ class CreateDB implements Migration {
         $sql = "CREATE TABLE {$db_prefix}responses (
             `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             `form_id` BIGINT UNSIGNED NOT NULL,
-            `status` VARCHAR(50) NOT NULL DEFAULT 'publish' COMMENT 'value: draft, publish',
+            `status` ENUM('publish', 'draft') NOT NULL DEFAULT 'publish',
             `is_read` TINYINT NOT NULL DEFAULT 0 COMMENT 'value: 0/1',
             `is_completed` TINYINT NOT NULL DEFAULT 0 COMMENT 'value: 0/1',
             `completed_at` TIMESTAMP DEFAULT NULL,
@@ -82,6 +82,25 @@ class CreateDB implements Migration {
             `expired_at` TIMESTAMP NULL,
             PRIMARY KEY (`id`)
         ) {$charset_collate};
+
+        -- -----------------------------------------------------
+        -- Table email_notifications
+        -- -----------------------------------------------------
+        CREATE TABLE {$db_prefix}email_notifications (
+            `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            `form_id` BIGINT UNSIGNED NOT NULL,
+            `name` VARCHAR(255) NOT NULL,
+            `send_to` VARCHAR(255) NOT NULL,
+            `subject` VARCHAR(255) NOT NULL,
+            `body` LONGTEXT NULL,
+            `cc` VARCHAR(255) NULL,
+            `bcc` VARCHAR(255) NULL,
+            `reply_to` VARCHAR(255) NULL,
+            `status` ENUM('publish', 'draft') NOT NULL DEFAULT 'publish',
+            `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`)
+        ) {$charset_collate};
         ";
 
         dbDelta( $sql );
@@ -97,21 +116,24 @@ class CreateDB implements Migration {
 
         // Define constraints
         $tables = [
-            'responses'      => [
+            'responses'           => [
                 'form_id' => "{$wpdb->prefix}posts(ID)"
             ],
-            'answers'        => [
+            'answers'             => [
                 'form_id'     => "{$wpdb->prefix}posts(ID)",
                 'response_id' => "{$db_prefix}responses(id)",
                 'parent_id'   => "{$db_prefix}answers(id)"
             ],
-            'notes'          => [
+            'notes'               => [
                 'response_id' => "{$db_prefix}responses(id)"
             ],
-            'response_token' => [
+            'response_token'      => [
                 'form_id'     => "{$wpdb->prefix}posts(ID)",
                 'response_id' => "{$db_prefix}responses(id)"
-            ]
+            ],
+            'email_notifications' => [
+                'form_id' => "{$wpdb->prefix}posts(ID)"
+            ],
         ];
 
         foreach ( $tables as $table => $constraints ) {
@@ -124,22 +146,23 @@ class CreateDB implements Migration {
 
         // Check if the table exists
         $table_name = $db_prefix . $table;
-        //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $columns = $wpdb->get_col( "DESCRIBE {$table_name}", 0 );
+        //phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnquotedComplexPlaceholder, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching	
+        $columns = $wpdb->get_col( $wpdb->prepare( "DESCRIBE %1s", [$table_name] ), 0 );
 
         // Add foreign key constraints if columns exist
         foreach ( $constraints as $column => $reference ) {
             if ( in_array( $column, $columns ) ) {
                 // Check if the constraint already exists
                 $constraint_name = "fk_{$db_prefix}{$table}_{$column}";
-                $result          = $wpdb->get_results(
+                //phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching	
+                $result = $wpdb->get_results(
                     $wpdb->prepare(
                         "SELECT CONSTRAINT_NAME 
                     FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE 
                     WHERE TABLE_SCHEMA = %s 
                     AND TABLE_NAME = %s 
                     AND CONSTRAINT_NAME = %s",
-                        DB_NAME, // Use DB_NAME constant directly
+                        DB_NAME,
                         $table_name,
                         $constraint_name
                     ) 
@@ -147,8 +170,8 @@ class CreateDB implements Migration {
 
                 if ( empty( $result ) ) {
                     // Add foreign key constraint
-                    //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                    $wpdb->query( "ALTER TABLE {$table_name} ADD CONSTRAINT {$constraint_name} FOREIGN KEY ({$column}) REFERENCES {$reference} ON DELETE CASCADE" );
+                    // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnquotedComplexPlaceholder, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                    $wpdb->query( $wpdb->prepare( "ALTER TABLE %1s ADD CONSTRAINT %2s FOREIGN KEY ( %3s ) REFERENCES %4s ON DELETE CASCADE", [ $table_name, $constraint_name, $column, $reference ] ) );
                 }
             }
         }

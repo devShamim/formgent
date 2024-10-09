@@ -29,7 +29,15 @@
 		},
 		"label_alignment": {
 			"type": "string",
-			"default": "left"
+			"default": "top"
+		},
+		"validation": {
+			"type": "boolean",
+			"default": false
+		},
+		"validation_message": {
+			"type": "string",
+			"default": "Please enter a valid URL."
 		},
 		"sub_label": {
 			"type": "string",

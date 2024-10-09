@@ -4,7 +4,7 @@ namespace FormGent\App\BackgroundProcessors;
 
 defined( 'ABSPATH' ) || exit;
 
-use FormGent\App\Packages\BackgroundProcessor\WpBackgroundProcess;
+use FormGent\WP_Background_Process as WpBackgroundProcess;
 
 abstract class CoreBackgroundProcess extends WpBackgroundProcess {
     protected $prefix = 'formgent';

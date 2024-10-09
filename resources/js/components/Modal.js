@@ -5,7 +5,9 @@ export default function AntModal( props ) {
 	const defaultComponentTokens = {
 		Modal: {},
 	};
-	const defaultTokens = {};
+	const defaultTokens = {
+		fontFamily: 'Inter',
+	};
 	return (
 		<InputStyle>
 			<ConfigProvider

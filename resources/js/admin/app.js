@@ -18,7 +18,9 @@ import { getPlugins } from '@wordpress/plugins';
 import AddForm from './pages/AddForm/index.js';
 import FormTable from './pages/FormTable/index.js';
 import ResponseTable from './pages/ResponseTable/index.js';
+import Analytics from './pages/Analytics/index.js';
 import Settings from './pages/Settings/index.js';
+import Summary from './pages/Summary/index.js';
 
 export default function App() {
 	const { setRouterState } = useDispatch( 'formgent' );
@@ -72,6 +74,14 @@ export default function App() {
 		{
 			path: '/forms/:id/response/*',
 			element: <ResponseTable />,
+		},
+		{
+			path: '/forms/:id/summary/*',
+			element: <Summary />,
+		},
+		{
+			path: '/forms/:id/analytics/*',
+			element: <Analytics />,
 		},
 		{
 			path: '/forms/form-new/:type',

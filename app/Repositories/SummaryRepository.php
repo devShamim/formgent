@@ -16,22 +16,22 @@ class SummaryRepository {
         $form            = $form_repository->get_by_id( $form_id );
 
         if ( ! $form ) {
-            throw new Exception( esc_html__( 'Form not found.', 'helpgent' ), 404 );
+            throw new Exception( esc_html__( 'Form not found.', 'formgent' ), 404 );
         }
-        
+
         $fields = formgent_get_form_field_settings( parse_blocks( $form->post_content ) );
 
         if ( ! isset( $fields[ $field_name ] ) ) {
-            throw new Exception( __( 'Field not found', 'helpgent' ), 404 );
+            throw new Exception( esc_html__( 'Field not found', 'formgent' ), 404 );
         }
 
         $field      = $fields[ $field_name ];
         $field_type = $field[ 'field_type' ];
 
         $field_handlers = formgent_config( 'fields' );
-        
+
         if ( empty( $field_handlers[ $field_type ] ) ) {
-            throw new Exception( __( 'Field handler not found.', 'helpgent' ), 404 );
+            throw new Exception( esc_html__( 'Field handler not found.', 'formgent' ), 404 );
         }
 
         /**
@@ -50,7 +50,7 @@ class SummaryRepository {
         $form            = $form_repository->get_by_id( $form_id );
 
         if ( ! $form ) {
-            throw new Exception( esc_html__( 'Form not found.', 'helpgent' ), 404 );
+            throw new Exception( esc_html__( 'Form not found.', 'formgent' ), 404 );
         }
 
         /**
@@ -91,7 +91,7 @@ class SummaryRepository {
 
             if ( ! empty( $field['children'] ) ) {
                 $children = [];
-                
+
                 foreach ( array_keys( $field['children'] ) as $child_key ) {
                     $children[ $child_key ] = ! empty( $field['children'][ $child_key ]['label'] ) ? $field['children'][ $child_key ]['label'] : $child_key;
                 }

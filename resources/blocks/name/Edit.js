@@ -22,7 +22,7 @@ const TEMPLATE = [
 		'core/group',
 		{
 			layout: { type: 'grid', minimumColumnWidth: null, columnCount: 3 },
-			style: { spacing: { blockGap: 'var:preset|spacing|20' } },
+			style: { spacing: { blockGap: 'var:preset|spacing|10' } },
 		},
 		[
 			[

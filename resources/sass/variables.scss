@@ -1,6 +1,8 @@
 :root {
-	--formgent-color-primary: #6551f2;
+	--formgent-color-primary: #5e53f9;
+	--formgent-color-primary-hover: #563dee;
 	--formgent-color-primary-2: #2188ff;
+	--formgent-color-primary-50: #edefff;
 	--formgent-color-primary-100: #dee3ff;
 	--formgent-color-secondary: #fc495d;
 	--formgent-color-dark: #000000;
@@ -17,7 +19,8 @@
 	--formgent-color-info: #217aef;
 	--formgent-color-info-light: #91d2ff;
 	--formgent-color-info-deep: #eff8ff;
-	--formgent-color-danger: #ef0000; //#ef0000;
+	--formgent-color-danger: #ef0000;
+	--formgent-color-danger-100: #fbe5e5;
 	--formgent-color-danger-light: #fdf3f3;
 	--formgent-color-disable: #dddada;
 	--formgent-color-warning-deep: #ff7300;

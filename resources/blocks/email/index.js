@@ -13,10 +13,9 @@ import './style.scss';
 
 const exampleAttributes = {};
 
-const controls = {
+const generalControls = {
 	basic_info: {
 		type: 'panel',
-		label: __( 'General', 'formgent' ),
 		children: {
 			label_alignment: {
 				type: 'toggle_group',
@@ -40,24 +39,56 @@ const controls = {
 					},
 				],
 			},
+			placeholder: {
+				type: 'text',
+				label: __( 'Field Placeholder', 'formgent' ),
+			},
+			show_field_icon: {
+				type: 'switch',
+				label: __( 'Show Email Icon', 'formgent' ),
+			},
+			enable_confirmation_field: {
+				type: 'switch',
+				label: __( 'Enable Confirmation Field', 'formgent' ),
+			},
+			confirm_placeholder: {
+				type: 'text',
+				label: __( 'Confirm Field Placeholder', 'formgent' ),
+				condition: ( attributes ) => {
+					return attributes.enable_confirmation_field;
+				},
+			},
+			confirmation_field_gap: {
+				type: 'height',
+				label: __( 'Confirmation Field Gap', 'formgent' ),
+				condition: ( attributes ) => {
+					return attributes.enable_confirmation_field;
+				},
+			},
 			required: {
 				type: 'switch',
 				label: __( 'Required', 'formgent' ),
 			},
-			placeholder: {
-				type: 'text',
-				label: __( 'Field Placeholder', 'formgent' ),
+		},
+	},
+};
+
+const advancedControls = {
+	advanced: {
+		type: 'panel',
+		children: {
+			value: {
+				type: 'default_value',
+				label: __( 'Default Value', 'formgent' ),
 			},
 			name: {
 				type: 'text',
 				label: __( 'Field Name', 'formgent' ),
 			},
-			value: {
-				type: 'default_value',
-				label: __( 'Default Value', 'formgent' ),
-			},
 		},
 	},
 };
+
+const controls = { generalControls, advancedControls };
 
 registerBlock( metadata, controls, Edit, 'smiley', exampleAttributes );

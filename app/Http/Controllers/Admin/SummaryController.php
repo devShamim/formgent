@@ -29,14 +29,6 @@ class SummaryController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         try {
             return Response::send(
                 $this->summary_repository->get( 

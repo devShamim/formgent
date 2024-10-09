@@ -31,30 +31,26 @@ class AnalyticRepository {
     public function form_view_count( int $form_id ): int {
         $data = PostMeta::query()
             ->where( 'post_id', $form_id )
-            ->where( 'meta_key', '_formgent_views' )
+            ->where( 'meta_key', '_formgent_views' ) //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
             ->first();
 
         return $data ? absint( $data->meta_value ) : 0;
     }
 
     public function response_summary( int $form_id ): ?array {
-        $total_completion_time_query = <<<SQL
-        SUM(
-            CASE
-                WHEN response.is_completed = '1' THEN TIME_TO_SEC(
-                    TIMEDIFF( response.completed_at, response.created_at )
-                )
-                ELSE 0
-            END
-        ) AS total_completion_time
-SQL;
-
         $base_query = Response::query( 'response' )
             ->select( 
                 [
                     "COUNT( form_id ) AS total_stared",
                     "SUM( CASE WHEN response.is_completed = '1' THEN 1 ELSE 0 END ) AS total_finished",
-                    $total_completion_time_query,
+                    "SUM(
+                        CASE
+                            WHEN response.is_completed = '1' THEN TIME_TO_SEC(
+                                TIMEDIFF( response.completed_at, response.created_at )
+                            )
+                            ELSE 0
+                        END
+                    ) AS total_completion_time",
                 ]
             );
 
@@ -84,7 +80,7 @@ SQL;
     public function update_form_view_count( int $form_id, int $count, $type = '=' ): int {
         $old_count_meta = PostMeta::query()
             ->where( 'post_id', $form_id )
-            ->where( 'meta_key', '_formgent_views' )
+            ->where( 'meta_key', '_formgent_views' ) //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
             ->first();
 
         if ( ! $old_count_meta ) {
@@ -92,8 +88,8 @@ SQL;
             $id    = PostMeta::query()->insert_get_id(
                 [
                     'post_id'    => $form_id,
-                    'meta_key'   => '_formgent_views',
-                    'meta_value' => $count,
+                    'meta_key'   => '_formgent_views', //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+                    'meta_value' => $count, //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value 
                 ]
             );
 
@@ -118,8 +114,8 @@ SQL;
 
         $status = PostMeta::query()
             ->where( 'post_id', $form_id )
-            ->where( 'meta_key', '_formgent_views' )
-            ->update( [  'meta_value' => $count ] );
+            ->where( 'meta_key', '_formgent_views' ) //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+            ->update( [  'meta_value' => $count ] ); //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 
         if ( false === $status ) {
             throw new Exception( esc_html__( 'Could not update the view count.', 'formgent' ), 403 );

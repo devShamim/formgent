@@ -58,7 +58,7 @@ class FormRepository {
             function( $form ) {
                 $form->preview_url = get_post_permalink( $form->id );
                 return $form;
-            }, $posts_query->pagination( $dto->get_per_page(), $dto->get_page() )
+            }, $posts_query->pagination( $dto->get_page(), $dto->get_per_page() )
         );
 
         return [
@@ -184,6 +184,7 @@ class FormRepository {
         );
 
         if ( $post_id instanceof WP_Error ) {
+            //phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped	
             throw new Exception( $post_id->get_error_message(), $post_id->get_error_code() );
         }
 
@@ -230,19 +231,22 @@ class FormRepository {
             } else {
                 $response_code = $error_code;
             }
+            //phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped	
             throw new Exception( $response->get_error_message(), $response_code );
         }
 
         $response_code = intval( wp_remote_retrieve_response_code( $response ) );
 
         if ( 200 !== $response_code ) {
+            //phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped	
             throw new Exception( wp_remote_retrieve_response_message( $response ), $response_code );
         }
 
         $file_name = wp_basename( $attachment_url );
-        $upload    = wp_upload_bits( $file_name, '', wp_remote_retrieve_body( $response ) );
+        $upload    = wp_upload_bits( $file_name, null, wp_remote_retrieve_body( $response ) );
 
         if ( ! empty( $upload['error'] ) ) {
+            //phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped	
             throw new Exception( $upload['error'], 500 );
         }
 
@@ -256,6 +260,7 @@ class FormRepository {
         $id = wp_insert_attachment( $attachment, $upload['file'] );
 
         if ( is_wp_error( $id ) ) {
+            //phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped	
             throw new Exception( $id->get_error_message(), $id->get_error_code() );
         }
 

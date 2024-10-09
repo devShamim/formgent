@@ -6,7 +6,6 @@ defined( 'ABSPATH' ) || exit;
 
 use FormGent\App\DTO\AnswerDTO;
 use FormGent\App\EnumeratedList\FormType;
-use FormGent\App\Exceptions\RequestValidatorException;
 use FormGent\App\Repositories\AnswerRepository;
 use FormGent\WpMVC\RequestValidator\Validator;
 use stdClass;
@@ -47,24 +46,10 @@ abstract class Field {
                     $field['name'] => implode( '|', $rules ),
                 ]
             );
-                
-            static::throw_validator_errors( $validator );
         }
     }
 
     public function get_field_dto( array $field, WP_REST_Request $wp_rest_request, stdClass $form ): AnswerDTO {
         return ( new AnswerDTO() )->set_form_id( $form->ID )->set_field_type( $field['field_type'] )->set_field_name( $field['name'] )->set_value( $wp_rest_request->get_param( $field['name'] ) );
-    }
-
-    protected static function throw_validator_errors( Validator $validator ) {
-        if ( $validator->is_fail() ) {
-            $errors            = $validator->errors;
-            $validator->errors = [];
-            static::throw_errors( $errors );
-        }
-    }
-
-    protected static function throw_errors( array $errors ) {
-        throw new RequestValidatorException( $errors, 422, null );
     }
 }

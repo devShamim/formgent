@@ -15,6 +15,6 @@ trait MethodResolver {
     }
 
     protected function get_validation_rules(): array {
-        return ['string', 'accepted:0,1'];
+        return ['integer', 'accepted:0,1'];
     }
 }

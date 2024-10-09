@@ -3,9 +3,32 @@
 .components-panel__body.edit-post-post-status {
 	display: none;
 }
+.components-panel__body.is-opened {
+	.formgent-repeater-control {
+		.formgent-control-label {
+			font-size: 11px;
+			font-weight: 500;
+			line-height: 1.4;
+			text-transform: uppercase;
+			box-sizing: border-box;
+			display: block;
+			padding-top: 0px;
+			padding-bottom: 0px;
+			max-width: 100%;
+			z-index: 1;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}
 
 .formgent-repeater-control {
 	margin-bottom: 30px;
+	.formgent-control-label {
+		display: block;
+		margin-bottom: 8px;
+	}
 }
 
 .formgent-repeater-field {
@@ -106,4 +129,183 @@ button.formgent-repeater-field-expand {
 			background: var(--formgent-color-bg-light);
 		}
 	}
+}
+
+//Color picker
+.formgent-control-color-picker {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 25px;
+	flex-wrap: wrap;
+	position: relative;
+	.formgent-control-label {
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		box-sizing: border-box;
+		display: block;
+		padding-top: 0px;
+		padding-bottom: 0px;
+		max-width: 100%;
+		z-index: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.formgent-control-color-picker-trigger {
+		border-radius: 8px;
+		border: 1px solid var(--formgent-color-gray-300);
+		background: #fff;
+		box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+		padding: 6px 6px 6px 12px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		justify-content: space-between;
+		width: 123px;
+	}
+	.formgent-control-color-picker-value {
+		color: var(--formgent-color-gray-600);
+		font-size: 12px;
+		font-weight: 500;
+	}
+	.formgent-control-color-picker-color {
+		width: 36px;
+		height: 20px;
+		border-radius: 5px;
+	}
+}
+
+.formgent-control-color-picker-input {
+	background: #fff;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.components-color-picker,
+	.react-colorful {
+		width: 100%;
+	}
+	.components-base-control {
+		margin-bottom: 0;
+		.components-select-control {
+			margin-left: 0;
+		}
+	}
+	.components-input-control .components-input-control__backdrop {
+		border: 1px solid var(--formgent-color-gray-300) !important;
+	}
+}
+
+.formgent .control-tabs {
+	.components-tab-panel__tabs {
+		display: flex;
+		border-top: calc(0.1em + 1px) solid #f2f4f5;
+		position: relative;
+		.components-button {
+			flex: 1;
+			height: auto;
+			padding: 15px;
+			&:first-child {
+				border-right: 1px solid #d6d9dd;
+			}
+			&:after {
+				content: none;
+			}
+			svg {
+				fill: none;
+				width: 18px;
+				height: 18px;
+			}
+			.formgent-control-tab-icon {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 6px;
+			}
+			&.is-active,
+			&:hover {
+				color: #0085ba;
+				svg {
+					g path {
+						fill: #0085ba;
+					}
+				}
+			}
+			&.is-active {
+				&:after {
+					content: none;
+				}
+			}
+		}
+		&:after {
+			position: absolute;
+			content: "";
+			width: 50%;
+			height: 2px;
+			background: #007cba;
+			bottom: 0px;
+			transition: 0.3s ease;
+		}
+	}
+	&.control-tabs--general {
+		.components-tab-panel__tabs:after {
+			left: 0;
+		}
+	}
+	&.control-tabs--advanced {
+		.components-tab-panel__tabs:after {
+			left: 50%;
+		}
+	}
+}
+
+.formgent-form-settings-panel {
+	&.is-opened {
+		padding: 0;
+	}
+	.formgent-form-settings-panel__title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 16px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: 0.3s ease;
+		&:hover {
+			background: #f5f5f5;
+		}
+	}
+}
+.formgent-form-settings-modal {
+	background: #e5e7eb;
+	border-radius: 12px;
+	padding: 20px;
+	.components-modal__header {
+		.components-button {
+			width: 36px;
+			height: 36px;
+			background: #d2d6db;
+			border-radius: 50%;
+			svg {
+				width: 16px;
+				height: 16 px;
+			}
+		}
+	}
+	.components-modal__content {
+		padding: 0;
+	}
+	.formgent-form-settings-modal__body {
+		background: #fff;
+		border-radius: 12px;
+		padding: 15px;
+	}
+}
+
+// Hide block default advanced tab panel
+.editor-sidebar__panel:is(.components-panel):has(.formgent)
+	.block-editor-block-inspector__advanced:not(.formgent-advanced) {
+	display: none;
 }

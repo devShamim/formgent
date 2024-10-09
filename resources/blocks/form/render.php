@@ -4,8 +4,6 @@ use FormGent\WpMVC\View\View;
 
 $post = get_post( $attributes['formId'] );
 
-// error_log( print_r( formgent_get_form_field_settings( parse_blocks( $post->post_content ) ), true ) );
-
 if ( empty( $post ) ) {
     echo "Form not found";
     return;
@@ -13,7 +11,7 @@ if ( empty( $post ) ) {
 
 View::render(
     'form', [
-        'form'   => $post,
-        'fields' => do_blocks( $post->post_content )
+        'form'     => $post,
+        'is_block' => true
     ]
 );

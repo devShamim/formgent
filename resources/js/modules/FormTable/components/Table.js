@@ -1,33 +1,21 @@
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { applyFilters } from '@wordpress/hooks';
 import { AntTable, AntSpin, AntPagination } from '@formgent/components';
 import { formatDate } from '@formgent/helper/utils';
 import { TableStyle } from './style';
+import { __ } from '@wordpress/i18n';
 import TableAction from './TableAction';
 import TableBulkSelection from './TableBulkSelection';
 import TitleBox from './TitleBox';
-import checkIcon from '@icon/check.svg';
-import copyIcon from '@icon/copy.svg';
-import spinnerIcon from '@icon/spinner.svg';
-import { Tooltip } from '@wordpress/components';
-import { __ } from '@wordpress/i18n';
-import handleTextSelect from '@formgent/helper/handleTextSelect';
 import postData from '@formgent/helper/postData';
-import ReactSVG from 'react-inlinesvg';
 import FormTableStatus from './FormTableStatus';
+import Shortcode from './Shortcode';
 
 export default function Table( props ) {
 	const [ selectedRowKeys, setSelectedRowKeys ] = useState( [] );
 	const [ selectedForms, setSelectedForms ] = useState( [] );
 	const [ editableForm, setEditableForm ] = useState( null );
-	const [ copiedText, setCopiedText ] = useState( '' );
-	const [ isCopied, setIsCopied ] = useState( false );
-	const [ isCopying, setIsCopying ] = useState( false );
-	const [ copiedShortcode, setCopiedShortcode ] = useState( null );
-	const [ inputPosition, setInputPosition ] = useState( null );
-	const [ copyingTimeoutId, setCopyingTimeoutId ] = useState( null );
-	const [ copiedTimeoutId, setCopiedTimeoutId ] = useState( null );
 
 	const {
 		updateCurrentPage,
@@ -46,6 +34,7 @@ export default function Table( props ) {
 		dateType,
 		isStatusUpdating,
 		singleStatusUpdated,
+		isFormDuplicating,
 	} = props;
 
 	const [ filteredForms, setFilteredForms ] = useState( forms );
@@ -97,36 +86,6 @@ export default function Table( props ) {
 		day: 'numeric',
 	};
 
-	const handleShortcodeCopy = ( event ) => {
-		const copyableText = event.target.value;
-		handleTextSelect( { copyableText, setCopiedText } );
-		const inputRect = event.target.getBoundingClientRect();
-		setInputPosition( inputRect );
-		if ( copyingTimeoutId ) {
-			clearTimeout( copyingTimeoutId );
-		}
-		if ( copiedTimeoutId ) {
-			clearTimeout( copiedTimeoutId );
-		}
-		setIsCopying( true );
-		const copyingTimeout = setTimeout( () => {
-			setIsCopying( false );
-			setIsCopied( true );
-			const copiedTimeout = setTimeout( () => {
-				setIsCopied( false );
-			}, 3000 );
-			setCopiedTimeoutId( copiedTimeout );
-		}, 500 );
-		setCopyingTimeoutId( copyingTimeout );
-	};
-
-	document.addEventListener( 'scroll', () => {
-		const inputRects = document.querySelector(
-			`input[data-shortcode_id="${ copiedShortcode }"]`
-		);
-		setInputPosition( inputRects && inputRects.getBoundingClientRect() );
-	} );
-
 	const formTableColumns = applyFilters( 'formgent_form_table_columns', [
 		{
 			title: 'Name',
@@ -144,58 +103,7 @@ export default function Table( props ) {
 		{
 			title: 'Shortcode',
 			className: 'formgent-form-shortcode',
-			render: ( text, record ) => (
-				<Tooltip
-					text={
-						isCopied && copiedShortcode === record.id
-							? ''
-							: __( 'Click to copy', 'formgent' )
-					}
-					delay="0"
-					placement="bottom"
-					hideOnClick={ true }
-				>
-					<label
-						className={
-							isCopying && copiedShortcode === record.id
-								? 'formgent-form-shortcode__copying'
-								: ! isCopying &&
-								  isCopied &&
-								  copiedShortcode === record.id
-								? 'formgent-form-shortcode__copied'
-								: ''
-						}
-					>
-						{ isCopying && copiedShortcode === record.id ? (
-							<ReactSVG src={ spinnerIcon } />
-						) : ! isCopying &&
-						  isCopied &&
-						  copiedShortcode === record.id ? (
-							<ReactSVG src={ checkIcon } />
-						) : (
-							<ReactSVG src={ copyIcon } />
-						) }
-						<input
-							type="text"
-							readOnly
-							value={
-								isCopying & ( copiedShortcode === record.id )
-									? ''
-									: ! isCopying &&
-									  isCopied &&
-									  copiedShortcode === record.id
-									? __( 'Copied!', 'formgent' )
-									: `[formgent id="${ record.id }"]`
-							}
-							data-shortcode_id={ record.id }
-							onClick={ ( e ) => {
-								setCopiedShortcode( record.id );
-								handleShortcodeCopy( e );
-							} }
-						/>
-					</label>
-				</Tooltip>
-			),
+			render: ( text, record ) => <Shortcode record={ record } />,
 			width: 200,
 		},
 		{
@@ -203,10 +111,10 @@ export default function Table( props ) {
 			className: 'formgent-head-response',
 			render: ( text, record ) => (
 				<div className="helpgent-form-responses">
-					<Link to={ `forms/${ record.id }/response` }>
-						{ record.total_unread_responses > 0 ? (
+					<Link to={ `forms/${ record?.id }/response` }>
+						{ record?.total_unread_responses > 0 ? (
 							<div className="helpgent-badge helpgent-badge-danger helpgent-badge-circle helpgent-badge-small">
-								{ record.total_responses }
+								{ record?.total_responses }
 							</div>
 						) : (
 							'0'
@@ -220,7 +128,7 @@ export default function Table( props ) {
 			className: 'formgent-head-created-by',
 			render: ( text, record ) => (
 				<div className="helpgent-form-username">
-					{ record.username }
+					{ record?.username }
 				</div>
 			),
 		},
@@ -229,9 +137,9 @@ export default function Table( props ) {
 			className: 'formgent-head-updated-at',
 			render: ( text, record ) => {
 				const date =
-					'string' === typeof record.updated_at
-						? record.updated_at
-						: record.created_at;
+					'string' === typeof record?.updated_at
+						? record?.updated_at
+						: record?.created_at;
 				return (
 					<div className="helpgent-form-date">
 						{ formatDate( 'en-US', date, dateFormatOptions ) }
@@ -258,9 +166,9 @@ export default function Table( props ) {
 			className: 'formgent-head-action',
 			render: ( text, record ) => {
 				const date =
-					'string' === typeof record.updated_at
-						? record.updated_at
-						: record.created_at;
+					'string' === typeof record?.updated_at
+						? record?.updated_at
+						: record?.created_at;
 				return (
 					<div className="formgent-form-action">
 						<TableAction
@@ -268,6 +176,8 @@ export default function Table( props ) {
 							editableForm={ editableForm }
 							setEditableForm={ setEditableForm }
 							isFormDeleting={ isFormDeleting }
+							isFormDuplicating={ isFormDuplicating }
+							pagination={ pagination }
 						/>
 					</div>
 				);

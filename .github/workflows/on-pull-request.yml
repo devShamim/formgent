@@ -37,6 +37,9 @@ jobs:
 
       - name: Install Composer dependencies
         run: composer setup
+        
+      - name: PHPCS Permission
+        run: composer permission
 
       - name: Run PHPCS checks
-        run: php vendor/vendor-src/bin/phpcs --standard=phpcs.xml
+        run: composer phpcs

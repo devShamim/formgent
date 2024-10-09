@@ -6,7 +6,9 @@ export default function AntForm( props ) {
 			paddingBlock: 13,
 		},
 	};
-	const defaultTokens = {};
+	const defaultTokens = {
+		fontFamily: 'Inter',
+	};
 	return (
 		<ConfigProvider
 			theme={ {

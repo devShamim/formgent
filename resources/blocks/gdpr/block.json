@@ -21,7 +21,7 @@
 		},
 		"label_alignment": {
 			"type": "string",
-			"default": "left"
+			"default": "top"
 		},
 		"description": {
 			"type": "string",

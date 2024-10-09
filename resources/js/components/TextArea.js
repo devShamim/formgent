@@ -16,6 +16,7 @@ export default function AntTextArea( props ) {
 		colorBorder: 'transparent',
 		borderRadius: 12,
 		lineWidth: 2,
+		fontFamily: 'Inter',
 	};
 	return (
 		<InputStyle>

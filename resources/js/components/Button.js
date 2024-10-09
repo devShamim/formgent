@@ -11,6 +11,7 @@ export default function AntButton( props ) {
 		controlHeightLG: 50,
 		controlHeightSM: 34,
 		borderRadius: 8,
+		fontFamily: 'Inter',
 	};
 	return (
 		<ConfigProvider

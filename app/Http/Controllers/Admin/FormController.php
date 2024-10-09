@@ -36,34 +36,14 @@ class FormController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         $dto = new FormReadDTO;
         $dto->set_page( intval( $wp_rest_request->get_param( 'page' ) ) );
         $dto->set_per_page( intval( $wp_rest_request->get_param( 'per_page' ) ) );
         $dto->set_search( (string) $wp_rest_request->get_param( 's' ) );
-
-        if ( $wp_rest_request->has_param( 'sort_by' ) ) {
-            $dto->set_sort_by( $wp_rest_request->get_param( 'sort_by' ) );
-        }
-
-        if ( $wp_rest_request->has_param( 'date_type' ) ) {
-            $dto->set_date_type( $wp_rest_request->get_param( 'date_type' ) );
-        }
-
-        if ( $wp_rest_request->has_param( 'date_frame' ) ) {
-            $dto->set_date_frame( $wp_rest_request->get_param( 'date_frame' ) );
-        }
-
-        if ( $wp_rest_request->has_param( 'type' ) ) {
-            $dto->set_type( $wp_rest_request->get_param( 'type' ) );
-        }
+        $dto->set_sort_by( $wp_rest_request->get_param( 'sort_by' ) );
+        $dto->set_date_type( $wp_rest_request->get_param( 'date_type' ) );
+        $dto->set_date_frame( $wp_rest_request->get_param( 'date_frame' ) );
+        $dto->set_type( $wp_rest_request->get_param( 'type' ) );
 
         $data                      = $this->form_repository->get( $dto );
         $response                  = $this->pagination( $wp_rest_request, $data['total'], $dto->get_per_page(), false );
@@ -83,14 +63,6 @@ class FormController extends Controller {
                 'type'   => 'required|string|accepted:general,conversational'
             ]
         );
-
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
 
         try {
             $dto = new FormDTO;
@@ -132,14 +104,6 @@ class FormController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         do_action( 'formgent_before_update_form_title', $wp_rest_request );
 
         $this->form_repository->update_title( intval( $wp_rest_request->get_param( 'id' ) ), $wp_rest_request->get_param( 'title' ) );
@@ -160,14 +124,6 @@ class FormController extends Controller {
                 'status' => 'required|string|accepted:publish,draft'
             ]
         );
-
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
 
         $ids = $wp_rest_request->get_param( 'ids' );
     
@@ -196,14 +152,6 @@ class FormController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         do_action( 'formgent_before_update_form_status', $wp_rest_request );
 
         $this->form_repository->update_status( intval( $wp_rest_request->get_param( 'id' ) ), $wp_rest_request->get_param( 'status' ) );
@@ -223,14 +171,6 @@ class FormController extends Controller {
                 'id' => 'required|numeric'
             ]
         );
-
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
 
         $form = $this->form_repository->get_by_id( intval( $wp_rest_request->get_param( 'id' ) ) );
 
@@ -291,14 +231,6 @@ class FormController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         $form_id = intval( $wp_rest_request->get_param( 'id' ) );
 
         $form = $this->form_repository->get_by_id( $form_id );
@@ -322,14 +254,6 @@ class FormController extends Controller {
                 'ids' => 'required|array'
             ]
         );
-
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
 
         $form_ids = $wp_rest_request->get_param( 'ids' );
 
@@ -370,14 +294,6 @@ class FormController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         $attachment_url = $wp_rest_request->get_param( 'url' );
 
         try {
@@ -404,14 +320,6 @@ class FormController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-        
         return Response::send(
             [
                 'settings' => $this->form_repository->get_settings( intval( $wp_rest_request->get_param( 'id' ) ) ),
@@ -426,14 +334,6 @@ class FormController extends Controller {
                 'settings' => 'required|array'
             ]
         );
-
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
 
         $form_id = intval( $wp_rest_request->get_param( 'id' ) );
 

@@ -43,7 +43,7 @@ class ResponseRepository {
 
         return [
             'total'     => $count_query->count( 'DISTINCT response.id' ),
-            'responses' => $responses_query->pagination( $dto->get_per_page(), $dto->get_page() )
+            'responses' => $responses_query->pagination( $dto->get_page(), $dto->get_per_page() )
         ];
     }
 
@@ -116,7 +116,7 @@ class ResponseRepository {
 
         do_action( 'formgent_responses_query', $responses_query, $dto );
 
-        $responses = $responses_query->pagination( 1, $dto->get_page(), 1, 1 );
+        $responses = $responses_query->pagination( $dto->get_page(), 1, 1, 1 );
 
         if ( ! empty( $responses[0] ) ) {            
             $data = formgent_get_form_field_settings( parse_blocks( get_post( $dto->get_form_id() )->post_content ) );

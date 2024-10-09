@@ -24,6 +24,7 @@ function FormTable( props ) {
 		sortBy,
 		dateType,
 		isFilterActive,
+		isFormDuplicating,
 	} = FormReducer;
 
 	return (
@@ -51,6 +52,7 @@ function FormTable( props ) {
 						dateType={ dateType }
 						isStatusUpdating={ isStatusUpdating }
 						singleStatusUpdated={ singleStatusUpdated }
+						isFormDuplicating={ isFormDuplicating }
 					/>
 				</Suspense>
 			) : forms.length === 0 && isFilterActive ? (

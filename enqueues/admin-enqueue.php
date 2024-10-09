@@ -10,7 +10,7 @@ include_once __DIR__ . '/register.php';
  * Builder scripts
  */
 if ( formgent_post_type() === get_post_type() ) {
-    Enqueue::script( 'formgent/blocks-editor', 'build/js/blocks-editor' );
+    Enqueue::script( 'formgent/blocks-editor', 'build/js/blocks-editor', ['lodash'] );
     Enqueue::style( 'formgent/blocks-editor', 'build/css/blocks-editor' );
 }
 

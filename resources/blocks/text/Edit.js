@@ -31,7 +31,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			</div>
 			<div className="formgent-editor-block-list__single__wrapper">
 				<input
-					className="formgent-editor-block-list__single__input"
+					className={ `formgent-editor-block-list__single__input` }
 					type="text"
 					name={ attributes.name }
 					placeholder={ attributes.placeholder }

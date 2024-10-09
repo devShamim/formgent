@@ -38,10 +38,10 @@ return [
         'types'      => ['general', 'conversational'],
         'field_type' => Number::get_key()
     ],
-    // 'formgent/button'        => [
-    //     'types'      => ['general', 'conversational'],
-    //     'field_type' => ''
-    // ],
+    'formgent/submit-button'   => [
+        'types'      => ['general', 'conversational'],
+        'field_type' => ''
+    ],
     'formgent/phone-number'    => [
         'types'      => ['general', 'conversational'],
         'field_type' => PhoneNumber::get_key(),

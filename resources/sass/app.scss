@@ -662,9 +662,6 @@ a.formgent-btn-disabled {
 		.components-modal__header {
 			border: 0 none;
 		}
-		.helpgent-alert-content > p {
-			margin-top: 0;
-		}
 		.formgent-form-delete-alert-action {
 			.formgent-modal-action__cancel {
 				border: 1px solid #d2d6db;
@@ -1051,16 +1048,6 @@ a.formgent-btn-disabled {
 	}
 }
 
-//Keyframes
-@keyframes formgent_spinner {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
-}
-
 .formgent-control-default-value-list-content {
 	.components-popover__content {
 		width: 200px;
@@ -1111,5 +1098,67 @@ a.formgent-btn-disabled {
 .ant-picker-date-range-wrapper {
 	.ant-picker-cell {
 		padding: 6px 0;
+	}
+}
+
+.formgent-analytics-chart-datepicker {
+	.ant-picker-panel-container .ant-picker-presets ul li {
+		padding: 5px 10px;
+	}
+	.ant-picker-range-arrow {
+		display: none !important;
+	}
+	.ant-picker-range-wrapper {
+		border-radius: 12px;
+	}
+	.ant-picker-panel-container {
+		border: 1px solid var(--formgent-color-gray-200);
+	}
+}
+
+.formgent-analytics-chart-datepicker,
+.ant-picker {
+	font-family: "Inter", sans-serif;
+}
+
+.single-response-drawer {
+	.ant-drawer-mask {
+		display: none;
+	}
+	.ant-drawer-content-wrapper {
+		top: 98px;
+		right: 0;
+		background: #fff;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		.ant-drawer-body {
+			padding: 0;
+		}
+	}
+}
+
+.formgent-loading {
+	position: relative;
+	pointer-events: none;
+	&:before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		border: 2px solid rgba(0, 0, 0, 0.1);
+		border-top-color: var(--formgent-color-primary);
+		animation: formgent_spinner 1s linear infinite;
+	}
+}
+
+@keyframes formgent_spinner {
+	0% {
+		transform: translate(-50%, -50%) rotate(0deg); /* Start at 0 degrees */
+	}
+	100% {
+		transform: translate(-50%, -50%) rotate(360deg); /* End at 360 degrees (full rotation) */
 	}
 }

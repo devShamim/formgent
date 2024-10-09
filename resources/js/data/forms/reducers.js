@@ -17,6 +17,7 @@ const DEFAULT_STATE = {
 	isBulkStatusUpdating: false,
 	isTitleUpdating: false,
 	isStatusUpdating: false,
+	isFormDuplicating: false,
 	singleStatusUpdated: false,
 	isFilterActive: false,
 	error: null,
@@ -160,6 +161,26 @@ export const FormReducer = ( state = DEFAULT_STATE, action ) => {
 					...state.pagination,
 					total_items: bulkUpdatedForm.length,
 				},
+			};
+		case 'DUPLICATE_FORM_REQUEST':
+			return {
+				...state,
+				isFormDuplicating: true,
+			};
+		case 'DUPLICATE_FORM_SUCCESS':
+			return {
+				...state,
+				pagination: {
+					...state.pagination,
+					total_items: state.pagination.total_items + 1,
+				},
+				isFormDuplicating: false,
+			};
+		case 'DUPLICATE_FORM_ERROR':
+			return {
+				...state,
+				isFormDuplicating: false,
+				error: error,
 			};
 		case 'BULK_DELETE_FORM_ERROR':
 			return {

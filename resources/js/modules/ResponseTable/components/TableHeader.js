@@ -1,7 +1,6 @@
 import {
 	AntButton,
 	AntCheckbox,
-	AntDropdown,
 	AntInput,
 	AntTabs,
 } from '@formgent/components';
@@ -12,8 +11,6 @@ import { TableActionStyle, TableHeaderStyle, TableTabStyle } from './style';
 import chevronDownIcon from '@icon/chevron-down.svg';
 import closeIcon from '@icon/close.svg';
 import columnIcon from '@icon/column-3.svg';
-import downloadIcon from '@icon/download.svg';
-import printIcon from '@icon/print.svg';
 import refreshIcon from '@icon/refresh.svg';
 import searchIcon from '@icon/search.svg';
 import trashIcon from '@icon/trash.svg';
@@ -32,8 +29,7 @@ export default function TableHeader( props ) {
 		setVisibleColumns,
 		setFieldColumnHide,
 		responseFields,
-		handleDelete,
-		handlePrint,
+		handleActivateDeleteFormModal,
 		downloadItems,
 		handleDownload,
 	} = props;
@@ -113,26 +109,8 @@ export default function TableHeader( props ) {
 							Select All
 						</button>
 					</div>
-					<AntDropdown
-						menu={ {
-							items: downloadItems,
-							onClick: handleDownload,
-						} }
-						placement="bottomLeft"
-						overlayStyle={ { width: 210 } }
-					>
-						<AntButton
-							onClick={ ( e ) => e.preventDefault() }
-							icon={
-								<ReactSVG
-									width="16"
-									height="16"
-									src={ downloadIcon }
-								/>
-							}
-						/>
-					</AntDropdown>
-					<AntButton
+
+					{ /* <AntButton
 						onClick={ handlePrint }
 						icon={
 							<ReactSVG
@@ -141,9 +119,9 @@ export default function TableHeader( props ) {
 								src={ printIcon }
 							/>
 						}
-					/>
+					/> */ }
 					<AntButton
-						onClick={ handleDelete }
+						onClick={ handleActivateDeleteFormModal }
 						icon={
 							<ReactSVG
 								width="16"
@@ -230,26 +208,6 @@ export default function TableHeader( props ) {
 								} ) }
 							</div>
 						</div>
-
-						<AntDropdown
-							menu={ {
-								items: downloadItems,
-								onClick: handleDownload,
-							} }
-							placement="bottomRight"
-							overlayStyle={ { width: 210 } }
-						>
-							<AntButton
-								onClick={ ( e ) => e.preventDefault() }
-								icon={
-									<ReactSVG
-										width="16"
-										height="16"
-										src={ downloadIcon }
-									/>
-								}
-							/>
-						</AntDropdown>
 
 						<AntButton
 							onClick={ handleRefresh }

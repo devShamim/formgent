@@ -1,13 +1,16 @@
 import AntDropdown from '@formgent/components/Dropdown';
 import PopUp from '@formgent/components/PopUp';
 import deleteData from '@formgent/helper/deleteData';
+import postData from '@formgent/helper/postData';
 import ellipsisH from '@icon/ellipsis-h.svg';
 import penNib from '@icon/pen-nib.svg';
 import trash from '@icon/trash.svg';
 import trashAlt from '@icon/trash-alt.svg';
-import { useDispatch } from '@wordpress/data';
+import copyIcon from '@icon/copy.svg';
+import spinnerIcon from '@icon/spinner.svg';
+import { useDispatch, resolveSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { applyFilters } from '@wordpress/hooks';
+import { applyFilters, doAction } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import ReactSVG from 'react-inlinesvg';
 import FormDeleteAlert from './FormDeleteAlert';
@@ -15,10 +18,23 @@ import FormDeleteAlert from './FormDeleteAlert';
 export default function TableAction( props ) {
 	const [ isActivateFormDeleteModal, setIsActivateFormDeleteModal ] =
 		useState( false );
-	const { form, setEditableForm, isFormDeleting } = props;
+	const {
+		form,
+		editableForm,
+		setEditableForm,
+		isFormDeleting,
+		isFormDuplicating,
+		pagination,
+	} = props;
 
-	const { deleteFormRequest, deleteFormSuccess, deleteFormError } =
-		useDispatch( 'formgent' );
+	const {
+		deleteFormRequest,
+		deleteFormSuccess,
+		deleteFormError,
+		duplicateFormRequest,
+		duplicateFormSuccess,
+		duplicateFormError,
+	} = useDispatch( 'formgent' );
 
 	function handleActivateEditor( e ) {
 		e.preventDefault();
@@ -46,10 +62,22 @@ export default function TableAction( props ) {
 				</a>
 			),
 		},
-		// {
-		// 	key: '2',
-		// 	label: __( 'Duplicate', 'formgent' ),
-		// },
+		{
+			key: '2',
+			label: (
+				<a
+					onClick={ handleFormDuplicate }
+					className="dropdown-header-content"
+				>
+					{ isFormDuplicating ? (
+						<ReactSVG src={ spinnerIcon } width="16" height="16" />
+					) : (
+						<ReactSVG src={ copyIcon } width="16" height="16" />
+					) }{ ' ' }
+					{ __( 'Duplicate', 'formgent' ) }
+				</a>
+			),
+		},
 		{
 			type: 'divider',
 		},
@@ -85,10 +113,35 @@ export default function TableAction( props ) {
 		}
 	}
 
+	async function handleFormDuplicate() {
+		if ( isFormDuplicating ) return;
+
+		duplicateFormRequest();
+		try {
+			const formDuplicateResponse = await postData(
+				`admin/forms/${ form.id }/duplicate`
+			);
+
+			duplicateFormSuccess( form.id );
+			doAction( 'formgent-toast', {
+				message: formDuplicateResponse.message,
+			} );
+
+			resolveSelect( 'formgent' ).getForms(
+				pagination.current_page,
+				pagination.per_page,
+				Date.now()
+			);
+		} catch ( error ) {
+			duplicateFormError( error );
+			console.log( error );
+		}
+	}
+
 	return (
 		<div
 			className="formgent-table-action"
-			data-tooltip={ __( 'Rename & Delete', 'formgent' ) }
+			data-tooltip={ __( 'Rename, Duplicate & Delete', 'formgent' ) }
 		>
 			<AntDropdown
 				menu={ { items } }

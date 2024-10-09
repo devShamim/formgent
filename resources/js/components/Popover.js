@@ -5,7 +5,9 @@ export default function AntPopover( props ) {
 	const defaultComponentTokens = {
 		Popover: {},
 	};
-	const defaultTokens = {};
+	const defaultTokens = {
+		fontFamily: 'Inter',
+	};
 	return (
 		<InputStyle>
 			<ConfigProvider

@@ -36,14 +36,6 @@ class SettingsController extends Controller
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         $this->repository->save(
             array_merge( 
                 $this->repository->get(), 

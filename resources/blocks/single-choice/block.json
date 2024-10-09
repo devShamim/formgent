@@ -29,11 +29,15 @@
 		},
 		"label_alignment": {
 			"type": "string",
-			"default": "left"
+			"default": "top"
 		},
 		"sub_label": {
 			"type": "string",
 			"default": ""
+		},
+		"style": {
+			"type": "string",
+			"default": "frame"
 		},
 		"required": {
 			"type": "boolean",

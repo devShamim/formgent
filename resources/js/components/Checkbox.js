@@ -6,6 +6,7 @@ export default function AntCheckbox( props ) {
 	};
 	const defaultTokens = {
 		colorPrimary: '#6551f2',
+		fontFamily: 'Inter',
 	};
 	return (
 		<ConfigProvider

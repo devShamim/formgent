@@ -5,7 +5,7 @@
     "license": "MIT",
     "version": "1.0.0",
     "scripts": {
-		"setup": [
+        "setup": [
 			"composer install --no-cache",
 			"composer humbug/php-scoper",
 			"composer add-prefix"
@@ -15,11 +15,11 @@
 		],
 		"humbug/php-scoper": "composer bin php-scoper require --dev humbug/php-scoper:0.17.5",
 		"add-prefix": [
-			"vendor-src/bin/php-scoper add-prefix --output-dir vendor --force",
+			"vendor-src/bin/php-scoper add-prefix --config=dev-tools/scoper/index.php --output-dir vendor --force",
 			"composer dump-autoload -d vendor"
 		],
-		"format": "php vendor/vendor-src/bin/phpcbf --standard=phpcs.xml",
-		"phpcs": "php vendor/vendor-src/bin/phpcs --standard=phpcs.xml",
+		"format": "vendor/vendor-src/bin/phpcbf --standard=dev-tools/phpcs.xml",
+		"phpcs": "vendor/vendor-src/bin/phpcs --standard=dev-tools/phpcs.xml",
 		"make-pot": [
 			"wp i18n make-pot . languages/formgent.pot --include='app/**/*.php,assets/**/*.js,assets/**/*.php,resources/views,resources/blocks/**/*.php'",
 			"cp languages/formgent.pot languages/formgent.po"
@@ -31,6 +31,10 @@
 		"make-production-pot": [
 			"composer make-pot",
 			"wp i18n make-json languages/formgent.po --no-purge"
+		],
+        "permission": [
+			"chmod +x vendor/vendor-src/bin/phpcs",
+			"chmod +x vendor/vendor-src/bin/phpcbf"
 		]
 	},
     "autoload": {
@@ -49,8 +53,9 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.4",
-        "wpmvc/framework": "1.0.0",
-        "whichbrowser/parser": "dev-master"
+        "wpmvc/framework": "1.1.1",
+        "whichbrowser/parser": "dev-master",
+        "deliciousbrains/wp-background-processing": "dev-master"
     },
     "require-dev": {
         "wp-cli/i18n-command": "^2.0@dev",
@@ -59,7 +64,7 @@
         "dealerdirect/phpcodesniffer-composer-installer": "1.0.0",
         "phpcompatibility/phpcompatibility-wp": "2.1.4",
         "wp-coding-standards/wpcs": "^2.3",
-	    "wpmvc/artisan": "1.0.0"
+	    "wpmvc/artisan": "1.1.0"
     },
     "config": {
         "vendor-dir": "vendor-src",

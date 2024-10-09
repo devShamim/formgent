@@ -4,17 +4,24 @@ defined( 'ABSPATH' ) || exit;
 
 use FormGent\App\Http\Controllers\Admin\SummaryController;
 use FormGent\App\Http\Controllers\Admin\NoteController;
+use FormGent\App\Http\Controllers\Admin\EmailNotificationController;
 use FormGent\App\Http\Controllers\Admin\SettingsController;
 use FormGent\App\Http\Controllers\Admin\ResponseController;
 use FormGent\App\Http\Controllers\Admin\FormController;
 use FormGent\App\Http\Controllers\Admin\AnalyticsController;
-use FormGent\App\Http\Controllers\FontController;
 use FormGent\WpMVC\Routing\Route;
 
 Route::group(
     'admin', function() {
         Route::group(
             'forms', function() {
+                Route::group(
+                    'email-notifications', function() {
+                        Route::patch( '{id}/status', [EmailNotificationController::class, 'update_status'] );
+                        Route::post( '{id}/duplicate', [EmailNotificationController::class, 'duplicate'] );
+                        Route::resource( '/', EmailNotificationController::class );
+                    }
+                );
                 Route::group(
                     '{id}', function() {
                         Route::get( 'settings', [FormController::class, 'get_settings'] );
@@ -56,8 +63,6 @@ Route::group(
                 Route::resource( '/', ResponseController::class );
             }
         );
-
-        Route::get( 'fonts', [FontController::class, 'index'] );
 
         Route::group(
             'analytics', function() {

@@ -16,7 +16,11 @@
 			"default": "number"
 		},
 		"value": {
-			"type": "number",
+			"type": "string",
+			"default": ""
+		},
+		"placeholder": {
+			"type": "string",
 			"default": ""
 		},
 		"label": {
@@ -25,11 +29,15 @@
 		},
 		"label_alignment": {
 			"type": "string",
-			"default": "left"
+			"default": "top"
 		},
 		"sub_label": {
 			"type": "string",
 			"default": ""
+		},
+		"format": {
+			"type": "string",
+			"default": "none"
 		},
 		"required": {
 			"type": "boolean",

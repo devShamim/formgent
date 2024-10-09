@@ -104,7 +104,9 @@ export const SingleFormActions = {
 		searchItem,
 		formID,
 		readStatus,
-		orderType
+		orderFieldType,
+		orderType,
+		orderBy
 	) => {
 		return {
 			type: 'FETCH_RESPONSE',
@@ -115,7 +117,9 @@ export const SingleFormActions = {
 				searchItem,
 				formID,
 				readStatus,
+				orderFieldType,
 				orderType,
+				orderBy,
 			},
 		};
 	},
@@ -131,7 +135,8 @@ export const SingleFormActions = {
 		searchItem,
 		formID,
 		readStatus,
-		orderType
+		orderType,
+		orderBy
 	) => {
 		return {
 			type: 'FETCH_SINGLE_RESPONSE',
@@ -142,6 +147,7 @@ export const SingleFormActions = {
 				formID,
 				readStatus,
 				orderType,
+				orderBy,
 			},
 		};
 	},
@@ -329,6 +335,26 @@ export const SingleFormActions = {
 		};
 	},
 
+	responseSingleChangeRequest: () => {
+		return {
+			type: 'RESPONSE_SINGLE_CHANGE_REQUEST',
+		};
+	},
+
+	responseSingleChangeSuccess: ( id ) => {
+		return {
+			type: 'RESPONSE_SINGLE_CHANGE_SUCCESS',
+			id,
+		};
+	},
+
+	responseSingleChangeError: ( error ) => {
+		return {
+			type: 'RESPONSE_SINGLE_CHANGE_ERROR',
+			error,
+		};
+	},
+
 	getResponseNotes: ( notes ) => {
 		return {
 			type: 'GET_RESPONSE_NOTES',
@@ -355,6 +381,98 @@ export const SingleFormActions = {
 		return {
 			type: 'DELETE_RESPONSE_NOTES',
 			id,
+		};
+	},
+	fetchSummary: ( path, formId, fieldName, perPage ) => {
+		return {
+			type: 'FETCH_SUMMARY',
+			payload: {
+				path,
+				formId,
+				fieldName,
+				perPage,
+			},
+		};
+	},
+	fetchSummaryRequest: () => {
+		return {
+			type: 'FETCH_SUMMARY_REQUEST',
+		};
+	},
+	fetchSummarySuccess: ( data, formId, fieldName, perPage ) => {
+		return {
+			type: 'FETCH_SUMMARY_SUCCESS',
+			payload: {
+				data,
+				formId,
+				fieldName,
+				perPage,
+			},
+		};
+	},
+	fetchSummaryError: ( error ) => {
+		return {
+			type: 'FETCH_SUMMARY_ERROR',
+			error,
+		};
+	},
+	fetchSummaryFields: ( path ) => {
+		return {
+			type: 'FETCH_SUMMARY_FIELDS',
+			path,
+		};
+	},
+	fetchSummaryFieldsRequest: () => {
+		return {
+			type: 'FETCH_SUMMARY_FIELDS_REQUEST',
+		};
+	},
+	fetchSummaryFieldsSuccess: ( fields ) => {
+		return {
+			type: 'FETCH_SUMMARY_FIELDS_SUCCESS',
+			payload: {
+				fields,
+			},
+		};
+	},
+	fetchSummaryFieldsError: ( error ) => {
+		return {
+			type: 'FETCH_SUMMARY_FIELDS_ERROR',
+			error,
+		};
+	},
+	updateSummaryPerPage: ( fieldName, perPage ) => {
+		return {
+			type: 'UPDATE_SUMMARY_PER_PAGE',
+			fieldName,
+			perPage,
+		};
+	},
+
+	fetchAnalyticsSummary: ( path ) => {
+		return {
+			type: 'FETCH_ANALYTICS_SUMMARY',
+			path,
+		};
+	},
+	fetchAnalyticsSummaryRequest: () => {
+		return {
+			type: 'FETCH_ANALYTICS_SUMMARY_REQUEST',
+		};
+	},
+	fetchAnalyticsSummarySuccess: ( data, formId ) => {
+		return {
+			type: 'FETCH_ANALYTICS_SUMMARY_SUCCESS',
+			payload: {
+				data,
+				formId,
+			},
+		};
+	},
+	fetchAnalyticsSummaryError: ( error ) => {
+		return {
+			type: 'FETCH_ANALYTICS_SUMMARY_ERROR',
+			error,
 		};
 	},
 };

@@ -16,6 +16,7 @@ export default function AntDropdown( props ) {
 		controlItemBgHover: '#f5f5f5',
 		controlPaddingHorizontal: 15,
 		lineHeight: 1.18,
+		fontFamily: 'Inter',
 	};
 	return (
 		<DropdownStyle>

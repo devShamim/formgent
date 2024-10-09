@@ -17,9 +17,9 @@ class Select extends \Elementor\Control_Select2 {
         $control_uid = $this->get_control_uid();
         ?>
             <div class="elementor-control-field">
-                <label for="<?php formgent_render( $control_uid ); ?>" class="elementor-control-title">{{{ data.label }}}</label>
+                <label for="<?php echo esc_attr( $control_uid ); ?>" class="elementor-control-title">{{{ data.label }}}</label>
                 <div class="elementor-control-input-wrapper elementor-control-unit-5">
-                    <select id="<?php formgent_render( $control_uid ); ?>" class="custom-control-select elementor-control-tag-area" style="width:100%" data-setting="{{ data.name }}">
+                    <select id="<?php echo esc_attr( $control_uid ); ?>" class="custom-control-select elementor-control-tag-area" style="width:100%" data-setting="{{ data.name }}">
                     </select>
                     <input type="hidden" class="saved-value" data-setting="{{ data.name }}">
                 </div>

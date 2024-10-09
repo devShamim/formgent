@@ -14,10 +14,9 @@ import './style.scss';
 
 const exampleAttributes = {};
 
-const controls = {
+const generalControls = {
 	general: {
 		type: 'panel',
-		label: __( 'General', 'formgent' ),
 		children: {
 			name: {
 				type: 'text',
@@ -26,6 +25,10 @@ const controls = {
 		},
 	},
 };
+
+const advancedControls = {};
+
+const controls = { generalControls, advancedControls };
 
 registerBlock( metadata, controls, Edit, 'smiley', exampleAttributes, {
 	save: Save,

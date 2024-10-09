@@ -31,14 +31,6 @@ class AnalyticsController extends Controller {
             ]
         );
 
-        if ( $validator->is_fail() ) {
-            return Response::send(
-                [
-                    'messages' => $validator->errors
-                ], 422
-            );
-        }
-
         try {
             $form = $this->form_repository->get_by_id( absint( $wp_rest_request->get_param( 'id' ) ) );
 

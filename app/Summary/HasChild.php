@@ -17,7 +17,7 @@ trait HasChild {
     }
 
     protected function get_answers( stdClass $form, array $field, int $page, int $per_page ) {
-        $parents = $this->query( $form->ID, $field['name'], $field['field_type'] )->select( 'id' )->pagination( $per_page, $page );
+        $parents = $this->query( $form->ID, $field['name'], $field['field_type'] )->select( 'id' )->pagination( $page, $per_page );
 
         if ( empty( $parents ) ) {
             return [];

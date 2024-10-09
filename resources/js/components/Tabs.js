@@ -4,6 +4,7 @@ export default function AntTabs( props ) {
 	const defaultTokens = {
 		Tabs: {
 			//borderColor: 'red'
+			fontFamily: 'Inter',
 		},
 	};
 

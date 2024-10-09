@@ -45,9 +45,9 @@ function formgent_dir( string $dir = '' ) {
     return formgent()->get_dir( $dir );
 }
 
-function formgent_render( string $content ) {
+function formgent_render_icon( string $icon ) {
     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo $content;
+    echo file_get_contents( formgent_dir( "resources/svg/icons/{$icon}.svg" ) );
 }
 
 function formgent_date_time_format() {
@@ -124,13 +124,13 @@ function formgent_field_handler( string $field_type ):Field {
     $field_handler_class = formgent_config( "fields.{$field_type}.class" );
 
     if ( ! class_exists( $field_handler_class ) ) {
-        throw new Exception( __( 'Field handler not found.', 'formgent' ), 500 );
+        throw new Exception( esc_html__( 'Field handler not found.', 'formgent' ), 500 );
     }
 
     $field_handler = formgent_make( $field_handler_class );
 
     if ( ! $field_handler instanceof Field ) {
-        throw new Exception( __( 'Please use a valid field handler.', 'formgent' ), 500 );
+        throw new Exception( esc_html__( 'Please use a valid field handler.', 'formgent' ), 500 );
     }
 
     return $field_handler;
@@ -150,10 +150,6 @@ function formgent_generate_token() {
     $random = bin2hex( random_bytes( 5 ) );
     $token  = $random . $time;
     return $token;
-}
-
-function formgent_font_family_dir( string $file = '' ) {
-    return WP_CONTENT_DIR . '/formgent-font-family/' . ltrim( $file, '/' );
 }
 
 function formgent_post_type() {
@@ -194,6 +190,8 @@ function formgent_get_form_field_settings( array $parsed_blocks, bool $remove_la
             unset( $attributes['label'] );
             unset( $attributes['sub_label'] );
             unset( $attributes['description'] );
+            unset( $attributes['options'] );
+            unset( $attributes['button_text'] );
         }
 
         $attributes['field_type'] = $blocks[$block_name]['field_type'];

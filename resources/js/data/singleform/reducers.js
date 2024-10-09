@@ -1,5 +1,6 @@
 const DEFAULT_STATE = {
 	forms: null,
+	analyticsSummary: null,
 	selectedFormType: '',
 	selectedFormId: null,
 	isCreatingForm: false,
@@ -9,6 +10,8 @@ const DEFAULT_STATE = {
 	isReadStatusChanging: false,
 	isResponseDeleting: false,
 	isResponseColumnUpdating: false,
+	isResponseSingleChanging: false,
+	isAnalyticsSummaryFetching: false,
 	starredItems: {},
 	readStatusItems: {},
 	pagination: {
@@ -19,12 +22,24 @@ const DEFAULT_STATE = {
 	activeCustomizerTab: 'element',
 	activeField: '',
 	error: null,
+	summary: null,
+	summaryFields: null,
+	isFetchingSummary: false,
 };
 
 export const SingleFormReducer = ( state = DEFAULT_STATE, action ) => {
-	const { type, isLoading, data, currentPage, error } = action;
+	const {
+		type,
+		isLoading,
+		data,
+		currentPage,
+		error,
+		summaryPerPage,
+		fieldName,
+	} = action;
 
 	let fieldList = {};
+
 	switch ( type ) {
 		case 'CREATE_FORM_REQUEST':
 			return {
@@ -147,13 +162,6 @@ export const SingleFormReducer = ( state = DEFAULT_STATE, action ) => {
 						},
 					},
 				},
-				// singleForm: {
-				// 	...state.singleForm,
-				// 	content: {
-				// 		...state.singleForm.content,
-				// 		fields: data,
-				// 	},
-				// },
 			};
 		case 'UPDATE_FIELD_LABEL':
 			fieldList = structuredClone( state?.singleForm?.content?.fields );
@@ -262,6 +270,25 @@ export const SingleFormReducer = ( state = DEFAULT_STATE, action ) => {
 				isResponseColumnUpdating: false,
 			};
 
+		case 'RESPONSE_SINGLE_CHANGE_REQUEST':
+			return {
+				...state,
+				isResponseSingleChanging: true,
+			};
+
+		case 'RESPONSE_SINGLE_CHANGE_SUCCESS':
+			return {
+				...state,
+				isResponseSingleChanging: false,
+			};
+
+		case 'RESPONSE_SINGLE_CHANGE_ERROR':
+			return {
+				...state,
+				error: error,
+				isResponseSingleChanging: false,
+			};
+
 		case 'GET_RESPONSE_NOTES':
 			return {
 				...state,
@@ -270,7 +297,6 @@ export const SingleFormReducer = ( state = DEFAULT_STATE, action ) => {
 		case 'ADD_RESPONSE_NOTES':
 			return {
 				...state,
-				notes: [ ...state.notes, action.note ],
 			};
 		case 'UPDATE_RESPONSE_NOTES':
 			return {
@@ -280,6 +306,72 @@ export const SingleFormReducer = ( state = DEFAULT_STATE, action ) => {
 			return {
 				...state,
 			};
+		case 'FETCH_SUMMARY_REQUEST':
+			return {
+				...state,
+				isFetchingSummary: true,
+			};
+		case 'FETCH_SUMMARY_SUCCESS':
+			const updatedSummary = {
+				...state.summary,
+				[ action.payload.formId ]: {
+					...state.summary?.[ action.payload.formId ],
+					[ action.payload.fieldName ]: action.payload.data,
+				},
+			};
+
+			return {
+				...state,
+				summary: updatedSummary,
+				isFetchingSummary: false,
+			};
+		case 'FETCH_SUMMARY_ERROR':
+			return {
+				...state,
+				error: error,
+				isFetchingSummary: false,
+			};
+		case 'FETCH_SUMMARY_FIELDS_REQUEST':
+			return {
+				...state,
+				isFetchingSummary: true,
+			};
+		case 'FETCH_SUMMARY_FIELDS_SUCCESS':
+			return {
+				...state,
+				summaryFields: action.payload.fields,
+			};
+		case 'FETCH_SUMMARY_FIELDS_ERROR':
+			return {
+				...state,
+				error: error,
+				isFetchingSummary: false,
+			};
+		case 'UPDATE_SUMMARY_PER_PAGE':
+			return {
+				...state,
+				per_page: summaryPerPage,
+				field_name: fieldName,
+			};
+		case 'FETCH_ANALYTICS_SUMMARY_REQUEST':
+			return {
+				...state,
+				isAnalyticsSummaryFetching: true,
+			};
+		case 'FETCH_ANALYTICS_SUMMARY_SUCCESS':
+			return {
+				...state,
+				analyticsSummary: {
+					[ action.payload.formId ]: action.payload.data,
+				},
+			};
+		case 'FETCH_ANALYTICS_SUMMARY_ERROR':
+			return {
+				...state,
+				error: error,
+				isAnalyticsSummaryFetching: false,
+			};
+
 		default:
 			return state;
 	}

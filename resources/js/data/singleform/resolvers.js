@@ -36,7 +36,9 @@ export const SingleFormResolvers = {
 		searchItem = '',
 		formID = '',
 		readStatus = 0,
-		orderType = 'asc',
+		orderFieldType = 'response',
+		orderType = 'desc',
+		orderBy = 'created_at',
 		timestamp = 0
 	) {
 		yield SingleFormActions.isSingleFormFetchLoading( true );
@@ -48,7 +50,10 @@ export const SingleFormResolvers = {
 				searchItem,
 				formID,
 				readStatus,
-				orderType
+				orderFieldType,
+				orderType,
+				orderBy,
+				timestamp
 			);
 
 			yield SingleFormActions.storeResponse( {
@@ -68,6 +73,7 @@ export const SingleFormResolvers = {
 		formID,
 		readStatus = 0,
 		orderType,
+		orderBy,
 		timestamp = 0
 	) {
 		try {
@@ -77,7 +83,8 @@ export const SingleFormResolvers = {
 				searchItem,
 				formID,
 				readStatus,
-				orderType
+				orderType,
+				orderBy
 			);
 
 			yield SingleFormActions.storeSingleResponse( {
@@ -106,6 +113,50 @@ export const SingleFormResolvers = {
 			console.error( 'getSingleFormFields error', error );
 			yield SingleFormActions.fetchSingleFormError( error );
 			yield SingleFormActions.isSingleFormFetchLoading( false );
+		}
+	},
+	*getSummary( formId, fieldName, perPage = 10, timestamp = 0 ) {
+		try {
+			const responseSummary = yield SingleFormActions.fetchSummary(
+				'formgent/admin/forms',
+				formId,
+				fieldName,
+				perPage,
+				Date.now()
+			);
+			yield SingleFormActions.fetchSummarySuccess(
+				responseSummary,
+				formId,
+				fieldName
+			);
+		} catch ( error ) {
+			yield SingleFormActions.fetchSummaryError( error );
+		}
+	},
+	*getSummaryFields( formId, timestamp = 0 ) {
+		try {
+			const summaryFields = yield SingleFormActions.fetchSummaryFields(
+				`formgent/admin/forms/${ formId }/summary/field`
+			);
+			yield SingleFormActions.fetchSummaryFieldsSuccess(
+				summaryFields.fields
+			);
+		} catch ( error ) {
+			yield SingleFormActions.fetchSummaryFieldsError( error );
+		}
+	},
+	*getAnalyticsSummary( formId, timestamp = 0 ) {
+		try {
+			const analyticsSummaryResponse =
+				yield SingleFormActions.fetchAnalyticsSummary(
+					`formgent/admin/analytics/forms/${ formId }/summary`
+				);
+			yield SingleFormActions.fetchAnalyticsSummarySuccess(
+				analyticsSummaryResponse.data,
+				formId
+			);
+		} catch ( error ) {
+			yield SingleFormActions.fetchAnalyticsSummaryError( error );
 		}
 	},
 };

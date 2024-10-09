@@ -18,4 +18,12 @@ function formatDate( formatType, date, options, isTimeActive = true ) {
 	);
 }
 
-export { formatDate };
+function convertToTitleCase( text ) {
+	return text
+		.replace( /_/g, ' ' )
+		.split( ' ' )
+		.map( ( word ) => word.charAt( 0 ).toUpperCase() + word.slice( 1 ) )
+		.join( ' ' );
+}
+
+export { formatDate, convertToTitleCase };

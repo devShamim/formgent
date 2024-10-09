@@ -4,6 +4,8 @@ namespace FormGent\App\DTO;
 
 defined( 'ABSPATH' ) || exit;
 
+use FormGent\WpMVC\DTO\DTO;
+
 class NoteDTO extends DTO {
     private int $id;
 

@@ -63,8 +63,7 @@ class Form extends Widget_Base {
 
         View::render(
             'form', [
-                'form'   => $form,
-                'fields' => do_blocks( $form->post_content )
+                'form' => $form
             ]
         );
     }

@@ -76,7 +76,7 @@ export default function Filter( props ) {
 			value: 'general',
 			label: sprintf(
 				__( 'General (%s)', 'formgent' ),
-				forms.filter( ( item ) => item.type === 'general' ).length
+				forms.filter( ( item ) => item?.type === 'general' ).length
 			),
 		},
 	];
@@ -252,7 +252,7 @@ export default function Filter( props ) {
 		const [ dateFrom, dateTo ] = dateStrings;
 		updateFormDateFrom( `${ dateFrom } 00:00:01` );
 		updateFormDateTo( `${ dateTo } 23:59:59` );
-		resolveSelect( 'formgent' ).getForms(
+		'formgent'.getForms(
 			pagination.current_page,
 			pagination.per_page,
 			Date.now(),

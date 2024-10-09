@@ -29,7 +29,7 @@
 		},
 		"label_alignment": {
 			"type": "string",
-			"default": "left"
+			"default": "top"
 		},
 		"sub_label": {
 			"type": "string",
@@ -38,6 +38,10 @@
 		"required": {
 			"type": "boolean",
 			"default": false
+		},
+		"mask_type": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

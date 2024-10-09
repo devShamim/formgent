@@ -7,6 +7,7 @@ defined( 'ABSPATH' ) || exit;
 use FormGent\WpMVC\RequestValidator\Validator;
 use FormGent\App\DTO\AnswerDTO;
 use FormGent\App\Summary\MultiChoice;
+use FormGent\WpMVC\Exceptions\Exception;
 use stdClass;
 use WP_REST_Request;
 
@@ -35,24 +36,22 @@ trait MethodResolver {
                 $field['name'] => implode( '|', $rules ),
             ]
         );
-            
-        static::throw_validator_errors( $validator );
         
         $is_required = isset( $field["required"] ) && '1' ===  $field["required"];
         $values      = $wp_rest_request->get_param( $field['name'] );
 
         if ( '1' === $is_required && empty( $values ) ) {
-            static::throw_errors(
+            throw (new Exception())->set_messages(
                 [
                     $field['name'] => [
                         sprintf( "The %s field is required.", $field['name'] )
                     ]
-                ] 
+                ]
             );
         }
 
         if ( array_unique( $values ) !== $values ) {
-            static::throw_errors(
+            throw (new Exception())->set_messages(
                 [
                     $field['name'] => [
                         sprintf( "The %s field does not allow the same value multiple times", $field['name'] )
@@ -62,11 +61,19 @@ trait MethodResolver {
         }
 
         if ( ! empty( array_diff( $values, $options ) ) ) {
-            static::throw_errors(
+            throw (new Exception())->set_messages(
                 [
                     $field['name'] => [
                         sprintf( "The value of %s must be between %s", $field['name'], implode( ',', $options ) )
                     ]
+                ]
+            );
+        }
+
+        if ( $field['choice_limit'] && count( $values ) > $field['choice_limit_item'] ) {
+            throw (new Exception())->set_messages(
+                [
+                    $field['name'] => sprintf( "Can select maximum %d items", $field['choice_limit_item'] )
                 ]
             );
         }
