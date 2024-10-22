@@ -4,7 +4,7 @@ namespace FormGent\App\EnumeratedList;
 
 defined( 'ABSPATH' ) || exit;
 
-class SummaryType {
+class SummaryType extends EnumBase {
     const PAGINATION   = 'pagination';
     const CHART        = 'chart';
     const SINGLECHOICE = 'single_choice';

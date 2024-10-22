@@ -4,7 +4,7 @@ namespace FormGent\App\EnumeratedList;
 
 defined( 'ABSPATH' ) || exit;
 
-class BackgroundProcessStatus {
+class BackgroundProcessStatus extends EnumBase {
     const IDLE        = 'idle';
     const INITIALIZED = 'initialized';
     const RUNNING     = 'running';
