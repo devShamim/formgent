@@ -7,7 +7,7 @@ use FormGent\WpMVC\App;
 /**
  * Plugin Name:       FormGent
  * Description:       A no-code AI-powered form builder for WordPress. Drag-and-drop forms, mobile-first, and future-ready for quizzes, payments, and more!
- * Version:           0.0.5
+ * Version:           0.0.6
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Tested up to:      6.6

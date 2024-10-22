@@ -2,6 +2,11 @@
 
 use FormGent\WpMVC\View\View; 
 
+if ( 0 >= $attributes['formId'] ) {
+    echo "Form not found";
+    return;
+}
+
 $post = get_post( $attributes['formId'] );
 
 if ( empty( $post ) ) {
