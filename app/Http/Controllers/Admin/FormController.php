@@ -351,4 +351,18 @@ class FormController extends Controller {
             ]
         );
     }
+
+    public function get_preset_fields( Validator $validator, WP_REST_Request $request ) {
+        $validator->validate(
+            [
+                'id' => 'required|numeric'
+            ]
+        );
+
+        return Response::send(
+            [
+                'preset_fields' => $this->form_repository->get_preset_fields( $request->get_param( 'id' ) ),
+            ]
+        ); 
+    }
 }

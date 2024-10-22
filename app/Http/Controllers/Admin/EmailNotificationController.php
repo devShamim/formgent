@@ -26,14 +26,18 @@ class EmailNotificationController extends Controller {
     public function index( WP_REST_Request $request, Validator $validator ) {
         $validator->validate(
             [
+                'form_id'  => 'required|numeric',
                 'per_page' => 'numeric',
                 'page'     => 'numeric',
+                'sort_by'  => 'string|accepted:last_modified,date_created_asc,date_created_desc,alphabetical',
             ]
         );
 
         $dto = new EmailNotificationReadDTO;
         $dto->set_per_page( intval( $request->get_param( 'per_page' ) ) );
         $dto->set_page( intval( $request->get_param( 'page' ) ) );
+        $dto->set_form_id( intval( $request->get_param( 'form_id' ) ) );
+        $dto->set_sort_by( $request->get_param( 'sort_by' ) );
 
         return Response::send( $this->repository->get( $dto ) );
     }

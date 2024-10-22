@@ -36,7 +36,7 @@ class EmailNotificationServiceProvider implements Provider {
         $this->background_process->push_to_queue(
             [
                 'emails' => $emails
-            ] 
+            ]
         )->save()->dispatch();
     }
 

@@ -1,6 +1,10 @@
 import { Button, Icon } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import { nanoid } from 'nanoid';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import ReactSVG from 'react-inlinesvg';
+import dotsMove from '@icon/dots-move.svg';
+import closeIcon from '@icon/close-solid-circle.svg';
 import Controls from '../Controls';
 
 export default function Repeater( {
@@ -10,12 +14,25 @@ export default function Repeater( {
 	setAttributes,
 } ) {
 	const [ openIndex, setOpenIndex ] = useState( null );
+	const options = attributes[ attr_key ];
+
+	// Handle drag and drop reordering
+	const onDragEnd = ( { destination, source }, sortableArray ) => {
+		if (
+			! destination ||
+			( destination.droppableId === source.droppableId &&
+				destination.index === source.index )
+		) {
+			return;
+		}
+		const [ removedItem ] = sortableArray.splice( source.index, 1 );
+		sortableArray.splice( destination.index, 0, removedItem );
+		setAttributes( { [ attr_key ]: sortableArray } );
+	};
 
 	//handle repeater field remove
 	const handleRemoveField = ( id ) => {
-		const newFields = attributes[ attr_key ].filter(
-			( item ) => item.id !== id
-		);
+		const newFields = options.filter( ( item ) => item.id !== id );
 
 		if ( newFields.length > 0 ) {
 			setAttributes( { [ attr_key ]: newFields } );
@@ -25,7 +42,7 @@ export default function Repeater( {
 	//handle add repeater field
 	const handleAddField = () => {
 		const newField = { id: nanoid(), label: 'New Option', value: nanoid() };
-		const newFields = [ ...attributes[ attr_key ], newField ];
+		const newFields = [ ...options, newField ];
 		setAttributes( { [ attr_key ]: newFields } );
 		setOpenIndex( newFields.length - 1 );
 	};
@@ -47,7 +64,7 @@ export default function Repeater( {
 				setAttributes
 			);
 		} else {
-			const newFields = attributes[ attr_key ].map( ( item ) => {
+			const newFields = options.map( ( item ) => {
 				if ( item.id === id ) {
 					return { ...item, [ fieldKey ]: value };
 				}
@@ -63,70 +80,143 @@ export default function Repeater( {
 	return (
 		<div className="formgent-repeater-control">
 			<label className="formgent-control-label">{ control.label }</label>
-			{ attributes[ attr_key ] &&
-				attributes[ attr_key ].map( ( field, index ) => {
-					const labelKey = control.label_key;
-					return (
+
+			<DragDropContext
+				onDragEnd={ ( results ) => onDragEnd( results, options ) }
+			>
+				<Droppable
+					droppableId="formgent-droppable-options"
+					type="formgent-options"
+				>
+					{ ( provided ) => (
 						<div
-							key={ field.id }
-							className={ `formgent-repeater-field ${
-								openIndex === index
-									? 'formgent-repeater-field--expanded'
-									: ''
-							}` }
+							ref={ provided.innerRef }
+							{ ...provided.droppableProps }
+							className="formgent-droppable-options"
 						>
-							<div className="formgent-repeater-field-control">
-								<div
-									className="formgent-repeater-field-title"
-									onClick={ () =>
-										toggleFieldContent( index )
-									}
-								>
-									{ typeof field[ labelKey ] === 'undefined'
-										? control.fields[ control.label_key ]
-												?.label
-										: field[ labelKey ] }
-								</div>
-								{ showActions ? (
-									<Button
-										onClick={ () =>
-											handleRemoveField( field.id )
-										}
-										className="formgent-repeater-field-remove"
-									>
-										X
-									</Button>
-								) : (
-									''
-								) }
-							</div>
-							{ openIndex === index && (
-								<div className="formgent-repeater-field-control-content">
-									<Controls
-										controls={ control.fields }
-										attributes={ field }
-										setAttributes={ ( updatedField ) => {
-											Object.keys( updatedField ).forEach(
-												( fieldKey ) => {
-													handleChange(
-														field.id,
-														fieldKey,
-														updatedField[ fieldKey ]
-													);
-												}
-											);
-										} }
-									/>
-								</div>
-							) }
+							{ options &&
+								options.map( ( field, index ) => {
+									const labelKey = control.label_key;
+									return (
+										<Draggable
+											draggableId={ field.id }
+											index={ index }
+											key={ field.id }
+										>
+											{ ( provided ) => (
+												<div
+													key={ field.id }
+													className={ `formgent-repeater-field ${
+														openIndex === index
+															? 'formgent-repeater-field--expanded'
+															: ''
+													}` }
+												>
+													<div
+														className="formgent-repeater-field-control"
+														ref={
+															provided.innerRef
+														}
+														{ ...provided.draggableProps }
+														{ ...provided.dragHandleProps }
+													>
+														<div className="formgent-repeater-field-control-actions">
+															<div
+																className="formgent-repeater-field-title"
+																onClick={ () =>
+																	toggleFieldContent(
+																		index
+																	)
+																}
+															>
+																{ typeof field[
+																	labelKey
+																] ===
+																'undefined'
+																	? control
+																			.fields[
+																			control
+																				.label_key
+																	  ]?.label
+																	: field[
+																			labelKey
+																	  ] }
+															</div>
+															{ showActions ? (
+																<span
+																	onClick={ () =>
+																		handleRemoveField(
+																			field.id
+																		)
+																	}
+																	className="formgent-repeater-field-remove"
+																>
+																	<ReactSVG
+																		src={
+																			closeIcon
+																		}
+																	/>
+																</span>
+															) : (
+																''
+															) }
+														</div>
+														<div className="formgent-repeater-field-control-move">
+															<ReactSVG
+																src={ dotsMove }
+															/>
+														</div>
+													</div>
+
+													{ openIndex === index && (
+														<div className="formgent-repeater-field-control-content">
+															<Controls
+																controls={
+																	control.fields
+																}
+																attributes={
+																	field
+																}
+																setAttributes={ (
+																	updatedField
+																) => {
+																	Object.keys(
+																		updatedField
+																	).forEach(
+																		(
+																			fieldKey
+																		) => {
+																			handleChange(
+																				field.id,
+																				fieldKey,
+																				updatedField[
+																					fieldKey
+																				]
+																			);
+																		}
+																	);
+																} }
+															/>
+														</div>
+													) }
+												</div>
+											) }
+										</Draggable>
+									);
+								} ) }
 						</div>
-					);
-				} ) }
+					) }
+				</Droppable>
+			</DragDropContext>
 			<div className="formgent-repeater__add-item">
 				{ showActions ? (
-					<Button variant="primary" onClick={ handleAddField }>
-						<Icon icon="plus" /> { control.add_button_text }
-					</Button>
+					<span
+						className="formgent-repeater__add-item__link"
+						onClick={ handleAddField }
+					>
+						<Icon icon="plus" />{ ' ' }
+						<span>{ control.add_button_text }</span>
+					</span>
 				) : (
 					''
 				) }

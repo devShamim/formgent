@@ -7,7 +7,7 @@ use FormGent\WpMVC\App;
 /**
  * Plugin Name:       FormGent
  * Description:       FormGent is the no-code, Gutenberg-native form builder you’ve been waiting for! Whether you want to create simple forms or plan for more dynamic, multi-step forms in the future—FormGent makes it easy. Built specifically for Gutenberg, the future of WordPress, FormGent focuses on delivering a fast and seamless form-building experience today, with powerful features like quizzes, payments, conversational forms, and AI on the way.
- * Version:           0.0.2
+ * Version:           0.0.4
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Tested up to:      6.6

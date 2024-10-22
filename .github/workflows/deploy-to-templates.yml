@@ -95,3 +95,4 @@ jobs:
             **/tests
             **/yarn.lock
             **/.DS_Store
+            **/install-wp-tests.sh

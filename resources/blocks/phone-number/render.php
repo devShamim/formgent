@@ -26,13 +26,13 @@ $unique_id = str_replace( '-', '_', wp_unique_id( 'formgent-store' ) );
             <!-- <span
                 class="formgent-phone-initialization"
                 data-wp-init="callbacks.phoneNumberInit"
-                data-wp-key="<?php echo esc_attr( $attributes['name'] ); ?>"
-                name="<?php echo esc_attr( $attributes['name'] ); ?>-<?php echo esc_attr( $unique_id ) ?>-dial-code"
+                data-wp-key="<?php // echo esc_attr( $attributes['name'] ); ?>"
+                name="<?php // echo esc_attr( $attributes['name'] ); ?>-<?php echo esc_attr( $unique_id ) ?>-dial-code"
             >
             </span> -->
             <div class="formgent-editor-block-list__single__dialer__content">
                 <input
-                    class="formgent-editor-block-list__single__input <?= $attributes['country_code'] ? 'formgent-editor-block-list__single__input--country-code' : ''; ?>"
+                    class="formgent-editor-block-list__single__input <?php $attributes['country_code'] ? 'formgent-editor-block-list__single__input--country-code' : ''; ?>"
                     type="text"
                     name="<?php echo esc_attr( $attributes['name'] ); ?>"
                     id="<?php echo esc_attr( $attributes['name'] ); ?>"

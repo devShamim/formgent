@@ -222,7 +222,7 @@ const TableStyle = Styled.div`
                 padding: 15px 20px;
                 text-align: start;
                 color: var(--formgent-color-gray-600);
-                background: #E5E7EB;
+                background: #f3f4f6;
                 &:before{
                     content: none !important;
                 }

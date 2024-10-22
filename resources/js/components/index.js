@@ -14,12 +14,16 @@ import AntRangePicker from './RangePicker';
 import AntSelect from './Select';
 import AntSkeleton from './Skeleton';
 import AntSpin from './Spin';
+import Loader from './Loader';
 import AntSwitch from './Switch';
 import AntTable from './Table';
 import AntTabs from './Tabs';
 import AntTextArea from './TextArea';
 import AntTooltip from './Tooltip';
 import AntProgress from './Progress';
+import ClassicEditorField from './FormFields/ClassicEditorField';
+import TextField from './FormFields/TextField';
+
 /**
  * Global components for admin and user
  */
@@ -34,6 +38,7 @@ registerModule( 'components', {
 	AntTabs,
 	AntTable,
 	AntSpin,
+	Loader,
 	AntCheckbox,
 	AntSkeleton,
 	AntTooltip,
@@ -47,6 +52,8 @@ registerModule( 'components', {
 	AntRangePicker,
 	AntPagination,
 	AntProgress,
+	ClassicEditorField,
+	TextField,
 } );
 
 /**
@@ -69,4 +76,7 @@ export {
 	AntTextArea,
 	Form,
 	AntProgress,
+	Loader,
+	ClassicEditorField,
+	TextField,
 };

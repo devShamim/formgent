@@ -1,0 +1,68 @@
+name: Deploy to wp org
+
+on:
+  release:
+    types:
+      - released
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+
+      - name: Setup composer
+        run: composer setup
+
+      - name: Setup Node.js 20.10.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.10.0"
+
+      - name: Install yarn globally
+        run: npm install --global yarn
+
+      - name: Install yarn dependencies
+        run: yarn install
+
+      - name: Compile Scripts
+        run: yarn minify
+
+      - name: Fix Text Domain
+        run: yarn fixtextdomain
+
+      - name: Generate Text Domain POT file
+        run: composer make-production-pot
+
+      - name: Remove Composer Dev Dependencies
+        run: composer build
+
+      - name: Build plugin
+        run: yarn git-compress
+
+      - name: Deploy to wp org
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: formgent
+          BUILD_DIR: formgent
+
+      - name: Create zip file
+        run: |
+          tag_name=$(git describe --tags --abbrev=0)
+          zip -r "formgent.${tag_name}.zip" formgent
+
+      - name: Upload zip file as a release asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: formgent*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

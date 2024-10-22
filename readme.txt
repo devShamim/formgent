@@ -1,10 +1,10 @@
-=== FormGent – No-Code Form Builder ===
+=== FormGent ===
 Contributors: wpwax
 Tags: form builder
 Requires at least: 6.6
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 0.0.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -82,7 +82,10 @@ We want **your feedback** to help shape the future of FormGent. If you have any 
 Need help getting started? We’ve got you covered with detailed documentation and a support team that’s ready to assist you. Head over to our **Support** section for all the help you need.
 
 == Frequently Asked Questions ==
+**How can I become a Contributor**
+
+If you want to contribute, go to our [FormGent GitHub Repository](https://github.com/sovware/formgent) and see where you can help.
 
 == Changelog ==
-= 1.0.0 - 22 September 2022 =
+= 0.0.4(beta) - 20 October 2024 =
 * Initial launch

@@ -6,6 +6,7 @@ const I18nLoaderWebpackPlugin = require( '@automattic/i18n-loader-webpack-plugin
 
 // removing old build files
 fs.removeSync( path.resolve( __dirname, './assets/build/' ) );
+fs.removeSync( path.resolve( __dirname, './assets/blocks/' ) );
 
 /**
  * Given a string, returns a new string with dash separators converted to
@@ -33,7 +34,10 @@ const resolve = {
 
 const plugins = [
 	...defaultConfig[ 0 ].plugins.reduce( ( acc, plugin ) => {
-		if ( plugin.constructor.name !== 'DependencyExtractionWebpackPlugin' ) {
+		if (
+			plugin.constructor.name !== 'DependencyExtractionWebpackPlugin' &&
+			plugin.constructor.name !== 'RtlCssPlugin'
+		) {
 			acc.push( plugin );
 		}
 		return acc;
@@ -71,14 +75,36 @@ const plugins = [
 	} ),
 ];
 
+const moduleConfig = {
+	...defaultConfig[ 0 ].module,
+	rules: [
+		...defaultConfig[ 0 ].module.rules.filter(
+			( rule ) => rule.type !== 'asset/resource'
+		),
+		{
+			test: /\.(bmp|png|jpe?g|gif|webp)$/i,
+			type: 'asset/resource',
+			generator: {
+				filename: 'images/[name][ext]',
+			},
+		},
+	],
+};
+
 module.exports = [
 	{
 		...defaultConfig[ 0 ],
+		output: {
+			...defaultConfig[ 0 ].output,
+			path: path.resolve( __dirname, './assets/blocks/' ),
+		},
+		module: moduleConfig,
 		plugins,
 		resolve,
 	},
 	{
 		...defaultConfig[ 0 ],
+		module: moduleConfig,
 		entry: {
 			// 'js/frontend/FormSubmission/index':
 			// 	'./resources/js/frontend/pages/FormSubmission/index.js',
@@ -108,9 +134,14 @@ module.exports = [
 			...defaultConfig[ 0 ].output,
 			path: path.resolve( __dirname, './assets/build/' ),
 			filename: '[name].js',
-			chunkFilename: '[name].js?ver=' + chunkUniqueKey,
+			chunkFilename: 'chunk/[name].js?ver=' + chunkUniqueKey,
 		},
-		plugins,
+		plugins: plugins.reduce( ( acc, plugin ) => {
+			if ( plugin.constructor.name !== 'CopyPlugin' ) {
+				acc.push( plugin );
+			}
+			return acc;
+		}, [] ),
 		resolve,
 	},
 	{
@@ -124,5 +155,11 @@ module.exports = [
 			filename: '[name].js',
 			chunkFilename: '[name].js?ver=' + chunkUniqueKey,
 		},
+		plugins: defaultConfig[ 1 ].plugins.reduce( ( acc, plugin ) => {
+			if ( plugin.constructor.name !== 'RtlCssPlugin' ) {
+				acc.push( plugin );
+			}
+			return acc;
+		}, [] ),
 	},
 ];

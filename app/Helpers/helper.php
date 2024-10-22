@@ -46,7 +46,7 @@ function formgent_dir( string $dir = '' ) {
 }
 
 function formgent_render_icon( string $icon ) {
-    //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
     echo file_get_contents( formgent_dir( "resources/svg/icons/{$icon}.svg" ) );
 }
 

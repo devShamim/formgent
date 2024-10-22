@@ -30,13 +30,13 @@ trait MethodResolver {
     public function validate( array $field, WP_REST_Request $wp_rest_request, Validator $validator, stdClass $form ) {
         $rules   = $this->get_validation_rules();
         $options = wp_list_pluck( $field['options'], 'value' );
-        
+
         $validator->validate(
             [
                 $field['name'] => implode( '|', $rules ),
             ]
         );
-        
+
         $is_required = isset( $field["required"] ) && '1' ===  $field["required"];
         $values      = $wp_rest_request->get_param( $field['name'] );
 

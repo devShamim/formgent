@@ -13,6 +13,7 @@ package-lock.json
 /.vscode
 phpcs-report.xml
 /assets/build
+/assets/blocks
 /assets/**/*.hot-update.*
 /assets/**/*.js.map
 /assets/css/*.js

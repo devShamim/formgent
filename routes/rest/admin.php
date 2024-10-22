@@ -29,6 +29,7 @@ Route::group(
                         Route::patch( 'status', [FormController::class, 'update_status'] );
                         Route::patch( 'title', [FormController::class, 'update_title'] );
                         Route::post( 'duplicate', [FormController::class, 'duplicate'] );
+                        Route::get( 'preset-fields', [FormController::class, 'get_preset_fields'] );
                         
                         Route::group(
                             'summary', function() {

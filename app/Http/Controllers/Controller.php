@@ -7,15 +7,10 @@ defined( 'ABSPATH' ) || exit;
 use WP_REST_Request;
 
 abstract class Controller {
-    protected function pagination( WP_REST_Request $wp_rest_request, int $total_items, int $per_page = 10, bool $with_links = true ) {
-        $params       = $this->get_query_params();
-        $current_page = isset( $params['page'] ) ? intval( $params['page'] ) : 1;
-        $per_page     = isset( $params['per_page'] ) ? intval( $params['per_page'] ) : $per_page;
+    protected function pagination( WP_REST_Request $wp_rest_request, int $total_items, int $per_page = 10 ) {
+        $current_page = $wp_rest_request->has_param( 'page' ) ? intval( $wp_rest_request->get_param( 'page' ) ) : 1;
+        $per_page     = $wp_rest_request->has_param( 'per_page' ) ? intval( $wp_rest_request->get_param( 'per_page' ) ) : $per_page;
         $total_pages  = ceil( $total_items / $per_page );
-        $rest_url     = get_rest_url( null, $wp_rest_request->get_route() );
-
-        $params['page']     = $current_page;
-        $params['per_page'] = $per_page;
 
         $pagination = [
             'pagination' => [
@@ -24,14 +19,6 @@ abstract class Controller {
                 'current_page' => $current_page,
             ]
         ];
-
-        if ( $with_links ) {
-            $pagination['links'] = [
-                'prev' => $this->get_prev_link( $params, $rest_url ),
-                'self' => add_query_arg( $params, $rest_url ),
-                'next' => $this->get_next_link( $params, $rest_url, $total_pages )
-            ];
-        }
 
         return $pagination;
     }

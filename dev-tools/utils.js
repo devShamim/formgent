@@ -90,6 +90,7 @@ const buildIgnoreFiles = [
 	'**/Installable',
 	'**/tests',
 	'**/composer/installed.json',
+	'**/install-wp-tests.sh',
 ].map( ( file_path ) => `${ dist }/zip/${ pluginRootFile }/${ file_path }` );
 
 module.exports = {

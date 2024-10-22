@@ -4,6 +4,8 @@
 import { createReduxStore, register } from '@wordpress/data';
 import { FormStore } from './forms';
 import { SingleFormStore } from './singleform';
+import { EmailNotificationStore } from './emailNotification';
+import { EmailNotificationSingleStore } from './emailNotificationSingle';
 import { CommonStore } from './commonData';
 import { rootReducers } from './rootReducers';
 
@@ -13,6 +15,8 @@ import { rootReducers } from './rootReducers';
 const ACTIONS = {
 	...FormStore.FormActions,
 	...SingleFormStore.SingleFormActions,
+	...EmailNotificationStore.EmailNotificationActions,
+	...EmailNotificationSingleStore.EmailNotificationSingleActions,
 	...CommonStore.CommonActions,
 };
 
@@ -22,6 +26,8 @@ const ACTIONS = {
 const SELECTORS = {
 	...FormStore.FormSelectors,
 	...SingleFormStore.SingleFormSelectors,
+	...EmailNotificationStore.EmailNotificationSelectors,
+	...EmailNotificationSingleStore.EmailNotificationSingleSelectors,
 	...CommonStore.CommonSelectors,
 };
 
@@ -31,6 +37,8 @@ const SELECTORS = {
 const CONTROLS = {
 	...FormStore.FormControls,
 	...SingleFormStore.SingleFormControls,
+	...EmailNotificationStore.EmailNotificationControls,
+	...EmailNotificationSingleStore.EmailNotificationSingleControls,
 };
 /**
  * merge all resolvers
@@ -38,6 +46,8 @@ const CONTROLS = {
 const RESOLVERS = {
 	...FormStore.FormResolvers,
 	...SingleFormStore.SingleFormResolvers,
+	...EmailNotificationStore.EmailNotificationResolvers,
+	...EmailNotificationSingleStore.EmailNotificationSingleResolvers,
 };
 
 /**

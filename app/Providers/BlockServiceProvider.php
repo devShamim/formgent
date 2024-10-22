@@ -24,7 +24,7 @@ class BlockServiceProvider implements Provider {
                     'src'    => formgent_url( 'assets/build/css/blocks-frontend.css' )
                 ]
             );
-            register_block_type( formgent_dir( "assets/build{$name}" ) );
+            register_block_type( formgent_dir( "assets/blocks{$name}" ) );
         }
 
         wp_localize_script(

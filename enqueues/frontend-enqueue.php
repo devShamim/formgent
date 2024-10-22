@@ -16,7 +16,7 @@ if ( isset( $_GET['elementor-preview'] ) ) {
     wp_enqueue_style( 'formgent/blocks-frontend', formgent_url( 'assets/build/css/blocks-frontend.css' ), [], formgent_version() );
 }
 
-wp_enqueue_script( 'formgent/jquery-input-mask', formgent_url( 'assets/js/jquery.mask.min.js' ), ['jquery'] );
+wp_enqueue_script( 'formgent/jquery-input-mask', formgent_url( 'assets/js/jquery.mask.min.js' ), ['jquery'], formgent_version(), [ 'in_footer' => true ] );
 
 $block_frontend_asset = include formgent_dir( 'assets/build/js/blocks-frontend.asset.php' );
 

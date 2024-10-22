@@ -34,7 +34,9 @@
 		],
         "permission": [
 			"chmod +x vendor/vendor-src/bin/phpcs",
-			"chmod +x vendor/vendor-src/bin/phpcbf"
+			"chmod +x vendor/vendor-src/bin/phpcbf",
+			"chmod ug+x .husky/*",
+			"chmod ug+x .git/hooks/*"
 		]
 	},
     "autoload": {

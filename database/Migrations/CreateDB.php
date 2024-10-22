@@ -170,7 +170,7 @@ class CreateDB implements Migration {
 
                 if ( empty( $result ) ) {
                     // Add foreign key constraint
-                    // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnquotedComplexPlaceholder, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+                    // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnquotedComplexPlaceholder, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                     $wpdb->query( $wpdb->prepare( "ALTER TABLE %1s ADD CONSTRAINT %2s FOREIGN KEY ( %3s ) REFERENCES %4s ON DELETE CASCADE", [ $table_name, $constraint_name, $column, $reference ] ) );
                 }
             }

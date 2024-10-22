@@ -87,7 +87,7 @@ class ResponseRepository {
     }
 
     public function get_count_by_form_id( int $form_id ) {
-        return Response::query( 'response' )->where( 'response.form_id', $form_id )->where( 'response.status', ResponseStatus::PUBLISH )->group_by( 'form_id' )->count();
+        return Response::query( 'response' )->where( 'response.form_id', $form_id )->where( 'response.status', ResponseStatus::PUBLISH )->count();
     }
 
     public function get_single( ResponseSingleDTO $dto ) {

@@ -359,6 +359,25 @@ export default function TableDrawer( props ) {
 					</span>
 				</div>
 				<div className="response-table__drawer__header__action">
+					<AntDropdown
+						menu={ {
+							items: downloadItems,
+							onClick: handleDownload,
+						} }
+						overlayStyle={ { width: 210 } }
+						placement="bottomRight"
+					>
+						<button
+							className="response-table__drawer__header__action__btn"
+							onClick={ ( e ) => e.preventDefault() }
+						>
+							<ReactSVG
+								width="14"
+								height="14"
+								src={ downloadIcon }
+							/>
+						</button>
+					</AntDropdown>
 					<div className="response-table__drawer__header__dropdown">
 						<AntDropdown
 							menu={ {
