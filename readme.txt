@@ -170,7 +170,7 @@ If you want to contribute, go to our [FormGent GitHub Repository](https://github
 
 == Changelog ==
 = 0.0.6(beta) - 22 October 2024 =
-* Fixed: form block not working issue.
+* Fixed: Form block not working issue.
 
 = 0.0.5(beta) - 22 October 2024 =
 * New: Email Notification Builder – Create and customize email notifications with dynamic fields, rich-text formatting, and media integration.
