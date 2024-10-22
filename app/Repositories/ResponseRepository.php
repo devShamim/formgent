@@ -249,4 +249,26 @@ class ResponseRepository {
 
         return $token;
     }
+
+    public function get_response_dto( int $id ): ?ResponseDTO {
+        $response_data = $this->get_by_id( $id );
+
+        if ( ! $response_data ) {
+            return null;
+        }
+
+        $response_dto = new ResponseDTO();
+
+        $response_dto->set_id( $response_data->id )
+            ->set_form_id( $response_data->form_id )
+            ->set_is_read( $response_data->is_read )
+            ->set_ip( $response_data->ip )
+            ->set_device( $response_data->device )
+            ->set_browser( $response_data->browser )
+            ->set_browser_version( $response_data->browser_version )
+            ->set_created_at( $response_data->created_at )
+            ->set_created_by( $response_data->created_by );
+
+        return $response_dto;
+    }
 }

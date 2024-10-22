@@ -9,7 +9,7 @@ trait ReadQueryDTO {
 
     public int $per_page = 10;
 
-    public ?string $orger_by = null;
+    public ?string $order_by = null;
 
     public ?string $orger = null;
 
@@ -58,23 +58,23 @@ trait ReadQueryDTO {
     }
 
     /**
-     * Get the value of orger_by
+     * Get the value of order_by
      *
      * @return ?string
      */
-    public function get_orger_by(): ?string {
-        return $this->orger_by;
+    public function get_order_by(): ?string {
+        return $this->order_by;
     }
     
     /**
-     * Set the value of orger_by
+     * Set the value of order_by
      *
-     * @param ?string $orger_by
+     * @param ?string $order_by
      * 
      * @return self
      */
-    public function set_orger_by( ?string $orger_by ): self {
-        $this->orger_by = $orger_by;
+    public function set_order_by( ?string $order_by ): self {
+        $this->order_by = $order_by;
     
         return $this;
     }

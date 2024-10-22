@@ -12,12 +12,15 @@ use FormGent\App\Http\Controllers\Controller;
 use FormGent\App\Models\Answer;
 use FormGent\App\Models\Post;
 use FormGent\App\Repositories\FormRepository;
+use FormGent\App\Repositories\FormPresetFieldRepository;
 use FormGent\WpMVC\RequestValidator\Validator;
 use FormGent\WpMVC\Routing\Response;
 use WP_REST_Request;
 
 class FormController extends Controller {
     public FormRepository $form_repository;
+
+    public FormPresetFieldRepository $form_preset_field_repository;
 
     public function __construct( FormRepository $form_repository ) {
         $this->form_repository = $form_repository;
@@ -46,7 +49,7 @@ class FormController extends Controller {
         $dto->set_type( $wp_rest_request->get_param( 'type' ) );
 
         $data                      = $this->form_repository->get( $dto );
-        $response                  = $this->pagination( $wp_rest_request, $data['total'], $dto->get_per_page(), false );
+        $response                  = $this->pagination( $wp_rest_request, $data['total'], $dto->get_per_page() );
         $response['types']         = $data['types'];
         $response['forms']         = $data['forms'];
         $response['form_edit_url'] = add_query_arg( ['action' => 'edit'], admin_url( 'post.php' ) );
@@ -361,7 +364,7 @@ class FormController extends Controller {
 
         return Response::send(
             [
-                'preset_fields' => $this->form_repository->get_preset_fields( $request->get_param( 'id' ) ),
+                'preset_fields' => $this->form_preset_field_repository->get_preset_fields( $request->get_param( 'id' ) ),
             ]
         ); 
     }
