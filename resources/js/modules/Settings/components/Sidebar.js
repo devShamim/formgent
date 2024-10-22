@@ -7,7 +7,7 @@ export default function Sidebar( props ) {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	const activeSidebarNav = location.pathname.split( 'settings/' )[ 1 ];
+	const activeSidebarNav = location.pathname.split( '/' )[ 1 ];
 	// Function to determine if a menu item should be active
 	const isActive = ( path ) => {
 		return activeSidebarNav === path;
@@ -35,16 +35,12 @@ export default function Sidebar( props ) {
 
 	const handleMenuClick = ( e ) => {
 		// Navigate to the selected route
+		if ( activeSidebarNav === e.key ) return;
 		navigate( e.key );
 	};
 
 	return (
 		<SettingsSidebarStyle className="formgent-settings-sider">
-			<div className="formgent-settings-sider__top">
-				<h3 className="formgent-settings-sider__title">
-					{ __( 'Share Settings', 'formgent' ) }
-				</h3>
-			</div>
 			<AntMenu
 				defaultSelectedKeys={ [ defaultSelectedChild || 'general' ] }
 				defaultOpenKeys={ [ defaultSelectedParent ] }

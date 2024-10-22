@@ -46,6 +46,10 @@
 		"country_auto_detection": {
 			"type": "boolean",
 			"default": false
+		},
+		"block_width": {
+			"type": "string",
+			"default": "100"
 		}
 	},
 	"supports": {

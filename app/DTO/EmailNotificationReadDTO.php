@@ -11,6 +11,10 @@ class EmailNotificationReadDTO extends DTO {
 
     private int $per_page;
 
+    private int $form_id;
+
+    private ?string $sort_by;
+
     /**
      * Get the value of page
      *
@@ -52,6 +56,50 @@ class EmailNotificationReadDTO extends DTO {
     public function set_per_page( int $per_page ): self {
         $this->per_page = $per_page;
 
+        return $this;
+    }
+
+    /**
+     * Get the value of form_id
+     *
+     * @return int
+     */
+    public function get_form_id(): int {
+        return $this->form_id;
+    }
+    
+    /**
+     * Set the value of form_id
+     *
+     * @param int $form_id
+     * 
+     * @return self
+     */
+    public function set_form_id( int $form_id ): self {
+        $this->form_id = $form_id;
+    
+        return $this;
+    }
+
+    /**
+     * Get the value of sort_by
+     *
+     * @return string
+     */
+    public function get_sort_by(): ?string {
+        return $this->sort_by;
+    }
+    
+    /**
+     * Set the value of sort_by
+     *
+     * @param string $sort_by
+     * 
+     * @return self
+     */
+    public function set_sort_by( ?string $sort_by ): self {
+        $this->sort_by = $sort_by;
+    
         return $this;
     }
 }

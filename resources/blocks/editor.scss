@@ -3,6 +3,13 @@
 .components-panel__body.edit-post-post-status {
 	display: none;
 }
+
+.editor-post-summary
+	.components-flex
+	.components-flex:has(.editor-post-panel__row-label) {
+	display: none;
+}
+
 .components-panel__body.is-opened {
 	.formgent-repeater-control {
 		.formgent-control-label {
@@ -29,6 +36,50 @@
 		display: block;
 		margin-bottom: 8px;
 	}
+	.formgent-droppable-options {
+		max-height: 300px;
+		overflow-y: auto;
+		padding-right: 5px;
+		margin-right: -5px;
+
+		//scrollbar style
+		scrollbar-width: auto;
+		-ms-overflow-style: none;
+		scrollbar-behavior: smooth;
+		&::-webkit-scrollbar {
+			width: 6px;
+			height: 43px;
+		}
+		&::-webkit-scrollbar-track {
+			background: var(--formgent-color-gray-200);
+			border-radius: 4px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: var(--formgent-color-gray-400);
+			border-radius: 4px;
+		}
+		&::-webkit-scrollbar-thumb:hover {
+			background-color: var(--formgent-color-gray-500);
+		}
+	}
+	.formgent-repeater__add-item {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		span {
+			transition: 0.3s ease;
+			font-weight: 500;
+		}
+		&:hover {
+			.formgent-repeater__add-item__link {
+				color: #007cba;
+				span:not(.dashicon) {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
 }
 
 .formgent-repeater-field {
@@ -38,19 +89,22 @@
 .formgent-repeater-field-control {
 	display: flex;
 	align-items: center;
-	border-bot button {
-		background: none;
-		border: 0 none;
-		outline: 0;
-		box-shadow: none;
-		padding: 0;
-		margin: 0;
-		text-align: left;
-		padding: 10px 5px;
-		cursor: pointer;
-		transition: 0.3s ease;
-		&:hover {
-			background: #f2f2f2;
+	.formgent-repeater-field-control-actions {
+		flex: 85%;
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+	.formgent-repeater-field-control-move {
+		flex: 15%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&:hover {
+		.formgent-repeater-field-remove {
+			visibility: visible;
+			opacity: 1;
 		}
 	}
 }
@@ -59,18 +113,24 @@
 }
 .formgent-repeater-field-title {
 	cursor: pointer;
-	width: 80%;
+	width: 100%;
 	padding: 10px;
+	border-right: 1px solid #dadada;
 	.components-base-control,
 	.components-base-control__field {
 		margin-bottom: 0 !important;
 	}
 }
-button.formgent-repeater-field-remove {
-	flex: 20%;
-	text-align: center;
+.formgent-repeater-field-remove {
+	display: flex;
+	align-items: center;
 	justify-content: center;
-	border-left: 1px solid #dadada;
+	transition: 0.3s ease;
+	visibility: hidden;
+	opacity: 0;
+	cursor: pointer;
+	position: absolute;
+	right: -8px;
 }
 button.formgent-repeater-field-expand {
 	text-align: center;
@@ -283,6 +343,8 @@ button.formgent-repeater-field-expand {
 	border-radius: 12px;
 	padding: 20px;
 	.components-modal__header {
+		padding: 12px 20px 8px;
+		height: auto;
 		.components-button {
 			width: 36px;
 			height: 36px;
@@ -296,11 +358,11 @@ button.formgent-repeater-field-expand {
 	}
 	.components-modal__content {
 		padding: 0;
+		margin-top: 43px;
 	}
 	.formgent-form-settings-modal__body {
 		background: #fff;
 		border-radius: 12px;
-		padding: 15px;
 	}
 }
 

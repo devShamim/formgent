@@ -1,6 +1,6 @@
 <?php defined( 'ABSPATH' ) || exit; ?>
 
-<div class="formgent-editor-block-list__single formgent-editor-block-list__single--csr">
+<div class="formgent-editor-block-list__single formgent-editor-block-list__single--csr formgent-block-width-<?php echo esc_attr( number_format( $attributes['block_width'] ) ); ?>">
     <div class="formgent-editor-block-list__single__wrapper formgent-editor-block-list__single__wrapper--gdpr formgent-label-align-<?php echo esc_attr( $attributes['label_alignment'] ); ?>">
         <input
             class="formgent-editor-block-list__single__input formgent-editor-block-list__single__input--checkbox"

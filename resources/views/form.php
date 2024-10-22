@@ -32,15 +32,17 @@ $context   = [
         data-wp-bind--disable="context.isResponseSubmitting"
     >
         <div class="formgent-notices"></div>
-        <?php
-        //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-        echo do_blocks( $form->post_content );
-        ?>
-        <!-- Honeypot field -->
-        <input
-            type="hidden"
-            name="formgent-honeypot-<?php echo esc_attr( $form->ID ) ?>"
-            id="formgent-honeypot-<?php echo esc_attr( $form->ID ) ?>"
-        >
+        <div class="formgent-editor-block-list">
+            <?php
+            //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            echo do_blocks( $form->post_content );
+            ?>
+            <!-- Honeypot field -->
+            <input
+                type="hidden"
+                name="formgent-honeypot-<?php echo esc_attr( $form->ID ) ?>"
+                id="formgent-honeypot-<?php echo esc_attr( $form->ID ) ?>"
+            >
+        </div>
     </form>
 </div>

@@ -6,6 +6,7 @@ import {
 	InspectorControls,
 	useBlockProps,
 	InspectorAdvancedControls,
+	BlockControls,
 } from '@wordpress/block-editor';
 import Controls from './Controls';
 import { Fragment, useEffect, useState } from '@wordpress/element';
@@ -17,6 +18,8 @@ import {
 	TabPanel,
 	PanelBody,
 	__experimentalUseSlotFills as useSlotFills,
+	Button,
+	ToolbarGroup,
 } from '@wordpress/components';
 import ReactSVG from 'react-inlinesvg';
 import editIcon from '@icon/edit.svg';
@@ -161,24 +164,9 @@ function mergeSiblingsBlocks( blocks ) {
 	let mergedBlocks = [];
 	blocks.forEach( ( block ) => {
 		if (
-			! block.name.includes( 'formgent/' ) ||
-			block.innerBlocks.length !== 0
+			block.name.includes( 'formgent/' ) ||
+			block.innerBlocks.length === 0
 		) {
-			// Recursively merge inner blocks
-			const innerMergedBlocks = mergeSiblingsBlocks( block.innerBlocks );
-			innerMergedBlocks.forEach( ( innerBlock ) => {
-				if (
-					! mergedBlocks.some(
-						( existingBlock ) =>
-							existingBlock.clientId === innerBlock.clientId
-					)
-				) {
-					mergedBlocks.push( innerBlock );
-				}
-			} );
-			//mergedBlocks = mergedBlocks.concat(mergeSiblingsBlocks(block.innerBlocks));
-		} else {
-			// Only add the block if it's not already in mergedBlocks
 			if (
 				! mergedBlocks.some(
 					( existingBlock ) =>
@@ -187,7 +175,6 @@ function mergeSiblingsBlocks( blocks ) {
 			) {
 				mergedBlocks.push( block );
 			}
-			//mergedBlocks.push(block);
 		}
 	} );
 	return mergedBlocks;
@@ -199,11 +186,6 @@ const mergeInnerBlocks = ( block, blockParentIds ) => {
 
 	if ( block.innerBlocks ) {
 		mergeBlocks = [ ...block.innerBlocks ];
-
-		// Recursively merge innerBlocks of each block
-		block.innerBlocks.forEach( ( innerBlock ) => {
-			mergeBlocks = mergeBlocks.concat( mergeInnerBlocks( innerBlock ) );
-		} );
 	}
 	if ( blockParentIds && blockParentIds.length > 1 ) {
 		mergeBlocks = mergeParentBlocks(
@@ -221,22 +203,11 @@ function mergeParentBlocks( blockParentIds, mergeBlocks, blockEditorStore ) {
 		const parent = blockEditorStore.getBlocksByClientId(
 			blockParentIds[ i ]
 		);
-		if ( ! parent[ 0 ].name.includes( 'formgent/' ) ) {
-			const innerBlocksClientIds = parent[ 0 ].innerBlocks.map(
-				( block ) => block.clientId
-			);
-			mergedParentBlocks = mergeParentBlocks(
-				innerBlocksClientIds,
-				mergedParentBlocks,
-				blockEditorStore
-			);
-		} else {
-			const isAlreadyMerged = mergedParentBlocks.some(
-				( block ) => block.clientId === parent[ 0 ].clientId
-			);
-			if ( ! isAlreadyMerged ) {
-				mergedParentBlocks = mergedParentBlocks.concat( parent );
-			}
+		const isAlreadyMerged = mergedParentBlocks.some(
+			( block ) => block.clientId === parent[ 0 ].clientId
+		);
+		if ( ! isAlreadyMerged ) {
+			mergedParentBlocks = mergedParentBlocks.concat( parent );
 		}
 	}
 	return mergedParentBlocks;
@@ -253,9 +224,15 @@ const getFilteredBlocks = ( blocksArray, id ) => {
 	return blocksArray.filter( ( block ) => block.clientId !== id );
 };
 
-function Block( { controls, Edit, attributes, setAttributes, metaData } ) {
+function Block( {
+	controls,
+	Edit,
+	attributes,
+	setAttributes,
+	metaData,
+	clientId,
+} ) {
 	const blockProps = useBlockProps();
-	const clientId = blockProps[ 'data-block' ];
 	const [ draggingEnded, setDraggingEnded ] = useState( false );
 	const [ selectedTab, setSelectedTab ] = useState( '' );
 
@@ -333,7 +310,6 @@ function Block( { controls, Edit, attributes, setAttributes, metaData } ) {
 						),
 					];
 				}
-
 				const filteredChildBlocks = getFilteredBlocks(
 					allBlocksToCheck,
 					blockProps[ 'data-block' ]
@@ -433,14 +409,110 @@ function Block( { controls, Edit, attributes, setAttributes, metaData } ) {
 		}
 	}, [] );
 
+	const [ isSelectedInput, setIsSelectedInput ] = useState( false );
+
 	return (
 		<>
-			<div { ...blockProps }>
+			<div
+				{ ...blockProps }
+				className={ `${
+					blockProps.className
+				} formgent-block-width-${ Math.trunc(
+					attributes.block_width
+				) }` }
+			>
 				<Edit
 					attributes={ attributes }
 					setAttributes={ setAttributes }
+					inputProps={ {
+						onFocus: () => setIsSelectedInput( true ), // Set focus on RichText
+						onBlur: () => setIsSelectedInput( false ), // Reset focus on blur
+					} }
 				/>
 			</div>
+
+			{ ! isSelectedInput && (
+				<BlockControls>
+					<ToolbarGroup>
+						<Button
+							variant="secondary"
+							className={ `formgent-toolbar-width-button ${
+								attributes.block_width === '100'
+									? 'is-selected'
+									: ''
+							}` }
+							onClick={ () =>
+								setAttributes( { block_width: '100' } )
+							}
+						>
+							<span className="formgent-toolbar-width-button__icon">
+								{ __( '100%', 'formgent' ) }
+							</span>
+						</Button>
+						<Button
+							variant="secondary"
+							className={ `formgent-toolbar-width-button ${
+								attributes.block_width === '75'
+									? 'is-selected'
+									: ''
+							}` }
+							onClick={ () =>
+								setAttributes( { block_width: '75' } )
+							}
+						>
+							<span className="formgent-toolbar-width-button__icon">
+								{ __( '75%', 'formgent' ) }
+							</span>
+						</Button>
+						<Button
+							variant="secondary"
+							className={ `formgent-toolbar-width-button ${
+								attributes.block_width === '50'
+									? 'is-selected'
+									: ''
+							}` }
+							onClick={ () =>
+								setAttributes( { block_width: '50' } )
+							}
+						>
+							<span className="formgent-toolbar-width-button__icon">
+								{ __( '50%', 'formgent' ) }
+							</span>
+						</Button>
+						<Button
+							variant="secondary"
+							className={ `formgent-toolbar-width-button ${
+								attributes.block_width === '33.33'
+									? 'is-selected'
+									: ''
+							}` }
+							onClick={ () =>
+								setAttributes( { block_width: '33.33' } )
+							}
+						>
+							<span className="formgent-toolbar-width-button__icon">
+								{ __( '33%', 'formgent' ) }
+							</span>
+						</Button>
+						<Button
+							variant="secondary"
+							className={ `formgent-toolbar-width-button ${
+								attributes.block_width === '25'
+									? 'is-selected'
+									: ''
+							}` }
+							onClick={ () =>
+								setAttributes( { block_width: '25' } )
+							}
+						>
+							<span className="formgent-toolbar-width-button__icon">
+								{ __( '25%', 'formgent' ) }
+							</span>
+						</Button>
+					</ToolbarGroup>
+				</BlockControls>
+			) }
+
 			<InspectorControls>
 				<div className="formgent">
 					<TabPanel
@@ -519,7 +591,7 @@ export function registerBlock(
 			example: {
 				attributes: exampleAttributes,
 			},
-			edit: function ( { attributes, setAttributes } ) {
+			edit: function ( { attributes, setAttributes, clientId } ) {
 				return (
 					<Block
 						controls={ controls }
@@ -527,6 +599,7 @@ export function registerBlock(
 						attributes={ attributes }
 						setAttributes={ setAttributes }
 						metaData={ metadata }
+						clientId={ clientId }
 					/>
 				);
 			},

@@ -21,7 +21,7 @@
 		"format": "vendor/vendor-src/bin/phpcbf --standard=dev-tools/phpcs.xml",
 		"phpcs": "vendor/vendor-src/bin/phpcs --standard=dev-tools/phpcs.xml",
 		"make-pot": [
-			"wp i18n make-pot . languages/formgent.pot --include='app/**/*.php,assets/**/*.js,assets/**/*.php,resources/views,resources/blocks/**/*.php'",
+			"wp i18n make-pot . languages/formgent.pot --include='app/**/*.php,assets/**/*.js,assets/**/*.php,resources/views'",
 			"cp languages/formgent.pot languages/formgent.po"
 		],
 		"make-unminified-pot": [

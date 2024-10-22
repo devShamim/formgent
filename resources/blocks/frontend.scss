@@ -1,13 +1,91 @@
 @import "../sass/variables.scss";
 
+// Formgent block editor
+.block-editor-block-list__layout,
+.formgent-editor-block-list {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 620px;
+	margin: 0 auto -20px;
+	gap: 0 12px;
+	.wp-block-spacer {
+		width: 100%;
+	}
+	.formgent-block-width-100 {
+		flex: 0 1 calc(100%);
+	}
+	.formgent-block-width-50 {
+		flex: 0 1 calc(50% - 6px);
+	}
+	.formgent-block-width-75 {
+		flex: 0 1 calc(75% - 6px);
+	}
+	.formgent-block-width-33 {
+		flex: 0 1 calc(33.33% - 12px);
+	}
+	.formgent-block-width-25 {
+		flex: 0 1 calc(25% - 12px);
+	}
+	.block-editor-block-list__block {
+		max-width: 100%;
+	}
+}
+
+.formgent-toolbar-width-button {
+	&.is-selected {
+		.formgent-toolbar-width-button__icon {
+			color: #fff;
+			background-color: var(--formgent-color-dark);
+		}
+	}
+	&.components-button {
+		padding: 6px 10px;
+		box-shadow: 0 0;
+		&:hover:not(:disabled, [aria-disabled="true"]) {
+			box-shadow: 0 0;
+		}
+	}
+	.formgent-toolbar-width-button__icon {
+		border: 1px solid;
+		padding: 6px;
+		border-radius: 2px;
+		line-height: 1.4;
+		font-size: 13px;
+	}
+}
+
+div.is-root-container.block-editor-block-list__layout {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 620px;
+	gap: 0 12px;
+	.block-editor-block-list__block {
+		max-width: 100%;
+		width: 100%;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		margin-top: 0 !important;
+		margin-bottom: 20px;
+		.formgent-editor-block-list__single {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.is-root-container {
+	&.is-layout-constrained {
+		.block-list-appender {
+			width: 100%;
+		}
+	}
+}
+
 // Block Input Field Style
 .formgent-editor-block-list__single {
 	display: flex;
 	gap: 10px;
 	flex-wrap: wrap;
-	&:last-child {
-		margin-bottom: 0;
-	}
+	margin-bottom: 20px;
 	.formgent-editor-block-list__single__wrapper {
 		display: flex;
 		gap: 10px;
@@ -154,7 +232,6 @@
 	.formgent-editor-block-list__single__label-container {
 		display: flex;
 		gap: 6px;
-		width: 100px;
 		font-size: 14px;
 		color: var(--formgent-color-dark);
 		line-height: 16px;
@@ -826,5 +903,218 @@ input.formgent-editor-block-list__single__dialer__input {
 
 	+ input {
 		padding-inline-start: 42px;
+	}
+}
+
+.formgent-action-link {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-radius: 8px;
+	text-decoration: none;
+	color: var(--formgent-color-light-gray);
+
+	.formgent-action-link-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 8px;
+		height: 32px;
+		width: 32px;
+		border-radius: 8px;
+		box-sizing: border-box;
+	}
+
+	svg path {
+		color: var(--formgent-color-gray-400);
+	}
+
+	&:hover {
+		color: var(--formgent-color-gray);
+		background-color: var(--formgent-color-bg-light);
+		svg path {
+			color: var(--formgent-color-gray);
+		}
+	}
+}
+
+.ant-table-pagination,
+.ant-pagination {
+	gap: 4px;
+	.ant-pagination-total-text {
+		font-size: 12px;
+		font-weight: 400;
+		color: var(--formgent-color-gray-600);
+	}
+	.ant-pagination-prev,
+	.ant-pagination-item,
+	.ant-pagination-next {
+		background: #fff;
+		box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+		border-radius: 8px;
+		width: 36px;
+		height: 36px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.ant-pagination-item-active {
+		background: var(--formgent-color-dark);
+		border-color: var(--formgent-color-dark);
+		a {
+			color: #fff;
+		}
+		&:hover {
+			background: var(--formgent-color-dark);
+			border-color: var(--formgent-color-dark);
+			a {
+				color: #fff;
+			}
+		}
+	}
+}
+
+.formgent-forms-pagination-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 40px;
+	.ant-pagination {
+		flex: auto;
+		display: flex;
+		gap: 12px;
+		align-items: center;
+		justify-content: center;
+		margin-left: -80px;
+		li {
+			margin: 0;
+		}
+	}
+	.formgent-forms-pagination-total-count {
+		margin-right: auto;
+	}
+}
+
+.formgent-icon {
+	display: inline-block;
+	height: 20px;
+}
+.formgent-has-input-addon-end {
+	position: relative;
+	input {
+		padding-inline-end: 145px;
+	}
+}
+.formgent-input-addon {
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+}
+.formgent-input-addon-end {
+	inset-inline-end: 10px;
+}
+
+// antd default style
+.ant-dropdown {
+	width: 168px;
+	z-index: 999999;
+	.ant-dropdown-menu {
+		padding: 4px 0;
+		border: 1px solid var(--formgent-color-border);
+		box-shadow: 0px 8px 16px 0px rgba(16, 24, 40, 0.1);
+		overflow: hidden;
+	}
+	.ant-dropdown-menu-item {
+		height: 40px;
+		padding: 0 16px !important;
+		border-radius: 0 !important;
+	}
+}
+.ant-dropdown-menu-title-content {
+	.dropdown-header-content {
+		position: relative;
+		display: flex;
+		gap: 12px;
+		align-items: center;
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--formgent-color-gray-600);
+		.active-icon {
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			border-radius: 100%;
+			background: var(--formgent-color-primary);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}
+.formgent-preset-field-dropdown {
+	width: 250px;
+	.ant-dropdown-menu {
+		max-height: 350px;
+		overflow-y: auto;
+	}
+}
+
+.formgent-tooltip-icon {
+	display: inline-flex;
+	margin-inline-end: 5px;
+	height: 18px;
+	width: 18px;
+	padding: 3px;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	border-radius: 50%;
+	background-color: var(--formgent-color-light-gray);
+	svg path {
+		fill: #fff;
+	}
+}
+
+.formgent-settings-delete-alert {
+	.formgent-settings-delete-alert__modal {
+		padding-top: 25px;
+	}
+	.components-modal__header-heading {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+	.helpgent-alert-content {
+		text-align: left;
+	}
+	.formgent-modal-action.formgent-settings-delete-alert-action {
+		background: none;
+		justify-content: center;
+		padding-top: 0;
+	}
+}
+
+.ant-switch {
+	min-width: 36px;
+	height: 20px;
+	background: var(--formgent-color-bg-deep);
+	.ant-switch-handle {
+		width: 14px;
+		height: 14px;
+		top: 3px;
+		inset-inline-start: 3px;
+	}
+	&.ant-switch-checked {
+		background: var(--formgent-color-primary);
+		.ant-switch-handle {
+			inset-inline-start: calc(100% - 18px);
+		}
+		&:hover {
+			background: #7d6cf4 !important;
+		}
 	}
 }

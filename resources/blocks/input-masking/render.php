@@ -1,6 +1,6 @@
 <?php defined( 'ABSPATH' ) || exit; ?>
 
-<div class="formgent-editor-block-list__single formgent-editor-block-list__single--csr">
+<div class="formgent-editor-block-list__single formgent-editor-block-list__single--csr formgent-block-width-<?php echo esc_attr( number_format( $attributes['block_width'] ) ); ?>">
     <?php if ( ! empty( $attributes['label'] ) ) : ?>
         <label
             for="<?php echo esc_attr( $attributes['name'] ); ?>"

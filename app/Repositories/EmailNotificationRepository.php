@@ -17,6 +17,27 @@ class EmailNotificationRepository extends Repository {
     public function get( EmailNotificationReadDTO $dto ) {
         $query = $this->get_query_builder();
 
+        if ( $dto->is_initialized( 'form_id' ) ) {
+            $query->where( 'form_id', $dto->get_form_id() );
+        }
+
+        if ( $dto->is_initialized( 'sort_by' ) ) {
+            switch ( $dto->get_sort_by() ) {
+                case 'last_modified':
+                    $query->order_by( 'updated_at', 'desc' );
+                    break;
+                case 'date_created_asc':
+                    $query->order_by( 'created_at', 'asc' );
+                    break;
+                case 'date_created_desc':
+                    $query->order_by( 'created_at', 'desc' );
+                    break;
+                case 'alphabetical':
+                    $query->order_by( 'name', 'asc' );
+                    break;
+            }
+        }
+
         $count_query = clone $query;
 
         return [

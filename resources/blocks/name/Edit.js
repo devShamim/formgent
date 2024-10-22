@@ -1,4 +1,6 @@
 import { InnerBlocks } from '@wordpress/block-editor';
+import { RichText } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
 
 import './editor.scss';
 
@@ -12,52 +14,57 @@ const ALLOWED_BLOCKS = [
 
 const TEMPLATE = [
 	[
-		'core/paragraph',
+		'formgent/text',
 		{
-			content: '<strong>Name</strong>',
-			className: 'has-medium-font-size',
+			label: 'First Name',
+			label_alignment: 'top',
+			name: 'first_name',
+			block_width: '33.33',
+			metadata: { name: 'First Name' },
 		},
 	],
 	[
-		'core/group',
+		'formgent/text',
 		{
-			layout: { type: 'grid', minimumColumnWidth: null, columnCount: 3 },
-			style: { spacing: { blockGap: 'var:preset|spacing|10' } },
+			label: 'Middle Name',
+			label_alignment: 'top',
+			name: 'middle_name',
+			block_width: '33.33',
+			metadata: { name: 'Middle Name' },
 		},
-		[
-			[
-				'formgent/text',
-				{
-					label: 'First Name',
-					label_alignment: 'top',
-					name: 'first_name',
-					metadata: { name: 'First Name' },
-				},
-			],
-			[
-				'formgent/text',
-				{
-					label: 'Middle Name',
-					label_alignment: 'top',
-					name: 'middle_name',
-					metadata: { name: 'Middle Name' },
-				},
-			],
-			[
-				'formgent/text',
-				{
-					label: 'Last Name',
-					label_alignment: 'top',
-					name: 'last_name`',
-					metadata: { name: 'Last Name' },
-				},
-			],
-		],
+	],
+	[
+		'formgent/text',
+		{
+			label: 'Last Name',
+			label_alignment: 'top',
+			name: 'last_name`',
+			block_width: '33.33',
+			metadata: { name: 'Last Name' },
+		},
 	],
 ];
 
-export default function Edit() {
+export default function Edit( { attributes, setAttributes } ) {
 	return (
-		<InnerBlocks allowedBlocks={ ALLOWED_BLOCKS } template={ TEMPLATE } />
+		<div className={ `formgent-editor-block-list__single` }>
+			<div
+				className={ `formgent-editor-block-list__single__label-container` }
+			>
+				<RichText
+					className="formgent-editor-block-list__single__label"
+					tagName="label"
+					value={ attributes.label }
+					onChange={ ( content ) =>
+						setAttributes( { label: content } )
+					}
+					placeholder={ __( 'Type your label' ) }
+				/>
+			</div>
+			<InnerBlocks
+				allowedBlocks={ ALLOWED_BLOCKS }
+				template={ TEMPLATE }
+			/>
+		</div>
 	);
 }

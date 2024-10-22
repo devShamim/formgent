@@ -28,7 +28,7 @@ export default function PopUp( props ) {
 			onRequestClose={ onCancel }
 			isDismissible={ isDismissible }
 		>
-			<ModalAlertStyle>
+			<ModalAlertStyle className={ `${ className }__modal` }>
 				{ children }
 				{ ! isDisableAction && (
 					<div

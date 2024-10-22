@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || exit;
 $unique_id = str_replace( '-', '_', wp_unique_id( 'formgent-store' ) );
 ?>
 
-<div class="formgent-editor-block-list__single formgent-editor-block-list__single--csr formgent-editor-block-align-<?php echo esc_attr( $attributes['label_alignment'] ); ?>">
+<div class="formgent-editor-block-list__single formgent-editor-block-list__single--csr formgent-block-width-<?php echo esc_attr( number_format( $attributes['block_width'] ) ); ?> formgent-editor-block-align-<?php echo esc_attr( $attributes['label_alignment'] ); ?>">
     <?php if ( ! empty( $attributes['label'] ) ) : ?>
         <label
             for="<?php echo esc_attr( $attributes['name'] ); ?>"

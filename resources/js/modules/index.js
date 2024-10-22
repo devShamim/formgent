@@ -1,14 +1,13 @@
 import AnalyticsChart from '@formgent/admin/Slots/AnalyticsChart';
 import QuestionsDropOff from '@formgent/admin/Slots/QuestionsDropOff';
 import { registerModule } from '@formgent/modules/helpers';
-import { lazy } from '@wordpress/element';
 import { registerBlock } from './../../blocks/utils';
 
-const SettingsModule = lazy( () => import( './Settings' ) );
-const FormTableModule = lazy( () => import( './FormTable' ) );
-const ResponseTableModule = lazy( () => import( './ResponseTable' ) );
-const SummaryModule = lazy( () => import( './Summary' ) );
-const AnalyticsModule = lazy( () => import( './Analytics' ) );
+import SettingsModule from './Settings';
+import FormTableModule from './FormTable';
+import ResponseTableModule from './ResponseTable';
+import SummaryModule from './Summary';
+import AnalyticsModule from './Analytics';
 
 registerModule( 'modules', {
 	SettingsModule,

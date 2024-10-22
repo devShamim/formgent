@@ -930,8 +930,6 @@ const { callbacks } = store( 'formgent/form', {
 				context.isResponseTokenGenerating = false;
 				context.isResponseSubmitting = true;
 
-				console.log( { responseToken, gt: context.generatedTokens } );
-
 				// Submit form response
 				const response = await wp.apiFetch( {
 					path: '/formgent/responses',

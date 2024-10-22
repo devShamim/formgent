@@ -228,6 +228,63 @@ a.formgent-btn-disabled {
 	color: var(--formgent-color-primary);
 }
 
+.formgent-space {
+	display: flex;
+	gap: 5px;
+}
+
+.formgent-space-vertical {
+	flex-direction: column;
+}
+
+.formgent-space-align-center {
+	align-items: center;
+	justify-content: center;
+}
+
+.formgent-space-middle-start {
+	align-items: center;
+	justify-content: start;
+}
+
+.formgent-icon {
+	display: inline-block;
+	height: 20px;
+}
+
+.formgent-tooltip-icon {
+	display: inline-flex;
+	margin-inline-end: 5px;
+	height: 18px;
+	width: 18px;
+	padding: 3px;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	border-radius: 50%;
+	background-color: var(--formgent-color-light-gray);
+	svg path {
+		fill: #fff;
+	}
+}
+
+.formgent-has-input-addon-end {
+	position: relative;
+	input {
+		padding-inline-end: 145px;
+	}
+}
+
+.formgent-input-addon {
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+}
+
+.formgent-input-addon-end {
+	inset-inline-end: 10px;
+}
+
 /* Block Button Style */
 .formgent-btn-block {
 	display: flex;
@@ -244,6 +301,39 @@ a.formgent-btn-disabled {
 
 	svg path {
 		fill: var(--formgent-color-primary);
+	}
+}
+
+.formgent-action-link {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-radius: 4px;
+	text-decoration: none;
+	color: var(--formgent-color-light-gray);
+
+	.formgent-action-link-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 8px;
+		height: 32px;
+		width: 32px;
+		border-radius: 4px;
+		box-sizing: border-box;
+	}
+
+	svg path {
+		color: var(--formgent-color-light-gray);
+	}
+
+	&:hover {
+		color: var(--formgent-color-gray);
+		background-color: var(--formgent-color-bg-light);
+		svg path {
+			color: var(--formgent-color-gray);
+		}
 	}
 }
 
@@ -1151,6 +1241,20 @@ a.formgent-btn-disabled {
 		border: 2px solid rgba(0, 0, 0, 0.1);
 		border-top-color: var(--formgent-color-primary);
 		animation: formgent_spinner 1s linear infinite;
+	}
+	&.formgent-loading--right {
+		&:before {
+			left: auto;
+			right: 0;
+			transform: translate(45%, 0);
+		}
+	}
+}
+
+.formgent-loading-light {
+	&:before {
+		border: 2px solid rgba(255, 255, 255, 0.3);
+		border-top-color: var(--formgent-color-white);
 	}
 }
 

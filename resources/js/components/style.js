@@ -217,7 +217,7 @@ const FormHeaderStyle = Styled.div`
     background-color: var(--formgent-color-white);
     position: sticky;
     top: 32px;
-    z-index: 9999;
+    z-index: 999;
     .formgent-editor-header__info {
         flex: 1;
         display: flex;
