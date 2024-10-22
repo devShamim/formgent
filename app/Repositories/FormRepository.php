@@ -387,11 +387,11 @@ class FormRepository {
         $form_dto = new FormDTO();
 
         $form_dto->set_id( $form_data->ID )
-            ->set_title( $form_data->title )
-            ->set_status( $form_data->status )
-            ->set_type( $form_data->type )
-            ->set_content( $form_data->content )
-            ->set_save_incomplete_data( $form_data->save_incomplete_data );
+            ->set_title( $form_data->post_title )
+            ->set_status( $form_data->post_status )
+            ->set_type( get_post_meta( $form_data->ID, '_formgent_type', true ) )
+            ->set_content( $form_data->post_content )
+            ->set_save_incomplete_data( get_post_meta( $form_data->ID, '_formgent_save_incomplete_data', true ) === '1' );
 
         return $form_dto;
     }
