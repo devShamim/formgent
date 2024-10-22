@@ -11,6 +11,8 @@ import { onChangeChoiceOptions } from '../utils';
 import Edit from './Edit';
 import metadata from './block.json';
 import './style.scss';
+import ReactSVG from 'react-inlinesvg';
+import singleChoiceIcon from '@icon/block-icons/single-choice.svg';
 
 const exampleAttributes = {};
 
@@ -106,4 +108,10 @@ const advancedControls = {
 
 const controls = { generalControls, advancedControls };
 
-registerBlock( metadata, controls, Edit, 'smiley', exampleAttributes );
+registerBlock(
+	metadata,
+	controls,
+	Edit,
+	<ReactSVG src={ singleChoiceIcon } />,
+	exampleAttributes
+);

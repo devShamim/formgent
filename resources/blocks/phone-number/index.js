@@ -10,6 +10,8 @@ import { registerBlock } from '@formgent/modules';
 import Edit from './Edit';
 import metadata from './block.json';
 import './style.scss';
+import ReactSVG from 'react-inlinesvg';
+import phoneNumberIcon from '@icon/block-icons/phone.svg';
 
 const exampleAttributes = {};
 
@@ -77,4 +79,10 @@ const advancedControls = {
 
 const controls = { generalControls, advancedControls };
 
-registerBlock( metadata, controls, Edit, 'smiley', exampleAttributes );
+registerBlock(
+	metadata,
+	controls,
+	Edit,
+	<ReactSVG src={ phoneNumberIcon } />,
+	exampleAttributes
+);
