@@ -30,6 +30,10 @@
 		"required": {
 			"type": "boolean",
 			"default": false
+		},
+		"block_width": {
+			"type": "string",
+			"default": "100"
 		}
 	},
 	"supports": {

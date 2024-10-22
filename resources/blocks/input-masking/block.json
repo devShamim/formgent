@@ -42,6 +42,10 @@
 		"mask_type": {
 			"type": "string",
 			"default": ""
+		},
+		"block_width": {
+			"type": "string",
+			"default": "100"
 		}
 	},
 	"supports": {
