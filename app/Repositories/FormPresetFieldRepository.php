@@ -4,8 +4,8 @@ namespace FormGent\App\Repositories;
 
 defined( 'ABSPATH' ) || exit;
 
-use FormGentPro\App\DTO\ResponseDTO;
-use FormGentPro\App\DTO\AnswerFieldDTO;
+use FormGent\App\DTO\ResponseDTO;
+use FormGent\App\DTO\AnswerFieldDTO;
 use Exception;
 
 class FormPresetFieldRepository {
@@ -246,11 +246,11 @@ class FormPresetFieldRepository {
         return $preset_fields;
     }
 
-    public function get_form_answers( int $form_id, int $response_id ): ?array {
+    public function get_form_answers( int $form_id, int $response_id ): array {
         $form_data = $this->form_repository->get_form_dto( $form_id );
 
         if ( ! $form_data ) {
-            return null;
+            return [];
         }
 
         /**

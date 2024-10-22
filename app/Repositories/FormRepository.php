@@ -386,7 +386,7 @@ class FormRepository {
 
         $form_dto = new FormDTO();
 
-        $form_dto->set_id( $form_data->id )
+        $form_dto->set_id( $form_data->ID )
             ->set_title( $form_data->title )
             ->set_status( $form_data->status )
             ->set_type( $form_data->type )
