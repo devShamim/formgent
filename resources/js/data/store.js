@@ -8,6 +8,7 @@ import { EmailNotificationStore } from './emailNotification';
 import { EmailNotificationSingleStore } from './emailNotificationSingle';
 import { CommonStore } from './commonData';
 import { rootReducers } from './rootReducers';
+import { WebhooksStore } from './webhooks';
 
 /**
  * merge all actions
@@ -18,6 +19,7 @@ const ACTIONS = {
 	...EmailNotificationStore.EmailNotificationActions,
 	...EmailNotificationSingleStore.EmailNotificationSingleActions,
 	...CommonStore.CommonActions,
+	...WebhooksStore.WebhooksActions,
 };
 
 /**
@@ -29,6 +31,7 @@ const SELECTORS = {
 	...EmailNotificationStore.EmailNotificationSelectors,
 	...EmailNotificationSingleStore.EmailNotificationSingleSelectors,
 	...CommonStore.CommonSelectors,
+	...WebhooksStore.WebhooksSelectors,
 };
 
 /**
@@ -39,6 +42,7 @@ const CONTROLS = {
 	...SingleFormStore.SingleFormControls,
 	...EmailNotificationStore.EmailNotificationControls,
 	...EmailNotificationSingleStore.EmailNotificationSingleControls,
+	...WebhooksStore.WebhooksControls,
 };
 /**
  * merge all resolvers
@@ -48,6 +52,7 @@ const RESOLVERS = {
 	...SingleFormStore.SingleFormResolvers,
 	...EmailNotificationStore.EmailNotificationResolvers,
 	...EmailNotificationSingleStore.EmailNotificationSingleResolvers,
+	...WebhooksStore.WebhooksResolvers,
 };
 
 /**
