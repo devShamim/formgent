@@ -1,4 +1,4 @@
-=== FormGent - Next Generation AI Form Builder ===
+=== FormGent - Next Generation AI Form Builder in WordPress ===
 Contributors: wpWax
 Tags: form builder
 Requires at least: 6.6
