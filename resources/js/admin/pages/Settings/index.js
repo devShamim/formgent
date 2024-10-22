@@ -4,6 +4,7 @@ import { addFilter } from '@wordpress/hooks';
 import IntegrationsChild1 from './IntegrationsChild1.js';
 import IntegrationsChild2 from './IntegrationsChild2.js';
 import IntegrationsChild3 from './IntegrationsChild3.js';
+import Webhooks from './Webhooks/index.js';
 
 // Add filter to extend settings routes
 addFilter(
@@ -16,6 +17,12 @@ addFilter(
 				key: 'integrations',
 				label: 'Integrations',
 				children: [
+					{
+						key: 'webhooks',
+						label: 'Webhooks',
+						path: 'webhooks',
+						element: <Webhooks />,
+					},
 					{
 						key: 'integrations/child1',
 						label: 'Integrations Child 1',
