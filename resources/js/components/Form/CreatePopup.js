@@ -72,11 +72,11 @@ function CreatePopup( props ) {
 						isImportingAttachment ? {} : handlePopupCloseRequest()
 					}
 					isDismissible={ ! isImportingAttachment }
-					headerActions={
-						<span className="formgent-create-modal-logo">
-							<ReactSVG src={ formgentLogo } />
-						</span>
-					}
+					// headerActions={
+					// 	<span className="formgent-create-modal-logo">
+					// 		<ReactSVG src={ formgentLogo } />
+					// 	</span>
+					// }
 				>
 					<CreatePopupStyle
 						className={ `formgent-create-form-modal ${
