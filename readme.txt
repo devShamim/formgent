@@ -4,7 +4,7 @@ Tags: form builder
 Requires at least: 6.6
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 0.0.4
+Stable tag: 0.0.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -167,6 +167,13 @@ Absolutely! FormGent provides built-in analytics to track form submissions, user
 **How can I become a Contributor**
 
 If you want to contribute, go to our [FormGent GitHub Repository](https://github.com/sovware/formgent) and see where you can help.
+
+== Changelog ==
+= 0.0.5(beta) - 22 October 2024 =
+* New: Email Notification Builder – Create and customize email notifications with dynamic fields, rich-text formatting, and media integration.
+* New: Added a custom control for block width.
+* New: Export form responses in PDF, CSV, and XLSX formats for flexible reporting.
+* Improved: Enhanced repeater controls with refined styling for a smoother user experience.
 
 == Changelog ==
 = 0.0.4(beta) - 20 October 2024 =
