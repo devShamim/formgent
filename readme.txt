@@ -8,7 +8,7 @@ Stable tag: 0.0.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-AI-powered WordPress form builder with drag-and-drop, mobile-first design, instant form sharing, and built-in analytics for user insights!
+A no-code AI-powered form builder for WordPress. Drag-and-drop forms, mobile-first, and future-ready for quizzes, payments, and more!
 
 == Description ==
 Say goodbye to complicated, time-consuming form creation! Meet FormGent, a next-generation, no-code WordPress form builder designed exclusively for the Gutenberg block editor. Whether you’re building a simple contact form, a dynamic multi-step form, or something entirely custom, FormGent makes it effortless with its intuitive drag & drop based form builder.
