@@ -1,6 +1,6 @@
 === FormGent - Next Generation AI Form Builder in WordPress ===
 Contributors: wpWax
-Tags: form builder
+Tags: contact form, custom form, form builder, forms, WP Forms
 Requires at least: 6.6
 Tested up to: 6.6
 Requires PHP: 7.4
@@ -8,7 +8,7 @@ Stable tag: 0.0.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-A no-code AI-powered form builder for WordPress. Drag-and-drop forms, mobile-first, and future-ready for quizzes, payments, and more!
+AI-powered, UI & UX-friendly, drag & drop WordPress form builder that simplifies form creation with ease, speed, and future-ready features.
 
 == Description ==
 Say goodbye to complicated, time-consuming form creation! Meet FormGent, a next-generation, no-code WordPress form builder designed exclusively for the Gutenberg block editor. Whether you’re building a simple contact form, a dynamic multi-step form, or something entirely custom, FormGent makes it effortless with its intuitive drag & drop based form builder.
@@ -119,7 +119,7 @@ FormGent is built for performance. This WP form builder is lightweight and effic
 We’re always improving FormGent to meet the needs of our users. Got feature suggestions? Let us know through our Feedback Form. Together, we’ll make FormGent even better!
 
 === OTHER AMAZING PRODUCTS FROM wpWAX ===
-👉 [Directorist](https://wordpress.org/plugins/directorist/) – Createany kind of directory websites and classified ads listing sites with ease.
+👉 [Directorist](https://wordpress.org/plugins/directorist/) – Create any kind of directory websites and classified ads listing sites with ease.
 
 👉 [HelpGent](https://wordpress.org/plugins/helpgent/) – Your Ultimate Help Agent for Video, Voice, and Text Messaging with Screen Record Facility
 
@@ -178,6 +178,5 @@ If you want to contribute, go to our [FormGent GitHub Repository](https://github
 * New: Export form responses in PDF, CSV, and XLSX formats for flexible reporting.
 * Improved: Enhanced repeater controls with refined styling for a smoother user experience.
 
-== Changelog ==
 = 0.0.4(beta) - 20 October 2024 =
 * Initial launch
