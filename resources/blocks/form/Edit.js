@@ -79,15 +79,12 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 			<div { ...useBlockProps() }>
 				{ 0 === formId ? (
-					<>
-						<h3>FormGent Logo</h3>
-						<SelectControl
-							label={ __( 'SELECT A FORM', 'formgent' ) }
-							value={ formId }
-							options={ options }
-							onChange={ onChangeForm }
-						/>
-					</>
+					<SelectControl
+						label={ __( 'SELECT A FORM', 'formgent' ) }
+						value={ formId }
+						options={ options }
+						onChange={ onChangeForm }
+					/>
 				) : (
 					<Form formId={ formId } />
 				) }
