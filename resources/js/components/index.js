@@ -4,7 +4,8 @@ import AntButton from './Button';
 import AntCheckbox from './Checkbox';
 import AntDrawer from './Drawer';
 import AntDropdown from './Dropdown';
-import AntForm from './Form.js';
+import AntForm from './Form';
+import AntFormItem from './FormItem';
 import AntInput from './Input';
 import AntMenu from './Menu';
 import AntModal from './Modal';
@@ -35,6 +36,7 @@ registerModule( 'components', {
 	AntModal,
 	AntDrawer,
 	AntForm,
+	AntFormItem,
 	AntTabs,
 	AntTable,
 	AntSpin,
@@ -64,6 +66,7 @@ export {
 	AntDrawer,
 	AntDropdown,
 	AntForm,
+	AntFormItem,
 	AntInput,
 	AntMenu,
 	AntModal,

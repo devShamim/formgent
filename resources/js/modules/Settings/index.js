@@ -8,9 +8,12 @@ import General from './components/General';
 import EmailNotifications from './components/emailNotification/EmailNotifications';
 import Edit from './components/emailNotification/Edit';
 import Sidebar from './components/Sidebar';
+import Webhooks from './components/webhooks/Webhooks';
+import CreateHooks from './components/webhooks/CreateHooks';
 import ReactSVG from 'react-inlinesvg';
 import cogIcon from '@icon/cog.svg';
 import mailIcon from '@icon/envelope.svg';
+import webhookIcon from '@icon/webhook.svg';
 
 function Settings( props ) {
 	const [ uiState, setUiState ] = useState( {
@@ -37,6 +40,13 @@ function Settings( props ) {
 			icon: <ReactSVG src={ mailIcon } />,
 			path: '/email-notifications',
 			element: <EmailNotifications />,
+		},
+		{
+			key: 'webhooks',
+			label: 'Webhooks',
+			icon: <ReactSVG src={ webhookIcon } />,
+			path: '/webhooks',
+			element: <Webhooks />,
 		},
 	] );
 
@@ -79,6 +89,16 @@ function Settings( props ) {
 							key="email-notifications/edit/:email_notification_id"
 							path="email-notifications/edit/:email_notification_id"
 							element={ <Edit /> }
+						/>
+						<Route
+							key="webhooks"
+							path="webhooks"
+							element={ <Webhooks /> }
+						/>
+						<Route
+							key="webhooks/create"
+							path="webhooks/create"
+							element={ <CreateHooks /> }
 						/>
 						<Route
 							key="integrations/child1"

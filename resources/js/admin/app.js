@@ -21,7 +21,6 @@ import ResponseTable from './pages/ResponseTable/index.js';
 import Analytics from './pages/Analytics/index.js';
 import Settings from './pages/Settings/index.js';
 import Summary from './pages/Summary/index.js';
-import Webhooks from './pages/Settings/Webhooks/index.js';
 
 export default function App() {
 	const { setRouterState } = useDispatch( 'formgent' );
@@ -87,10 +86,6 @@ export default function App() {
 		{
 			path: '/forms/form-new/:type',
 			element: <AddForm />,
-		},
-		{
-			path: '/forms/:id/webhooks/*',
-			element: <Webhooks />,
 		},
 	] );
 

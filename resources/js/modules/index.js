@@ -1,5 +1,7 @@
 import AnalyticsChart from '@formgent/admin/Slots/AnalyticsChart';
 import QuestionsDropOff from '@formgent/admin/Slots/QuestionsDropOff';
+import SettingsWebhooks from '@formgent/admin/Slots/SettingsWebhooks';
+import SettingsWebhooksEdit from '@formgent/admin/Slots/SettingsWebhooksEdit';
 import { registerModule } from '@formgent/modules/helpers';
 import { registerBlock } from './../../blocks/utils';
 
@@ -8,6 +10,7 @@ import FormTableModule from './FormTable';
 import ResponseTableModule from './ResponseTable';
 import SummaryModule from './Summary';
 import AnalyticsModule from './Analytics';
+import WebhooksModule from './Settings/components/webhooks/Webhooks';
 
 registerModule( 'modules', {
 	SettingsModule,
@@ -16,8 +19,11 @@ registerModule( 'modules', {
 	AnalyticsModule,
 	registerBlock,
 	SummaryModule,
+	WebhooksModule,
 	AnalyticsChart,
 	QuestionsDropOff,
+	SettingsWebhooks,
+	SettingsWebhooksEdit,
 } );
 
 /**
@@ -27,9 +33,12 @@ export {
 	AnalyticsChart,
 	AnalyticsModule,
 	FormTableModule,
+	WebhooksModule,
 	QuestionsDropOff,
 	registerBlock,
 	ResponseTableModule,
 	SettingsModule,
 	SummaryModule,
+	SettingsWebhooks,
+	SettingsWebhooksEdit,
 };
