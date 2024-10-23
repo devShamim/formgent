@@ -24,6 +24,7 @@ import {
 import ReactSVG from 'react-inlinesvg';
 import editIcon from '@icon/edit.svg';
 import cogIcon from '@icon/cog.svg';
+import clsx from 'clsx';
 
 const AdvancedControls = () => {
 	const fills = useSlotFills( InspectorAdvancedControls.slotName );
@@ -224,6 +225,37 @@ const getFilteredBlocks = ( blocksArray, id ) => {
 	return blocksArray.filter( ( block ) => block.clientId !== id );
 };
 
+const widthOptions = [
+	{ label: __( '100%', 'formgent' ), value: '100' },
+	{ label: __( '75%', 'formgent' ), value: '75' },
+	{ label: __( '50%', 'formgent' ), value: '50' },
+	{ label: __( '33%', 'formgent' ), value: '33.33' },
+	{ label: __( '25%', 'formgent' ), value: '25' },
+];
+
+const WidthControls = ( { attributes, setAttributes } ) => {
+	return (
+		<BlockControls>
+			<ToolbarGroup className="formgent-toolbar">
+				{ widthOptions.map( ( { label, value } ) => (
+					<Button
+						key={ value }
+						variant="secondary"
+						className={ clsx( {
+							'is-selected': attributes.block_width === value,
+						} ) }
+						onClick={ () =>
+							setAttributes( { block_width: value } )
+						}
+					>
+						<span>{ label }</span>
+					</Button>
+				) ) }
+			</ToolbarGroup>
+		</BlockControls>
+	);
+};
+
 function Block( {
 	controls,
 	Edit,
@@ -409,8 +441,6 @@ function Block( {
 		}
 	}, [] );
 
-	const [ isSelectedInput, setIsSelectedInput ] = useState( false );
-
 	return (
 		<>
 			<div
@@ -424,95 +454,12 @@ function Block( {
 				<Edit
 					attributes={ attributes }
 					setAttributes={ setAttributes }
-					inputProps={ {
-						onFocus: () => setIsSelectedInput( true ), // Set focus on RichText
-						onBlur: () => setIsSelectedInput( false ), // Reset focus on blur
-					} }
 				/>
 			</div>
-
-			{ ! isSelectedInput && (
-				<BlockControls>
-					<ToolbarGroup>
-						<Button
-							variant="secondary"
-							className={ `formgent-toolbar-width-button ${
-								attributes.block_width === '100'
-									? 'is-selected'
-									: ''
-							}` }
-							onClick={ () =>
-								setAttributes( { block_width: '100' } )
-							}
-						>
-							<span className="formgent-toolbar-width-button__icon">
-								{ __( '100%', 'formgent' ) }
-							</span>
-						</Button>
-						<Button
-							variant="secondary"
-							className={ `formgent-toolbar-width-button ${
-								attributes.block_width === '75'
-									? 'is-selected'
-									: ''
-							}` }
-							onClick={ () =>
-								setAttributes( { block_width: '75' } )
-							}
-						>
-							<span className="formgent-toolbar-width-button__icon">
-								{ __( '75%', 'formgent' ) }
-							</span>
-						</Button>
-						<Button
-							variant="secondary"
-							className={ `formgent-toolbar-width-button ${
-								attributes.block_width === '50'
-									? 'is-selected'
-									: ''
-							}` }
-							onClick={ () =>
-								setAttributes( { block_width: '50' } )
-							}
-						>
-							<span className="formgent-toolbar-width-button__icon">
-								{ __( '50%', 'formgent' ) }
-							</span>
-						</Button>
-						<Button
-							variant="secondary"
-							className={ `formgent-toolbar-width-button ${
-								attributes.block_width === '33.33'
-									? 'is-selected'
-									: ''
-							}` }
-							onClick={ () =>
-								setAttributes( { block_width: '33.33' } )
-							}
-						>
-							<span className="formgent-toolbar-width-button__icon">
-								{ __( '33%', 'formgent' ) }
-							</span>
-						</Button>
-						<Button
-							variant="secondary"
-							className={ `formgent-toolbar-width-button ${
-								attributes.block_width === '25'
-									? 'is-selected'
-									: ''
-							}` }
-							onClick={ () =>
-								setAttributes( { block_width: '25' } )
-							}
-						>
-							<span className="formgent-toolbar-width-button__icon">
-								{ __( '25%', 'formgent' ) }
-							</span>
-						</Button>
-					</ToolbarGroup>
-				</BlockControls>
-			) }
-
+			<WidthControls
+				attributes={ attributes }
+				setAttributes={ setAttributes }
+			/>
 			<InspectorControls>
 				<div className="formgent">
 					<TabPanel

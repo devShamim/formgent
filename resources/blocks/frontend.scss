@@ -31,26 +31,37 @@
 	}
 }
 
-.formgent-toolbar-width-button {
-	&.is-selected {
-		.formgent-toolbar-width-button__icon {
-			color: #fff;
-			background-color: var(--formgent-color-dark);
-		}
-	}
-	&.components-button {
-		padding: 6px 10px;
+.formgent-toolbar {
+	gap: 6px;
+	padding: 0px 6px;
+	.components-button {
+		padding-left: 0;
+		padding-right: 0;
 		box-shadow: 0 0;
+
+		&:focus:before {
+			box-shadow: 0 0;
+			outline: none;
+		}
+
 		&:hover:not(:disabled, [aria-disabled="true"]) {
 			box-shadow: 0 0;
 		}
-	}
-	.formgent-toolbar-width-button__icon {
-		border: 1px solid;
-		padding: 6px;
-		border-radius: 2px;
-		line-height: 1.4;
-		font-size: 13px;
+
+		&.is-selected {
+			span {
+				color: #fff;
+				background-color: var(--formgent-color-dark);
+			}
+		}
+
+		span {
+			border: 1px solid;
+			padding: 6px;
+			border-radius: 2px;
+			line-height: 1.4;
+			font-size: 13px;
+		}
 	}
 }
 

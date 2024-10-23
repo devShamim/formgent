@@ -7,7 +7,7 @@ import ReactSVG from 'react-inlinesvg';
 import envelopeIcon from '@icon/envelope.svg';
 import './editor.scss';
 
-export default function Edit( { attributes, setAttributes, inputProps } ) {
+export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<>
 			<div
@@ -17,7 +17,6 @@ export default function Edit( { attributes, setAttributes, inputProps } ) {
 					className={ `formgent-editor-block-list__single__label-container formgent-label-align-${ attributes.label_alignment }` }
 				>
 					<RichText
-						{ ...inputProps }
 						className="formgent-editor-block-list__single__label"
 						tagName="label"
 						value={ attributes.label }
@@ -41,7 +40,6 @@ export default function Edit( { attributes, setAttributes, inputProps } ) {
 						) }
 
 						<input
-							{ ...inputProps }
 							className="formgent-editor-block-list__single__input"
 							type="email"
 							name={ attributes.name }
@@ -52,7 +50,6 @@ export default function Edit( { attributes, setAttributes, inputProps } ) {
 					</div>
 
 					<RichText
-						{ ...inputProps }
 						className="formgent-editor-block-list__single__sub-label"
 						tagName="span"
 						value={ attributes.sub_label }
@@ -78,7 +75,6 @@ export default function Edit( { attributes, setAttributes, inputProps } ) {
 							className={ `formgent-editor-block-list__single__label-container formgent-label-align-${ attributes.label_alignment }` }
 						>
 							<RichText
-								{ ...inputProps }
 								className="formgent-editor-block-list__single__label"
 								tagName="label"
 								value={ attributes.confirm_label }
@@ -100,7 +96,6 @@ export default function Edit( { attributes, setAttributes, inputProps } ) {
 								) }
 
 								<input
-									{ ...inputProps }
 									className="formgent-editor-block-list__single__input"
 									type="email"
 									name={ `${ attributes.name }_confirm` }
@@ -113,7 +108,6 @@ export default function Edit( { attributes, setAttributes, inputProps } ) {
 							</div>
 
 							<RichText
-								{ ...inputProps }
 								className="formgent-editor-block-list__single__sub-label"
 								tagName="span"
 								value={ attributes.confirm_sub_label }
