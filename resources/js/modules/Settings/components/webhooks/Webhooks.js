@@ -4,6 +4,8 @@ import { registerIsProActive } from '@formgent/helper/registerApplyFilter';
 import SettingsWebhooks from '@formgent/admin/Slots/SettingsWebhooks';
 import ReactSVG from 'react-inlinesvg';
 import layerIcon from '@icon/layer.svg';
+import AnalyticsProCta from '@formgent/modules/Analytics/components/AnalyticsProCta';
+import { __ } from '@wordpress/i18n';
 
 function Webhooks() {
 	const isProActive = registerIsProActive();
@@ -32,7 +34,20 @@ function Webhooks() {
 						{ ( fills ) => <>{ fills }</> }
 					</SettingsWebhooks.Slot>
 				) }
-				{ ! isProActive && <AnalyticsProCta /> }
+				{ ! isProActive && (
+					<AnalyticsProCta
+						title={ __( 'Webhooks Settings', 'formgent' ) }
+						description={ __(
+							'Upgrade to access advanced webhook settings and automate your integrations.',
+							'formgent'
+						) }
+						buttonValue={ __(
+							'Upgrade to use Webhooks',
+							'formgent'
+						) }
+						background={ false }
+					/>
+				) }
 			</div>
 		</>
 	);

@@ -22,8 +22,9 @@ class FormController extends Controller {
 
     public FormPresetFieldRepository $form_preset_field_repository;
 
-    public function __construct( FormRepository $form_repository ) {
-        $this->form_repository = $form_repository;
+    public function __construct( FormRepository $form_repository, FormPresetFieldRepository $form_preset_field_repository ) {
+        $this->form_preset_field_repository = $form_preset_field_repository;
+        $this->form_repository              = $form_repository;
     }
 
     public function index( Validator $validator, WP_REST_Request $wp_rest_request ) {
@@ -129,7 +130,7 @@ class FormController extends Controller {
         );
 
         $ids = $wp_rest_request->get_param( 'ids' );
-    
+
         if ( ! formgent_is_one_level_array( $ids ) ) {
             return Response::send(
                 [
@@ -326,7 +327,7 @@ class FormController extends Controller {
         return Response::send(
             [
                 'settings' => $this->form_repository->get_settings( intval( $wp_rest_request->get_param( 'id' ) ) ),
-            ]  
+            ]
         );
     }
 
@@ -342,9 +343,9 @@ class FormController extends Controller {
 
         $this->form_repository->save_settings(
             $form_id,
-            array_merge( 
-                $this->form_repository->get_settings( $form_id ), 
-                $wp_rest_request->get_param( 'settings' ) 
+            array_merge(
+                $this->form_repository->get_settings( $form_id ),
+                $wp_rest_request->get_param( 'settings' )
             )
         );
 
@@ -366,6 +367,6 @@ class FormController extends Controller {
             [
                 'preset_fields' => $this->form_preset_field_repository->get_preset_fields( $request->get_param( 'id' ) ),
             ]
-        ); 
+        );
     }
 }

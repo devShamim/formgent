@@ -76,7 +76,20 @@ function Analytics() {
 						</>
 					) }
 				</div>
-				{ ! isProActive && <AnalyticsProCta /> }
+				{ ! isProActive && (
+					<AnalyticsProCta
+						title={ __( 'Conversation analytics', 'formgent' ) }
+						description={ __(
+							'Track drop-off rates for each question of your form',
+							'formgent'
+						) }
+						buttonValue={ __(
+							'Upgrade to view analytics',
+							'formgent'
+						) }
+						background={ true }
+					/>
+				) }
 			</AnalyticsStyle>
 		</>
 	);
