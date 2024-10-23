@@ -24,6 +24,8 @@ import AntTooltip from './Tooltip';
 import AntProgress from './Progress';
 import ClassicEditorField from './FormFields/ClassicEditorField';
 import TextField from './FormFields/TextField';
+import AntRadio from './Radio';
+import AntRadioGroup from './RadioGroup';
 
 /**
  * Global components for admin and user
@@ -56,6 +58,8 @@ registerModule( 'components', {
 	AntProgress,
 	ClassicEditorField,
 	TextField,
+	AntRadio,
+	AntRadioGroup,
 } );
 
 /**
@@ -82,4 +86,6 @@ export {
 	Loader,
 	ClassicEditorField,
 	TextField,
+	AntRadio,
+	AntRadioGroup,
 };
