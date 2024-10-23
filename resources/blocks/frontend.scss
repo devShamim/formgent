@@ -1,13 +1,102 @@
 @import "../sass/variables.scss";
 
+// Formgent block editor
+.block-editor-block-list__layout,
+.formgent-editor-block-list {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 620px;
+	margin: 0 auto -20px;
+	gap: 0 12px;
+	.wp-block-spacer {
+		width: 100%;
+	}
+	.formgent-block-width-100 {
+		flex: 0 1 calc(100%);
+	}
+	.formgent-block-width-50 {
+		flex: 0 1 calc(50% - 6px);
+	}
+	.formgent-block-width-75 {
+		flex: 0 1 calc(75% - 6px);
+	}
+	.formgent-block-width-33 {
+		flex: 0 1 calc(33.33% - 12px);
+	}
+	.formgent-block-width-25 {
+		flex: 0 1 calc(25% - 12px);
+	}
+	.block-editor-block-list__block {
+		max-width: 100%;
+	}
+}
+
+.formgent-toolbar {
+	gap: 6px;
+	padding: 0px 6px;
+	.components-button {
+		padding-left: 0;
+		padding-right: 0;
+		box-shadow: 0 0;
+
+		&:focus:before {
+			box-shadow: 0 0;
+			outline: none;
+		}
+
+		&:hover:not(:disabled, [aria-disabled="true"]) {
+			box-shadow: 0 0;
+		}
+
+		&.is-selected {
+			span {
+				color: #fff;
+				background-color: var(--formgent-color-dark);
+			}
+		}
+
+		span {
+			border: 1px solid;
+			padding: 6px;
+			border-radius: 2px;
+			line-height: 1.4;
+			font-size: 13px;
+		}
+	}
+}
+
+div.is-root-container.block-editor-block-list__layout {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 620px;
+	gap: 0 12px;
+	.block-editor-block-list__block {
+		max-width: 100%;
+		width: 100%;
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		margin-top: 0 !important;
+		margin-bottom: 20px;
+		.formgent-editor-block-list__single {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.is-root-container {
+	&.is-layout-constrained {
+		.block-list-appender {
+			width: 100%;
+		}
+	}
+}
+
 // Block Input Field Style
 .formgent-editor-block-list__single {
 	display: flex;
 	gap: 10px;
 	flex-wrap: wrap;
-	&:last-child {
-		margin-bottom: 0;
-	}
+	margin-bottom: 20px;
 	.formgent-editor-block-list__single__wrapper {
 		display: flex;
 		gap: 10px;
@@ -154,7 +243,6 @@
 	.formgent-editor-block-list__single__label-container {
 		display: flex;
 		gap: 6px;
-		width: 100px;
 		font-size: 14px;
 		color: var(--formgent-color-dark);
 		line-height: 16px;

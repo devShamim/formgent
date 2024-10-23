@@ -54,9 +54,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					onMouseDown={ ( e ) => handleMouseDown( e ) }
 				>
 					{ attributes.options.map( ( option, index ) => (
-						<option key={ index } value={ option.value }>
-							{ option.label }
-						</option>
+						<option key={ option.label }>{ option.label }</option>
 					) ) }
 				</select>
 				<div className="formgent-editor-block-list__single__bottom">

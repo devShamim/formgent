@@ -38,6 +38,10 @@
 		"text_color": {
 			"type": "string",
 			"default": "#000000"
+		},
+		"block_width": {
+			"type": "string",
+			"default": "100"
 		}
 	},
 	"supports": {

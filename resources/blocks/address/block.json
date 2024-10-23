@@ -14,6 +14,14 @@
 		"name": {
 			"type": "string",
 			"default": "address"
+		},
+		"label": {
+			"type": "string",
+			"default": "Address"
+		},
+		"block_width": {
+			"type": "string",
+			"default": "100"
 		}
 	},
 	"supports": {
