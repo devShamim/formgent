@@ -377,114 +377,22 @@ class FormRepository {
         return $this->save_settings( $form_id, $settings );
     }
 
-    public function get_preset_fields( int $form_id ) {
-        $form = $this->get_by_id( $form_id );
+    public function get_form_dto( int $id ): ?FormDTO {
+        $form_data = $this->get_by_id( $id );
 
-        if ( ! $form ) {
-            throw new Exception( esc_html__( 'Form not found', 'formgent' ), 404 );
+        if ( ! $form_data ) {
+            return null;
         }
 
-        $fields = formgent_get_form_field_settings( parse_blocks( $form->post_content ), false );
+        $form_dto = new FormDTO();
 
-        $preset_fields = [
-            // Response Fields
-            [
-                'type'        => 'response',
-                'value'       => "{{response_id}}",
-                'description' => __( 'Prints the response ID', 'formgent' ),
-            ],
-            [
-                'type'        => 'response',
-                'value'       => "{{response_ip}}",
-                'description' => __( 'Prints the IP address', 'formgent' ),
-            ],
-            [
-                'type'        => 'response',
-                'value'       => "{{response_device}}",
-                'description' => __( 'Prints the device name', 'formgent' ),
-            ],
-            [
-                'type'        => 'response',
-                'value'       => "{{response_browser}}",
-                'description' => __( 'Prints the browser name', 'formgent' ),
-            ],
-            [
-                'type'        => 'response',
-                'value'       => "{{response_browser_version}}",
-                'description' => __( 'Prints the browser version name', 'formgent' ),
-            ],
-            // Other Info
-            [
-                'type'        => 'preset',
-                'value'       => "{{site_url}}",
-                'description' => __( 'Prints the website URL', 'formgent' ),
-            ],
-            [
-                'type'        => 'preset',
-                'value'       => "{{site_name}}",
-                'description' => __( 'Prints the website name', 'formgent' ),
-            ],
-            [
-                'type'        => 'preset',
-                'value'       => "{{admin_email}}",
-                'description' => __( 'Prints the admin email address', 'formgent' ),
-            ],
-            [
-                'type'        => 'preset',
-                'value'       => "{{admin_name}}",
-                'description' => __( 'Prints the admin name', 'formgent' ),
-            ],
-            [
-                'type'        => 'preset',
-                'value'       => "{{user_email}}",
-                'description' => __( 'Prints the user email address', 'formgent' ),
-            ],
-            [
-                'type'        => 'preset',
-                'value'       => "{{user_name}}",
-                'description' => __( 'Prints user name', 'formgent' ),
-            ],
-        ];
+        $form_dto->set_id( $form_data->ID )
+            ->set_title( $form_data->post_title )
+            ->set_status( $form_data->post_status )
+            ->set_type( get_post_meta( $form_data->ID, '_formgent_type', true ) )
+            ->set_content( $form_data->post_content )
+            ->set_save_incomplete_data( get_post_meta( $form_data->ID, '_formgent_save_incomplete_data', true ) === '1' );
 
-        $field_description = __( 'Prints the fields value', 'formgent' );
-        $label_description = __( 'Prints the fields label', 'formgent' );
-
-        foreach ( $fields as $field_key => $field ) {
-            if ( empty( $field['children'] ) ) {
-                $preset_fields[] = [
-                    'type'        => 'form_field',
-                    'value'       => "{{field:{$field_key}}}",
-                    'description' => $field_description,
-                ];
-
-                if ( ! empty( $field['label'] ) ) {
-                    $preset_fields[] = [
-                        'type'        => 'form_field',
-                        'value'       => "{{label:{$field_key}}}",
-                        'description' => $label_description,
-                    ];
-                }
-
-                continue;
-            }
-
-            foreach ( $field['children'] as $child_key => $child_field ) {
-                $preset_fields[] = [
-                    'type'        => 'form_field',
-                    'value'       => "{{field:{$field_key}.{$child_key}}}",
-                    'description' => $field_description,
-                ];
-
-                if ( ! empty( $child_field['label'] ) ) {
-                    $preset_fields[] = [
-                        'type'        => 'form_field',
-                        'value'       => "{{label:{$field_key}.{$child_key}}}",
-                        'description' => $label_description,
-                    ];
-                }
-            }
-        }
-
-        return $preset_fields;
+        return $form_dto;
     }
 }

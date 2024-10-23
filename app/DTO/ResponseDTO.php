@@ -30,6 +30,8 @@ class ResponseDTO extends DTO {
 
     private ?string $browser_version = null;
 
+    private ?string $created_at = null;
+
     /**
      * Get the value of id
      *
@@ -268,6 +270,28 @@ class ResponseDTO extends DTO {
      */
     public function set_browser_version( ?string $browser_version ) {
         $this->browser_version = $browser_version;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of created_at
+     *
+     * @return ?string
+     */
+    public function get_created_at():?string {
+        return $this->created_at;
+    }
+
+    /**
+     * Set the value of created_at
+     *
+     * @param ?string $created_at 
+     *
+     * @return self
+     */
+    public function set_created_at( ?string $created_at ):self {
+        $this->created_at = $created_at;
 
         return $this;
     }

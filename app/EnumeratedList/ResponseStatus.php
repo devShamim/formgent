@@ -4,7 +4,7 @@ namespace FormGent\App\EnumeratedList;
 
 defined( 'ABSPATH' ) || exit;
 
-class ResponseStatus {
+class ResponseStatus extends EnumBase {
     const DRAFT   = 'draft';
     const PUBLISH = 'publish';
 }

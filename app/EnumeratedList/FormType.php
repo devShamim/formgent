@@ -4,7 +4,7 @@ namespace FormGent\App\EnumeratedList;
 
 defined( 'ABSPATH' ) || exit;
 
-class FormType {
+class FormType extends EnumBase {
     const GENERAL        = 'general';
     const CONVERSATIONAL = 'conversational';
 }
