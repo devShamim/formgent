@@ -1133,3 +1133,43 @@ input.formgent-editor-block-list__single__dialer__input {
 .formgent-form-field-select {
 	z-index: 999999;
 }
+
+// Fields repeater
+.formgent-fields-repeater {
+	.formgent-form-group-inline {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+	.formgent-fields-repeater-row:not(:last-child) {
+		margin-bottom: 20px;
+	}
+}
+.formgent-fields-repeater-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+// Icon circle button
+.formgent-btn-icon-circle {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--formgent-color-gray-500);
+	border: 0 none;
+	transition: 0.3s ease;
+	cursor: pointer;
+	svg {
+		path {
+			fill: #fff;
+			stroke: #fff;
+		}
+	}
+	&:hover {
+		background: var(--formgent-color-gray-600);
+	}
+}

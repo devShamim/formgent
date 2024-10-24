@@ -3,7 +3,7 @@ import { useSelect } from '@wordpress/data';
 import { AnalyticsStyle } from './style';
 import { registerIsProActive } from '@formgent/helper/registerApplyFilter';
 import AnalyticStats from './components/AnalyticStats';
-import AnalyticsProCta from './components/AnalyticsProCta';
+import PremiumFeatureCTA from './components/PremiumFeatureCTA';
 import AnalyticsChart from '@formgent/admin/Slots/AnalyticsChart';
 import QuestionsDropOff from '@formgent/admin/Slots/QuestionsDropOff';
 import ReactSVG from 'react-inlinesvg';
@@ -77,7 +77,7 @@ function Analytics() {
 					) }
 				</div>
 				{ ! isProActive && (
-					<AnalyticsProCta
+					<PremiumFeatureCTA
 						title={ __( 'Conversation analytics', 'formgent' ) }
 						description={ __(
 							'Track drop-off rates for each question of your form',

@@ -3,7 +3,7 @@ import analyticsProBg from '@image/analytics-pro.png';
 import lineChartIcon from '@icon/line-chart.svg';
 import { __ } from '@wordpress/i18n';
 
-export default function AnalyticsProCta( {
+export default function PremiumFeatureCTA( {
 	title,
 	description,
 	background,
